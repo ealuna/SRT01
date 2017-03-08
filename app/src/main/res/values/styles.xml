@@ -1,0 +1,33 @@
+<resources>
+
+    <!-- Tema con ActionBar. -->
+    <style name="Con_Bar" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!-- Tema sin ActionBar. -->
+
+    <style name="Sin_Bar" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!-- Color borde inferior -->
+    <style name="CampoTextoNaranja" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">#f1bf96</item>
+        <item name="colorControlActivated">#ef9712</item>
+        <item name="android:textColorHighlight">#f4deaf</item>
+    </style>
+
+    <style name="ColorBoton" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">#55bdd7</item>#55bdd7
+        <item name="colorButtonNormal">#84dde9</item>
+    </style>
+
+
+</resources>
