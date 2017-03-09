@@ -9,6 +9,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -16,6 +17,17 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 
 public class AccesoActivity extends AppCompatActivity {
@@ -30,6 +42,8 @@ public class AccesoActivity extends AppCompatActivity {
     private SharedPreferences loginPreferences;
     private SharedPreferences.Editor loginPrefsEditor;
     private boolean saveLogin;
+    //JSON array para obtener los datos devueltos por el JSON
+    JSONArray array_json;
 
 
     @Override
@@ -75,13 +89,57 @@ public class AccesoActivity extends AppCompatActivity {
                         loginPrefsEditor.commit();
                     }
 
-                    hacerAlgo();
+                   //aca se inicia la URL para conectar con el JSON
+                //la dirección 10.0.3.2 hace referencia al emulador de genymotion, puede variar
+                //ConsultaPass("http://10.0.3.2/ejemplologin/consultarusuario.php?codigo="+codigo.getText().toString());
+
+                //configuracion para emulador android
+                ConsultaPass("http://10.0.2.2/ejemplologin/consultarusuario.php?codigo="+codigo.getText().toString());
             }
         });
 
     }
-    public void hacerAlgo() {
-        startActivity(new Intent(AccesoActivity.this, CuerpoActivity.class));
-        AccesoActivity.this.finish();
+    public void ConsultaPass(String URL) {
+        Log.i("url",""+URL);
+
+        //solicitud volley para realizar un get, cola de peticiones
+        RequestQueue queue = Volley.newRequestQueue(this);
+        StringRequest stringRequest =  new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    array_json = new JSONArray(response);
+                    String contra = array_json.getString(0);
+                    if(contra.equals(contraseña.getText().toString())){
+
+                        Toast.makeText(getApplicationContext(),"Bienvenido",Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(AccesoActivity.this, CuerpoActivity.class);
+                        startActivity(intent);
+                        finish();
+
+                    }else{
+                        Toast.makeText(getApplicationContext(),"Verifique la contraseña",Toast.LENGTH_SHORT).show();
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+
+                    Toast.makeText(getApplicationContext(),"El código no existe en la base de datos",Toast.LENGTH_LONG).show();
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Toast.makeText(getApplicationContext(),"Error al validar datos",Toast.LENGTH_LONG).show();
+            }
+        });
+
+        //de esta forma, se agrega una peticion a la cola de peticiones
+        queue.add(stringRequest);
     }
 }
