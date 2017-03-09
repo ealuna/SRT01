@@ -60,6 +60,7 @@ public class AccesoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_acceso);
 
+
         boton_acceso =(Button)findViewById(R.id.boton_acceso);
         logo =(ImageView) findViewById(R.id.logo);
         recordar =(CheckBox)findViewById(R.id.recordar);
@@ -110,6 +111,7 @@ public class AccesoActivity extends AppCompatActivity {
             }
         });
 
+
     }
 
     public void Progreso_Pre(){
@@ -135,6 +137,7 @@ public class AccesoActivity extends AppCompatActivity {
     }
 
     public void ConsultaPass(String URL) {
+
         Log.i("url",""+URL);
 
         Progreso_Pre();
