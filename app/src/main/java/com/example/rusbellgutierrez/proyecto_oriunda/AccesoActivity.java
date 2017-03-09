@@ -90,10 +90,11 @@ public class AccesoActivity extends AppCompatActivity {
                     }
 
                    //aca se inicia la URL para conectar con el JSON
+
                 //la dirección 10.0.3.2 hace referencia al emulador de genymotion, puede variar
                 //ConsultaPass("http://10.0.3.2/ejemplologin/consultarusuario.php?codigo="+codigo.getText().toString());
 
-                //configuracion para emulador android
+                //configuracion para emulador android, modificar para conexion remota
                 ConsultaPass("http://10.0.2.2/ejemplologin/consultarusuario.php?codigo="+codigo.getText().toString());
             }
         });
