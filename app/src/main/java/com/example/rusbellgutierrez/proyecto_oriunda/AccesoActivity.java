@@ -60,6 +60,7 @@ public class AccesoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_acceso);
 
+
         boton_acceso =(Button)findViewById(R.id.boton_acceso);
         logo =(ImageView) findViewById(R.id.logo);
         recordar =(CheckBox)findViewById(R.id.recordar);
@@ -106,9 +107,13 @@ public class AccesoActivity extends AppCompatActivity {
                 //ConsultaPass("http://10.0.3.2/ejemplologin/consultarusuario.php?codigo="+codigo.getText().toString());
 
                 //configuracion para emulador android, modificar conexion remota
-                ConsultaPass("http://10.0.2.2/ejemplologin/consultarusuario.php?codigo="+codigo.getText().toString());
+                ConsultaPass("http://10.0.2.2/ejemplologin/consultar_mysql.php?codigo="+codigo.getText().toString());
+
+                //configuracion para emulador android, CONEXION REMOTA
+                //ConsultaPass("http://10.0.2.2/ejemplologin/conectar_sql.php?codigo="+codigo.getText().toString());
             }
         });
+
 
     }
 
@@ -135,6 +140,7 @@ public class AccesoActivity extends AppCompatActivity {
     }
 
     public void ConsultaPass(String URL) {
+
         Log.i("url",""+URL);
 
         Progreso_Pre();
@@ -145,7 +151,8 @@ public class AccesoActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
 
-                try {
+                try {//error no se puede convertir string a JSON array
+
                     array_json = new JSONArray(response);
                     String contra = array_json.getString(0);
                     if(contra.equals(contraseña.getText().toString())){

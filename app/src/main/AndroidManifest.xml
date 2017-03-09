@@ -20,16 +20,30 @@
 
         <activity android:name=".AccesoActivity"
             android:theme="@style/Sin_Bar"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="stateHidden"
+            >
+            <!--declaramos AccesoActivity como padre-->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.rusbellgutierrez.proyecto_oriunda.AccesoActivity" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!--indicamos quien es el padre dentro del activity hijo-->
+
         <activity
+
             android:name=".CuerpoActivity"
-            android:theme="@style/Con_Bar" >
+            android:theme="@style/Con_Bar">
+            <!--android:parentActivityName="com.example.rusbellgutierrez.proyecto_oriunda.AccesoActivity">
+            declaramos AccesoActivity como padre-->
+            <!--<meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.rusbellgutierrez.proyecto_oriunda.AccesoActivity" />-->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
