@@ -11,12 +11,15 @@ import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -45,6 +48,12 @@ public class AccesoActivity extends AppCompatActivity {
     //JSON array para obtener los datos devueltos por el JSON
     JSONArray array_json;
 
+    //declaraciones para la animacion
+    AlphaAnimation inAnimation;
+    AlphaAnimation outAnimation;
+    //declaramos el framelayout
+    FrameLayout progressBarHolder;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +66,8 @@ public class AccesoActivity extends AppCompatActivity {
         codigo =(EditText)findViewById(R.id.codigo);
         contraseña =(EditText)findViewById(R.id.contraseña);
         carta =(CardView)findViewById(R.id.carta);
+        //declaramos el framelayout
+        progressBarHolder = (FrameLayout) findViewById(R.id.progressBarHolder);
 
         //aca inicia la funciòn para recordar datos
         loginPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
@@ -100,8 +111,33 @@ public class AccesoActivity extends AppCompatActivity {
         });
 
     }
+
+    public void Progreso_Pre(){
+
+        //experimental-->simulando metodo OnPreExecute
+        boton_acceso.setEnabled(false);
+        inAnimation = new AlphaAnimation(0f, 1f);
+        inAnimation.setDuration(200);
+        progressBarHolder.setAnimation(inAnimation);
+        progressBarHolder.setVisibility(View.VISIBLE);
+        //termina metodo OnPreExecute
+    }
+
+    public void Progreso_Post(){
+
+        //experimental-->simulando metodo OnPostExecute
+                outAnimation = new AlphaAnimation(1f, 0f);
+                outAnimation.setDuration(200);
+                progressBarHolder.setAnimation(outAnimation);
+                progressBarHolder.setVisibility(View.GONE);
+                boton_acceso.setEnabled(true);
+                //termina metodo OnPostExecute
+    }
+
     public void ConsultaPass(String URL) {
         Log.i("url",""+URL);
+
+        Progreso_Pre();
 
         //solicitud volley para realizar un get, cola de peticiones
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -119,13 +155,20 @@ public class AccesoActivity extends AppCompatActivity {
                         startActivity(intent);
                         finish();
 
+                        Progreso_Post();
+
                     }else{
+
+                        Progreso_Post();
+
                         Toast.makeText(getApplicationContext(),"Verifique la contraseña",Toast.LENGTH_SHORT).show();
 
                     }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
+
+                    Progreso_Post();
 
                     Toast.makeText(getApplicationContext(),"El código no existe en la base de datos",Toast.LENGTH_LONG).show();
                 }
@@ -135,6 +178,8 @@ public class AccesoActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+
+                Progreso_Post();
 
                 Toast.makeText(getApplicationContext(),"Error al validar datos",Toast.LENGTH_LONG).show();
             }
