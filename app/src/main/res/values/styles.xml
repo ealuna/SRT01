@@ -15,6 +15,11 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@android:color/primary_text_dark</item>
+        <item name="android:textColorPrimaryInverse">@color/cardview_dark_background</item>
+        <item name="android:textColorSecondaryInverse">@color/common_google_signin_btn_text_dark
+        </item>
+        <item name="android:textColorSecondary">@color/cardview_dark_background</item>
     </style>
 
     <!-- Color borde inferior -->

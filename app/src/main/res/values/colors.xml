@@ -3,4 +3,10 @@
     <color name="colorPrimary">#3d94c6</color>
     <color name="colorPrimaryDark">#3d94c6</color>
     <color name="colorAccent">#eca881</color>
+    <color name="colorProgress">#5dd4a4</color>
+    <color name="highlight_pressed">#5dd4a4</color>
+    <color name="highlight_focused">#5dd4a4</color>
+    <color name="foreground_material_light">#fdfcfc</color>
+    <color name="background_material_light">#ffffff</color>
+
 </resources>

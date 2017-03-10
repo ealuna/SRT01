@@ -11,12 +11,15 @@ import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -45,11 +48,18 @@ public class AccesoActivity extends AppCompatActivity {
     //JSON array para obtener los datos devueltos por el JSON
     JSONArray array_json;
 
+    //declaraciones para la animacion
+    AlphaAnimation inAnimation;
+    AlphaAnimation outAnimation;
+    //declaramos el framelayout
+    FrameLayout progressBarHolder;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_acceso);
+
 
         boton_acceso =(Button)findViewById(R.id.boton_acceso);
         logo =(ImageView) findViewById(R.id.logo);
@@ -57,6 +67,8 @@ public class AccesoActivity extends AppCompatActivity {
         codigo =(EditText)findViewById(R.id.codigo);
         contraseña =(EditText)findViewById(R.id.contraseña);
         carta =(CardView)findViewById(R.id.carta);
+        //declaramos el framelayout
+        progressBarHolder = (FrameLayout) findViewById(R.id.progressBarHolder);
 
         //aca inicia la funciòn para recordar datos
         loginPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
@@ -95,13 +107,43 @@ public class AccesoActivity extends AppCompatActivity {
                 //ConsultaPass("http://10.0.3.2/ejemplologin/consultarusuario.php?codigo="+codigo.getText().toString());
 
                 //configuracion para emulador android, modificar conexion remota
-                ConsultaPass("http://10.0.2.2/ejemplologin/consultarusuario.php?codigo="+codigo.getText().toString());
+                ConsultaPass("http://10.0.2.2/ejemplologin/consultar_mysql.php?codigo="+codigo.getText().toString());
+
+                //configuracion para emulador android, CONEXION REMOTA
+                //ConsultaPass("http://10.0.2.2/ejemplologin/conectar_sql.php?codigo="+codigo.getText().toString());
             }
         });
 
+
     }
+
+    public void Progreso_Pre(){
+
+        //experimental-->simulando metodo OnPreExecute
+        boton_acceso.setEnabled(false);
+        inAnimation = new AlphaAnimation(0f, 1f);
+        inAnimation.setDuration(200);
+        progressBarHolder.setAnimation(inAnimation);
+        progressBarHolder.setVisibility(View.VISIBLE);
+        //termina metodo OnPreExecute
+    }
+
+    public void Progreso_Post(){
+
+        //experimental-->simulando metodo OnPostExecute
+                outAnimation = new AlphaAnimation(1f, 0f);
+                outAnimation.setDuration(200);
+                progressBarHolder.setAnimation(outAnimation);
+                progressBarHolder.setVisibility(View.GONE);
+                boton_acceso.setEnabled(true);
+                //termina metodo OnPostExecute
+    }
+
     public void ConsultaPass(String URL) {
+
         Log.i("url",""+URL);
+
+        Progreso_Pre();
 
         //solicitud volley para realizar un get, cola de peticiones
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -109,7 +151,8 @@ public class AccesoActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
 
-                try {
+                try {//error no se puede convertir string a JSON array
+
                     array_json = new JSONArray(response);
                     String contra = array_json.getString(0);
                     if(contra.equals(contraseña.getText().toString())){
@@ -119,13 +162,20 @@ public class AccesoActivity extends AppCompatActivity {
                         startActivity(intent);
                         finish();
 
+                        Progreso_Post();
+
                     }else{
+
+                        Progreso_Post();
+
                         Toast.makeText(getApplicationContext(),"Verifique la contraseña",Toast.LENGTH_SHORT).show();
 
                     }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
+
+                    Progreso_Post();
 
                     Toast.makeText(getApplicationContext(),"El código no existe en la base de datos",Toast.LENGTH_LONG).show();
                 }
@@ -135,6 +185,8 @@ public class AccesoActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+
+                Progreso_Post();
 
                 Toast.makeText(getApplicationContext(),"Error al validar datos",Toast.LENGTH_LONG).show();
             }

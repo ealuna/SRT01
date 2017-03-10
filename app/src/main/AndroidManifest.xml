@@ -20,16 +20,22 @@
 
         <activity android:name=".AccesoActivity"
             android:theme="@style/Sin_Bar"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="stateHidden"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!--indicamos quien es el padre dentro del activity hijo-->
+
         <activity
+
             android:name=".CuerpoActivity"
-            android:theme="@style/Con_Bar" >
+            android:theme="@style/Sin_Bar">
+
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
