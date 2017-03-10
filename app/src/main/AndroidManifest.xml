@@ -22,10 +22,6 @@
             android:theme="@style/Sin_Bar"
             android:windowSoftInputMode="stateHidden"
             >
-            <!--declaramos AccesoActivity como padre-->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.rusbellgutierrez.proyecto_oriunda.AccesoActivity" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -38,12 +34,8 @@
         <activity
 
             android:name=".CuerpoActivity"
-            android:theme="@style/Con_Bar">
-            <!--android:parentActivityName="com.example.rusbellgutierrez.proyecto_oriunda.AccesoActivity">
-            declaramos AccesoActivity como padre-->
-            <!--<meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.rusbellgutierrez.proyecto_oriunda.AccesoActivity" />-->
+            android:theme="@style/Sin_Bar">
+
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 

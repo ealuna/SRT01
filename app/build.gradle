@@ -39,6 +39,11 @@ dependencies {
     //integrar libreria para material progressbar
     compile 'com.github.rey5137:material:1.2.2'
 
+    //recycler view
+    compile 'com.android.support:recyclerview-v7:25.0.+'
+
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
     compile 'com.android.support:design:25.2.0'
 
     compile 'com.android.support.constraint:constraint-layout:1.0.1'
