@@ -47,6 +47,8 @@ public class AccesoActivity extends AppCompatActivity {
     private SharedPreferences.Editor loginPrefsEditor;
     private boolean saveLogin;
     //JSON array para obtener los datos devueltos por el JSON
+    JSONArray ja;
+    //JSON object para obtener los datos del sql server
     JSONObject array_json;
 
     //declaraciones para la animacion
@@ -105,10 +107,10 @@ public class AccesoActivity extends AppCompatActivity {
                    //aca se inicia la URL para conectar con el JSON
 
                 //la dirección 10.0.3.2 hace referencia al emulador de genymotion, puede variar
-                //ConsultaPass("http://10.0.3.2/ejemplologin/consultarusuario.php?codigo="+codigo.getText().toString());
+                ConsultaPass("http://10.0.3.2/ejemplologin/consultarusuario.php?codigo="+codigo.getText().toString());
 
                 //configuracion para emulador android, modificar conexion remota
-                ConsultaPass("http://10.0.2.2/consqlsvr/index.php?codigo="+codigo.getText().toString());
+                //ConsultaPass("http://10.0.2.2/consqlsvr/index.php?codigo="+codigo.getText().toString());
 
                 //configuracion para emulador android, CONEXION REMOTA
                 //ConsultaPass("http://10.0.2.2/ejemplologin/conectar_sql.php?codigo="+codigo.getText().toString());
@@ -154,8 +156,15 @@ public class AccesoActivity extends AppCompatActivity {
 
                 try {//error no se puede convertir string a JSON array
 
-                    array_json = new JSONObject(response);
-                    String contra = array_json.get("0").toString();
+                    //declarando array JSON para mysql
+                    ja = new JSONArray(response);
+                    String contra = ja.getString(0);
+
+                    //declarando objeto JSON para sql server
+                    //array_json = new JSONObject(response);
+                    //se agrego el campo .get().toString() para poder obtener el json de sql server
+                    //String contra = array_json.get("0").toString();
+
                     if(contra.equals(contraseña.getText().toString())){
 
                         Toast.makeText(getApplicationContext(),"Bienvenido",Toast.LENGTH_SHORT).show();

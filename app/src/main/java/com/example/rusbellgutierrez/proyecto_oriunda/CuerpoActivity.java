@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
@@ -32,7 +33,7 @@ public class CuerpoActivity extends AppCompatActivity {
     //toolbar
     Toolbar toolbar;
     //instanciamos el alertdialog
-    Dialogo_Alerta alerta;
+    AlertDialog alerta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +54,7 @@ public class CuerpoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //revisar llamado
-                alerta.getShowsDialog();
+                alerta.show();
             }
         });
     }
