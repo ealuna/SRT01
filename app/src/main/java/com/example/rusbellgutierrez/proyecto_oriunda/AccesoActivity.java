@@ -1,4 +1,4 @@
-package com.example.rusbellgutierrez.proyecto_oriunda;
+﻿package com.example.rusbellgutierrez.proyecto_oriunda;
 
 import android.content.Context;
 import android.content.Intent;
@@ -155,7 +155,7 @@ public class AccesoActivity extends AppCompatActivity {
                 try {//error no se puede convertir string a JSON array
 
                     array_json = new JSONObject(response);
-                    String contra = array_json.get("0").toString();
+                    String contra = array_json.get("0").toString(); //Correjido se recibia un JSONObject no un JSONArray
                     if(contra.equals(contraseña.getText().toString())){
 
                         Toast.makeText(getApplicationContext(),"Bienvenido",Toast.LENGTH_SHORT).show();
