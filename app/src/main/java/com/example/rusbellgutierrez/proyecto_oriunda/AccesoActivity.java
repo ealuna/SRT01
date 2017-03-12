@@ -1,4 +1,4 @@
-package com.example.rusbellgutierrez.proyecto_oriunda;
+﻿package com.example.rusbellgutierrez.proyecto_oriunda;
 
 import android.content.Context;
 import android.content.Intent;
@@ -156,6 +156,10 @@ public class AccesoActivity extends AppCompatActivity {
 
                 try {//error no se puede convertir string a JSON array
 
+
+                    //array_json = new JSONObject(response);
+                    //String contra = array_json.get("0").toString(); //Correjido se recibia un JSONObject no un JSONArray
+
                     //declarando array JSON para mysql
                     ja = new JSONArray(response);
                     String contra = ja.getString(0);
@@ -164,6 +168,7 @@ public class AccesoActivity extends AppCompatActivity {
                     //array_json = new JSONObject(response);
                     //se agrego el campo .get().toString() para poder obtener el json de sql server
                     //String contra = array_json.get("0").toString();
+
 
                     if(contra.equals(contraseña.getText().toString())){
 
