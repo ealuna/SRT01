@@ -22,6 +22,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
+import android.support.v7.app.AppCompatDialogFragment;
 
 
 public class CuerpoActivity extends AppCompatActivity {
@@ -33,7 +35,8 @@ public class CuerpoActivity extends AppCompatActivity {
     //toolbar
     Toolbar toolbar;
     //instanciamos el alertdialog
-    AlertDialog alerta;
+    //AlertDialog alerta;
+    Dialogo_Alerta alerta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,13 +51,17 @@ public class CuerpoActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         //muestra el nombre de la apliación
         getSupportActionBar().setDisplayShowTitleEnabled(true);
-
+        //habilita el boton de la apliacion
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //accion del boton en toolbar
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                //Toast.makeText(getApplicationContext(),"presiono",Toast.LENGTH_SHORT).show();
                 //revisar llamado
-                alerta.show();
+                alerta.show(getFragmentManager(),"mensaje");
             }
         });
     }

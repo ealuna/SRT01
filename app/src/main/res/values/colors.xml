@@ -2,11 +2,15 @@
 <resources>
     <color name="colorPrimary">#3d94c6</color>
     <color name="colorPrimaryDark">#3d94c6</color>
-    <color name="colorAccent">#eca881</color>
+    <color name="colorAccent">#f9a575</color>
     <color name="colorProgress">#5dd4a4</color>
     <color name="highlight_pressed">#5dd4a4</color>
     <color name="highlight_focused">#5dd4a4</color>
-    <color name="foreground_material_light">#fdfcfc</color>
+    <color name="foreground_material_light">#f9f5f5</color>
     <color name="background_material_light">#ffffff</color>
+    <color name="primary_text_default_material_light">#de000000</color>
+    <color name="primary_text_default_material_dark">#1c1b1b</color>
+    <color name="secondary_text_default_material_light">#8a040404</color>
+    <color name="secondary_text_default_material_dark">#b3ffffff</color>
 
 </resources>

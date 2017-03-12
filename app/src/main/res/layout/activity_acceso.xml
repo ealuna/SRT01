@@ -57,7 +57,7 @@
                     <!--Campo que recibirá el efecto-->
 
                     <EditText
-                        android:hint="Código de transportista"
+                        android:hint="@string/hint_codigo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="number"
@@ -69,7 +69,7 @@
                 </android.support.design.widget.TextInputLayout>
 
             <CheckBox
-                android:text="Recordar código"
+                android:text="@string/hint_check"
                 android:layout_width="154dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -83,7 +83,7 @@
                 android:layout_marginBottom="30dp">
 
                 <EditText
-                    android:hint="Contraseña"
+                    android:hint="@string/hint_contra"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
@@ -91,12 +91,11 @@
                     android:drawableLeft="@drawable/key"
                     android:id="@+id/contraseña"
                     android:layout_weight="0.37"
-                    android:theme="@style/CampoTextoNaranja"
-                    tools:ignore="HardcodedText" />
+                    android:theme="@style/CampoTextoNaranja"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.v7.widget.AppCompatButton
-                android:text="Ingresar"
+                android:text="@string/str_acceso"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
