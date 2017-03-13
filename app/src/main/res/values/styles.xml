@@ -15,24 +15,24 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textColorPrimary">@android:color/primary_text_dark</item>
-        <item name="android:textColorPrimaryInverse">@color/cardview_dark_background</item>
-        <item name="android:textColorSecondaryInverse">@color/common_google_signin_btn_text_dark
-        </item>
-        <item name="android:textColorSecondary">@color/cardview_dark_background</item>
+        <item name="android:textColorPrimary">@android:color/black</item>
+        <item name="android:textColorHint">@color/color_hint</item>
     </style>
 
     <!-- Color borde inferior -->
     <style name="CampoTextoNaranja" parent="Theme.AppCompat.Light">
-        <item name="colorControlNormal">#f1bf96</item>
-        <item name="colorControlActivated">#ef9712</item>
-        <item name="android:textColorHighlight">#f4deaf</item>
+        <item name="colorControlNormal">#50e263</item>
+        <item name="colorControlActivated">#0bd726</item>
+        <item name="android:textColorHighlight">#86ed93</item>
     </style>
 
     <style name="ColorBoton" parent="Theme.AppCompat.Light">
-        <item name="colorControlHighlight">#55bdd7</item>#55bdd7
-        <item name="colorButtonNormal">#84dde9</item>
+        <item name="colorControlHighlight">#86ed93</item>
+        <item name="colorButtonNormal">#0bd726</item>
     </style>
 
+    <style name="ColorBotonDialog" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">#edb355</item>
+    </style>
 
 </resources>
