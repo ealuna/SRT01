@@ -2,7 +2,11 @@ package com.example.rusbellgutierrez.proyecto_oriunda;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.inputmethodservice.KeyboardView;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.support.v7.app.AppCompatDialogFragment;
+import android.support.v4.app.DialogFragment;
 
 
 public class CuerpoActivity extends AppCompatActivity {
@@ -38,6 +43,7 @@ public class CuerpoActivity extends AppCompatActivity {
     //AlertDialog alerta;
     Dialogo_Alerta alerta;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +54,9 @@ public class CuerpoActivity extends AppCompatActivity {
         nav =(NavigationView)findViewById(R.id.nav);
         //toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //color al title
+        toolbar.setTitleTextColor(Color.WHITE);
+        //soporte para toolbar
         setSupportActionBar(toolbar);
         //muestra el nombre de la apliación
         getSupportActionBar().setDisplayShowTitleEnabled(true);
@@ -61,7 +70,7 @@ public class CuerpoActivity extends AppCompatActivity {
 
                 //Toast.makeText(getApplicationContext(),"presiono",Toast.LENGTH_SHORT).show();
                 //revisar llamado
-                alerta.show(getFragmentManager(),"mensaje");
+                new Dialogo_Alerta().show(getSupportFragmentManager(), "SimpleDialog");
             }
         });
     }
