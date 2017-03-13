@@ -5,11 +5,11 @@
                 <item
                     android:id="@+id/menu_seccion_1"
                     android:icon="@drawable/account"
-                    android:title="seccion_1"/>
+                    android:title="Fragment1"/>
                 <item
                     android:id="@+id/menu_seccion_2"
                     android:icon="@drawable/account"
-                    android:title="seccion_2"/>
+                    android:title="Fragment2"/>
                 <item
                     android:id="@+id/menu_seccion_3"
                     android:icon="@drawable/account"
