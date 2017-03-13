@@ -51,7 +51,7 @@ public class AccesoActivity extends AppCompatActivity {
     JSONArray ja;
     //JSON object para obtener los datos del sql server
     JSONObject array_json;
-
+//prueba
     //declaraciones para la animacion
     AlphaAnimation inAnimation;
     AlphaAnimation outAnimation;
