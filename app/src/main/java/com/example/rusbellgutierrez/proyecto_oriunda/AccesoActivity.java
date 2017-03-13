@@ -133,7 +133,7 @@ public class AccesoActivity extends AppCompatActivity {
     }
 
     public void Progreso_Post(){
-
+    //HOLA GIT
         //experimental-->simulando metodo OnPostExecute
                 outAnimation = new AlphaAnimation(1f, 0f);
                 outAnimation.setDuration(200);
