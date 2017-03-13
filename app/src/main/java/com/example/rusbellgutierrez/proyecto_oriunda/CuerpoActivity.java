@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.inputmethodservice.KeyboardView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
@@ -73,7 +74,49 @@ public class CuerpoActivity extends AppCompatActivity {
                 new Dialogo_Alerta().show(getSupportFragmentManager(), "SimpleDialog");
             }
         });
+
+        //redirige a los fragmente, lógica para toda la funcionalidad
+        nav.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+
+                        boolean fragmentTransaction = false;
+                        Fragment fragment = null;
+
+                        switch (menuItem.getItemId()) {
+                            case R.id.menu_seccion_1:
+                                fragment = new Fragment1();
+                                fragmentTransaction = true;
+                                break;
+                            case R.id.menu_seccion_2:
+                                fragment = new Fragment2();
+                                fragmentTransaction = true;
+                                break;
+                            case R.id.menu_opcion_1:
+                                Log.i("NavigationView", "Pulsada opción 1");
+                                break;
+                            case R.id.menu_opcion_2:
+                                Log.i("NavigationView", "Pulsada opción 2");
+                                break;
+                        }
+
+                        if(fragmentTransaction) {
+                            getSupportFragmentManager().beginTransaction()
+                                    .replace(R.id.content_frame, fragment)
+                                    .commit();
+
+                            menuItem.setChecked(true);
+                            getSupportActionBar().setTitle(menuItem.getTitle());
+                        }
+
+                        drawer.closeDrawers();
+
+                        return true;
+                    }
+                });
+
     }
 
-    //reconoce los botones dentro del actionbar
+
 }

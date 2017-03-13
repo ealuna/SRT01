@@ -5,29 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_height="40dp"
-            android:layout_width="match_parent"
-            android:minHeight="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:navigationIcon="@drawable/arrowleft"
-            tools:ignore="UnusedAttribute"/>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context=".CuerpoActivity">
-
-
-        </RelativeLayout>
-
-    </LinearLayout>
+    <!--llamaremos al activity que contendra los fragment
+    porque replicar el código del navigation satura memoria-->
+    <include layout="@layout/activity_contenedor"/>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav"
