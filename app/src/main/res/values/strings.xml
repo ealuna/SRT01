@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Proyecto_Oriunda</string>
+    <string name="hint_codigo">Código de transportista</string>
+    <string name="hint_check">Recordar código</string>
+    <string name="hint_contra">Contraseña</string>
+    <string name="str_acceso">ACCESO</string>
 </resources>
