@@ -15,11 +15,6 @@
         app:navigationIcon="@drawable/account_remove"
         tools:ignore="UnusedAttribute"/>
 
-    <!--mostraremos una ventana de inicio
-    <include layout="@layout/activity_inicio" />-->
-
-
-
     <!-- Aca cambiaran entre los diferentes fragment -->
 
     <FrameLayout
