@@ -58,6 +58,10 @@ public class AccesoActivity extends AppCompatActivity {
     //declaramos el framelayout
     FrameLayout progressBarHolder;
 
+    //URL para cada conexion
+    String url_pass_nom="http://10.0.2.2/ejemplologin/index.php?codigo=";
+    String url_nombre="http://192.168.1.153/consqlsvr/index2.php?codigo=";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,11 +112,10 @@ public class AccesoActivity extends AppCompatActivity {
                    //aca se inicia la URL para conectar con el JSON
 
                 //la dirección 10.0.3.2 hace referencia al emulador de genymotion, puede variar
-                ConsultaPass("http://10.0.3.2/ejemplologin/consultarusuario.php?codigo="+codigo.getText().toString());
+                //ConsultaPass("http://10.0.3.2/ejemplologin/consultarusuario.php?codigo="+codigo.getText().toString());
 
                 //configuracion para emulador android, modificar conexion remota
-                //ConsultaPass("http://10.0.2.2/consqlsvr/index.php?codigo="+codigo.getText().toString());
-
+                Consulta(url_pass_nom+codigo.getText().toString());
                 //configuracion para emulador android, CONEXION REMOTA
                 //ConsultaPass("http://10.0.2.2/ejemplologin/conectar_sql.php?codigo="+codigo.getText().toString());
             }
@@ -143,33 +146,38 @@ public class AccesoActivity extends AppCompatActivity {
                 //termina metodo OnPostExecute
     }
 
-    public void ConsultaPass(String URL) {
+    public void Consulta(String URL) {
 
         Log.i("url",""+URL);
+        //Log.i("url",""+URL_Nom);
 
         Progreso_Pre();
 
         //solicitud volley para realizar un get, cola de peticiones
         RequestQueue queue = Volley.newRequestQueue(this);
-        StringRequest stringRequest =  new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+
+        //peticion para obtener la contraseña del usuario
+        StringRequest requestDatos =  new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
                 try {//error no se puede convertir string a JSON array
 
                     //declarando array JSON para mysql
-                    ja = new JSONArray(response);
-                    String contra = ja.getString(0);
+                    //ja = new JSONArray(response);
+                    //String contra = ja.getString(0);
 
                     //declarando objeto JSON para sql server
-                    //array_json = new JSONObject(response);
+                    array_json = new JSONObject(response);
                     //se agrego el campo .get().toString() para poder obtener el json de sql server
-                    //String contra = array_json.get("0").toString();
+                    String contra = array_json.get("0").toString();
+                    String nombre = array_json.get("1").toString();
 
                     if(contra.equals(contraseña.getText().toString())){
 
                         Toast.makeText(getApplicationContext(),"Bienvenido",Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(AccesoActivity.this, CuerpoActivity.class);
+                        intent.putExtra("nombre",nombre);
                         startActivity(intent);
                         finish();
 
@@ -203,7 +211,52 @@ public class AccesoActivity extends AppCompatActivity {
             }
         });
 
+
+       /* //Este stringRequest obtiene el nombre del usuario, falta tratar los datos obtenidos (eliminar espacios en blanco, codigos, etc)
+        StringRequest requestNom =  new StringRequest(Request.Method.GET, URL_Nom, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {//error no se puede convertir string a JSON array
+
+                    //declarando array JSON para mysql
+                    //ja = new JSONArray(response);
+                    //String contra = ja.getString(0);
+
+                    //declarando objeto JSON para sql server
+                    aj_nom = new JSONObject(response);
+                    //se agrego el campo .get().toString() para poder obtener el json de sql server
+                    String nombre = aj_nom.get("0").toString();
+
+                    Intent datos = new Intent (AccesoActivity.this, CuerpoActivity.class);
+                    datos.putExtra("nombre", nombre);
+                    startActivity(datos);
+
+                        Progreso_Post();
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+
+                    Progreso_Post();
+
+                    Toast.makeText(getApplicationContext(),"El código no existe en la base de datos",Toast.LENGTH_LONG).show();
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Progreso_Post();
+
+                Toast.makeText(getApplicationContext(),"Error al validar datos",Toast.LENGTH_LONG).show();
+            }
+        });
+
         //de esta forma, se agrega una peticion a la cola de peticiones
-        queue.add(stringRequest);
+        queue.add(requestNom);*/
+        queue.add(requestDatos);
     }
 }

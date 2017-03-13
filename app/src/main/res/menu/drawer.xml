@@ -4,30 +4,38 @@
         <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/menu_seccion_1"
-                    android:icon="@drawable/account"
-                    android:title="Fragment1"/>
+                    android:icon="@drawable/home"
+                    android:title="Inicio"/>
                 <item
                     android:id="@+id/menu_seccion_2"
-                    android:icon="@drawable/account"
-                    android:title="Fragment2"/>
+                    android:icon="@drawable/truck"
+                    android:title="Ruta"/>
                 <item
                     android:id="@+id/menu_seccion_3"
-                    android:icon="@drawable/account"
-                    android:title="seccion_3"/>
+                    android:icon="@drawable/cart"
+                    android:title="Clientes"/>
+                <item
+                    android:id="@+id/menu_seccion_4"
+                    android:icon="@drawable/clipboard_text"
+                    android:title="Documentos"/>
+                <item
+                    android:id="@+id/menu_seccion_5"
+                    android:icon="@drawable/product"
+                    android:title="Productos"/>
         </group>
 
         <item
             android:id="@+id/navigation_subheader"
-            android:title="otras_opciones">
+            android:title="Usuario">
                 <menu>
                         <item
                             android:id="@+id/menu_opcion_1"
-                            android:icon="@drawable/account"
-                            android:title="opcion_1"/>
+                            android:icon="@drawable/account_details"
+                            android:title="Perfil"/>
                         <item
                             android:id="@+id/menu_opcion_2"
-                            android:icon="@drawable/account"
-                            android:title="opcion_2"/>
+                            android:icon="@drawable/power"
+                            android:title="Cerrar Sesión"/>
                 </menu>
         </item>
 
