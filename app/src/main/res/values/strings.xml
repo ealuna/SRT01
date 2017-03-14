@@ -4,4 +4,6 @@
     <string name="hint_check">Recordar código</string>
     <string name="hint_contra">Contraseña</string>
     <string name="str_acceso">ACCESO</string>
+    <string name="drawer_open">drawer open</string>
+    <string name="drawer_close">drawer close</string>
 </resources>

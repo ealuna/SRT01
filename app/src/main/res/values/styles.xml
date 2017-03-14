@@ -34,5 +34,4 @@
     <style name="ColorBotonDialog" parent="Theme.AppCompat.Light">
         <item name="colorControlHighlight">#edb355</item>
     </style>
-
 </resources>

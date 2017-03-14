@@ -12,7 +12,6 @@
         android:layout_width="match_parent"
         android:minHeight="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
-        app:navigationIcon="@drawable/account_remove"
         tools:ignore="UnusedAttribute"/>
 
     <!-- Aca cambiaran entre los diferentes fragment -->
@@ -23,7 +22,7 @@
     android:layout_height="match_parent">
 
         <!--mostraremos una ventana de inicio-->
-    <include layout="@layout/activity_inicio" />
+    <include layout="@layout/fragment_inicio" />
 
     </FrameLayout>
 
