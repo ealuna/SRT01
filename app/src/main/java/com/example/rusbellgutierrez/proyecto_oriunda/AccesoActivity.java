@@ -58,9 +58,8 @@ public class AccesoActivity extends AppCompatActivity {
     //declaramos el framelayout
     FrameLayout progressBarHolder;
 
-    //URL para cada conexion
+    //URL para conexion
     String url_pass_nom="http://10.0.2.2/ejemplologin/index.php?codigo=";
-    String url_nombre="http://192.168.1.153/consqlsvr/index2.php?codigo=";
 
 
     @Override

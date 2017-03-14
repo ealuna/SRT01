@@ -7,7 +7,7 @@
         android:id="@+id/imageView3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srcCompat="@color/colorPrimary" />
+        android:background="#e9aa17" />
 
     <TextView
         android:id="@+id/textView2"
@@ -15,6 +15,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textSize="30dp"
-        android:text="FragmentCarga" />
+        android:text="FragmentInicio" />
 
 </FrameLayout>

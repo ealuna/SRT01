@@ -1,41 +1,21 @@
 package com.example.rusbellgutierrez.proyecto_oriunda;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.inputmethodservice.KeyboardView;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
-import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
-import android.support.v7.widget.ToolbarWidgetWrapper;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.support.v7.app.AppCompatDialogFragment;
-import android.support.v4.app.DialogFragment;
 
 
 public class CuerpoActivity extends AppCompatActivity {
@@ -117,30 +97,31 @@ public class CuerpoActivity extends AppCompatActivity {
                         Fragment fragment = null;
 
                         switch (menuItem.getItemId()) {
-                            case R.id.menu_seccion_1:
-                                fragment = new Fragment1();
+                            case R.id.inicio:
+                                fragment = new FragmentInicio();
                                 fragmentTransaction = true;
                                 break;
-                            case R.id.menu_seccion_2:
-                                fragment = new Fragment2();
+                            case R.id.ruta:
+                                fragment = new FragmentRuta();
                                 fragmentTransaction = true;
                                 break;
-                            case R.id.menu_seccion_3:
-                                fragment = new Fragment2();
+                            case R.id.cliente:
+                                fragment = new FragmentCliente();
                                 fragmentTransaction = true;
                                 break;
-                            case R.id.menu_seccion_4:
-                                fragment = new Fragment2();
+                            case R.id.documento:
+                                fragment = new FragmentDocumento();
                                 fragmentTransaction = true;
                                 break;
-                            case R.id.menu_seccion_5:
-                                fragment = new Fragment2();
+                            case R.id.producto:
+                                fragment = new FragmentProducto();
                                 fragmentTransaction = true;
                                 break;
-                            case R.id.menu_opcion_1:
-                                Log.i("NavigationView", "Pulsada opción 1");
+                            case R.id.perfil:
+                                fragment = new FragmentPerfil();
+                                fragmentTransaction = true;
                                 break;
-                            case R.id.menu_opcion_2:
+                            case R.id.sesion:
                                 new Dialogo_Alerta().show(getSupportFragmentManager(), "SimpleDialog");
                                 break;
                         }

@@ -6,9 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class Fragment2 extends Fragment {
+/**
+ * Created by Rusbell Gutierrez on 14/03/2017.
+ */
 
-    public Fragment2() {
+public class FragmentProducto extends Fragment {
+
+    public FragmentProducto() {
         // Required empty public constructor
     }
 
@@ -16,6 +20,6 @@ public class Fragment2 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment2, container, false);
+        return inflater.inflate(R.layout.fragment_producto, container, false);
     }
 }

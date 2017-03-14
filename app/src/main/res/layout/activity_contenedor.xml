@@ -22,7 +22,7 @@
     android:layout_height="match_parent">
 
         <!--mostraremos una ventana de inicio-->
-    <include layout="@layout/fragment_carga" />
+    <include layout="@layout/fragment_inicio" />
 
     </FrameLayout>
 
