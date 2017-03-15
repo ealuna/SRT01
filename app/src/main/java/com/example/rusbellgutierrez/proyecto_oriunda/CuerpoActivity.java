@@ -143,8 +143,8 @@ public class CuerpoActivity extends AppCompatActivity {
 
     }
 
-    //permite retroceder entre fragments
-    @Override
+    //permite retroceder entre fragments, revisar el comando despues
+    /*@Override
     public void onBackPressed() {
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -152,7 +152,7 @@ public class CuerpoActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
-    }
+    }*/
 
 
 
