@@ -37,6 +37,8 @@ import org.json.JSONObject;
 
 public class AccesoActivity extends AppCompatActivity {
 
+    Transportista nom;
+
     Button boton_acceso;
     ImageView logo;
     CheckBox recordar;
@@ -59,7 +61,11 @@ public class AccesoActivity extends AppCompatActivity {
     FrameLayout progressBarHolder;
 
     //URL para conexion
-    String url_pass_nom="http://10.0.2.2/ejemplologin/index.php?codigo=";
+    String ip="192.168.1.176:80";
+    String ip_geny="10.0.3.2";
+    String ip_android="10.0.2.2";
+    //String url_pass_nom="http://10.0.2.2/ejemplologin/index.php?codigo=";
+    String url_pass_nom="http://"+ip_android+"/ejemplologin/index.php?codigo=";
 
 
     @Override
@@ -166,17 +172,19 @@ public class AccesoActivity extends AppCompatActivity {
                     //ja = new JSONArray(response);
                     //String contra = ja.getString(0);
 
+                    nom = new Transportista();
+
                     //declarando objeto JSON para sql server
                     array_json = new JSONObject(response);
                     //se agrego el campo .get().toString() para poder obtener el json de sql server
                     String contra = array_json.get("0").toString();
-                    String nombre = array_json.get("1").toString();
+                    nom.setNom_transp(array_json.get("1").toString());
 
                     if(contra.equals(contraseña.getText().toString())){
 
                         Toast.makeText(getApplicationContext(),"Bienvenido",Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(AccesoActivity.this, CuerpoActivity.class);
-                        intent.putExtra("nombre",nombre);
+                        intent.putExtra("nombre",nom.getNom_transp());
                         startActivity(intent);
                         finish();
 
