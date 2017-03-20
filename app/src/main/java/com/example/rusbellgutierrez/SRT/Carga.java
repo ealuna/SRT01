@@ -1,4 +1,4 @@
-package com.example.rusbellgutierrez.proyecto_oriunda;
+package com.example.rusbellgutierrez.SRT;
 
 import java.util.Date;
 
@@ -13,6 +13,14 @@ public class Carga {
     private String almacen;
     private int cantidad;
     private Date fecha;
+
+    public Carga(int idtransportista, int idarticulo, String almacen, int cantidad, Date fecha) {
+        this.idtransportista = idtransportista;
+        this.idarticulo = idarticulo;
+        this.almacen = almacen;
+        this.cantidad = cantidad;
+        this.fecha = fecha;
+    }
 
     public int getIdtransportista() {
         return idtransportista;

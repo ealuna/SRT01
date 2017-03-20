@@ -4,26 +4,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:weightSum="1">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_height="40dp"
         android:layout_width="match_parent"
-        android:minHeight="?attr/actionBarSize"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
         android:background="?attr/colorPrimary"
-        tools:ignore="UnusedAttribute"/>
+        android:gravity="center"
+        android:minHeight="?attr/actionBarSize"
+        tools:ignore="UnusedAttribute" />
 
-    <!-- Aca cambiaran entre los diferentes fragment -->
+    <!--el scrollview permite ver la vista completamente, debe contener un layout obligatoriamente-->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <FrameLayout
-    android:id="@+id/content_frame"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <!--mostraremos una ventana de inicio-->
-    <include layout="@layout/fragment_inicio" />
+            <!-- Aca cambiaran entre los diferentes fragment -->
+            <FrameLayout
+                android:id="@+id/content_frame"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-    </FrameLayout>
+                <!--mostraremos una ventana de inicio-->
+                <include
+                    layout="@layout/fragment_inicio"
+                    android:layout_width="320dp"
+                    android:layout_height="460dp" />
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
 
 </LinearLayout>

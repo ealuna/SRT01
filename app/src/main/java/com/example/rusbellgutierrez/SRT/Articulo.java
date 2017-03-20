@@ -1,4 +1,4 @@
-package com.example.rusbellgutierrez.proyecto_oriunda;
+package com.example.rusbellgutierrez.SRT;
 
 /**
  * Created by Rusbell Gutierrez on 17/03/2017.
@@ -9,6 +9,12 @@ public class Articulo {
     private int idarticulo;
     private String nombre;
     private int cod_barra;
+
+    public Articulo(int idarticulo, String nombre, int cod_barra) {
+        this.idarticulo = idarticulo;
+        this.nombre = nombre;
+        this.cod_barra = cod_barra;
+    }
 
     public int getIdarticulo() {
         return idarticulo;

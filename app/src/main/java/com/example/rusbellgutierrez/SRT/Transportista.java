@@ -1,4 +1,4 @@
-package com.example.rusbellgutierrez.proyecto_oriunda;
+package com.example.rusbellgutierrez.SRT;
 
 /**
  * Created by Rusbell Gutierrez on 17/03/2017.
@@ -10,6 +10,13 @@ public class Transportista {
     private String nom_transp;
     private int cel_transp;
     private String placa;
+
+    public Transportista(int idtransportista, String nom_transp, int cel_transp, String placa) {
+        this.idtransportista = idtransportista;
+        this.nom_transp = nom_transp;
+        this.cel_transp = cel_transp;
+        this.placa = placa;
+    }
 
     public int getIdtransportista() {
         return idtransportista;

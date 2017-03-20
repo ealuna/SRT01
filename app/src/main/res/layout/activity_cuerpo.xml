@@ -13,7 +13,8 @@
         android:id="@+id/nav"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
+        android:layout_marginBottom="5dp"
+        android:layout_gravity="left"
         android:scrollbarThumbVertical="@drawable/scroll_bar"
         app:headerLayout="@layout/header_layout"
         app:menu="@menu/drawer"/>

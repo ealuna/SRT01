@@ -1,4 +1,4 @@
-package com.example.rusbellgutierrez.proyecto_oriunda;
+package com.example.rusbellgutierrez.SRT;
 
 import org.junit.Test;
 

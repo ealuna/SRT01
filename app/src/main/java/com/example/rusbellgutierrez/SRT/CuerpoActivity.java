@@ -1,24 +1,27 @@
-package com.example.rusbellgutierrez.proyecto_oriunda;
+package com.example.rusbellgutierrez.SRT;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 
-public class CuerpoActivity extends AppCompatActivity {
+public class CuerpoActivity extends AppCompatActivity implements FragmentIterationListener{
 
     //elementos para crear un drawer layout
     ListView lista_drawer;
@@ -28,6 +31,8 @@ public class CuerpoActivity extends AppCompatActivity {
     Toolbar toolbar;
     //boton del toolbar
     ActionBarDrawerToggle drawerToggle;
+
+    public FragmentIterationListener mCallback=null;
 
 
     @Override
@@ -52,7 +57,7 @@ public class CuerpoActivity extends AppCompatActivity {
         //toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         //color al title
-        toolbar.setTitleTextColor(Color.WHITE);
+        toolbar.setTitleTextColor(Color.BLACK);
         //soporte para toolbar
         setSupportActionBar(toolbar);
         //muestra el nombre de la apliación
@@ -71,17 +76,10 @@ public class CuerpoActivity extends AppCompatActivity {
             }
         });*/
 
-        //cambiar color al drawerbutton
-        final Drawable backArrow = getResources().getDrawable(R.drawable.menu);
-        backArrow.setColorFilter(getResources().getColor(R.color.color_appbar), PorterDuff.Mode.SRC_ATOP);
-        getSupportActionBar().setHomeAsUpIndicator(backArrow);
-
         //Aplicar el boton para desplegar el drawer
-        drawerToggle = new ActionBarDrawerToggle(
-                this,  drawer, toolbar,
-                R.string.drawer_open, R.string.drawer_close
-        );
+        drawerToggle = new ActionBarDrawerToggle(this,  drawer, toolbar,R.string.drawer_open, R.string.drawer_close);
         drawer.addDrawerListener(drawerToggle);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setIcon(R.drawable.truck_fast);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -129,6 +127,7 @@ public class CuerpoActivity extends AppCompatActivity {
                         if(fragmentTransaction) {
                             getSupportFragmentManager().beginTransaction()
                                     .replace(R.id.content_frame, fragment)
+        /*permite retroceder*/      .addToBackStack(null)
                                     .commit();
 
                             menuItem.setChecked(true);
@@ -143,17 +142,33 @@ public class CuerpoActivity extends AppCompatActivity {
 
     }
 
-    //permite retroceder entre fragments, revisar el comando despues
-    /*@Override
-    public void onBackPressed() {
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
+    /*public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        //retrieve scan result
+        IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+
+        if (scanningResult != null) {
+            //we have a result
+            String scanContent = scanningResult.getContents();
+            String scanFormat = scanningResult.getFormatName();
+
+            Bundle ob_bundle= new Bundle();
+            ob_bundle.putString("contenido",scanContent);
+            ob_bundle.putString("formato",scanFormat);
+            mCallback.onFragmentIteration(ob_bundle);
+            Intent i =new Intent(this,FragmentProducto.class);
+            startActivity(i);
+        }
+        else{
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    "No scan data received!", Toast.LENGTH_SHORT);
+            toast.show();
         }
     }*/
 
 
 
+    @Override
+    public void onFragmentIteration(Bundle parameters) {
+
+    }
 }

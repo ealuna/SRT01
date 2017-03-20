@@ -1,4 +1,4 @@
-package com.example.rusbellgutierrez.proyecto_oriunda;
+package com.example.rusbellgutierrez.SRT;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,9 +10,9 @@ import android.view.ViewGroup;
  * Created by Rusbell Gutierrez on 14/03/2017.
  */
 
-public class FragmentDocumento extends Fragment {
+public class FragmentCliente extends Fragment{
 
-    public FragmentDocumento() {
+    public FragmentCliente() {
         // Required empty public constructor
     }
 
@@ -20,6 +20,6 @@ public class FragmentDocumento extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_documento, container, false);
+        return inflater.inflate(R.layout.fragment_cliente, container, false);
     }
 }

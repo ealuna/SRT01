@@ -1,4 +1,4 @@
-package com.example.rusbellgutierrez.proyecto_oriunda;
+package com.example.rusbellgutierrez.SRT;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -6,13 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * Created by Rusbell Gutierrez on 14/03/2017.
- */
+public class FragmentInicio extends Fragment {
 
-public class FragmentPerfil extends Fragment{
+    //simple texto de etiqueta
+    public static final String TAG= "FragmentInicio";
 
-    public FragmentPerfil() {
+    public FragmentInicio() {
         // Required empty public constructor
     }
 
@@ -20,6 +19,12 @@ public class FragmentPerfil extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_perfil, container, false);
+        return inflater.inflate(R.layout.fragment_inicio, container, false);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
     }
 }

@@ -31,6 +31,16 @@
         <item name="colorButtonNormal">#0bd726</item>
     </style>
 
+    <style name="ColorBoton3" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">#ec86d4</item>
+        <item name="colorButtonNormal">#d70ba7</item>
+    </style>
+
+    <style name="ColorBoton2" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">#85ceed</item>
+        <item name="colorButtonNormal">#0b9ad7</item>
+    </style>
+
     <style name="ColorBotonDialog" parent="Theme.AppCompat.Light">
         <item name="colorControlHighlight">#edb355</item>
     </style>

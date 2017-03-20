@@ -1,15 +1,11 @@
-package com.example.rusbellgutierrez.proyecto_oriunda;
+package com.example.rusbellgutierrez.SRT;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.design.widget.NavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
-import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.CardView;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -18,9 +14,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -65,7 +59,10 @@ public class AccesoActivity extends AppCompatActivity {
     String ip_geny="10.0.3.2";
     String ip_android="10.0.2.2";
     //String url_pass_nom="http://10.0.2.2/ejemplologin/index.php?codigo=";
-    String url_pass_nom="http://"+ip_android+"/ejemplologin/index.php?codigo=";
+    //String url_pass_nom="http://"+ip_geny+"/ejemplologin/index.php?codigo=";
+
+    //para mysql
+    String url_pass_nom="http://"+ip_geny+"/ejemplologin/consultarusuario.php?codigo=";
 
 
     @Override
@@ -169,16 +166,16 @@ public class AccesoActivity extends AppCompatActivity {
                 try {//error no se puede convertir string a JSON array
 
                     //declarando array JSON para mysql
-                    //ja = new JSONArray(response);
-                    //String contra = ja.getString(0);
+                    ja = new JSONArray(response);
+                    String contra = ja.getString(0);
 
-                    nom = new Transportista();
+                    nom = new Transportista(100,"Jose Perez",986861992,"A123");
 
                     //declarando objeto JSON para sql server
-                    array_json = new JSONObject(response);
+                    //array_json = new JSONObject(response);
                     //se agrego el campo .get().toString() para poder obtener el json de sql server
-                    String contra = array_json.get("0").toString();
-                    nom.setNom_transp(array_json.get("1").toString());
+                    //String contra = array_json.get("0").toString();
+                    //nom.setNom_transp(array_json.get("1").toString());
 
                     if(contra.equals(contraseña.getText().toString())){
 

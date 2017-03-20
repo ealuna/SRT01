@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.rusbellgutierrez.proyecto_oriunda">
+    package="com.example.rusbellgutierrez.SRT">
     <uses-permission android:name="android.permission.INTERNET"/>
     <supports-screens android:resizeable="true"
     android:smallScreens="false"
@@ -18,7 +18,7 @@
         android:label="S.R.T"
         android:supportsRtl="true">
 
-        <activity android:name=".AccesoActivity"
+        <activity android:name="com.example.rusbellgutierrez.SRT.AccesoActivity"
             android:theme="@style/Sin_Bar"
             android:windowSoftInputMode="stateHidden"
             >
@@ -33,7 +33,7 @@
 
         <activity
 
-            android:name=".CuerpoActivity"
+            android:name="com.example.rusbellgutierrez.SRT.CuerpoActivity"
             android:theme="@style/Sin_Bar">
 
             <intent-filter>
