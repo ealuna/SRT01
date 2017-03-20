@@ -11,12 +11,12 @@ public class Transportista {
     private int cel_transp;
     private String placa;
 
-    public Transportista(int idtransportista, String nom_transp, int cel_transp, String placa) {
+    /*public Transportista(int idtransportista, String nom_transp, int cel_transp, String placa) {
         this.idtransportista = idtransportista;
         this.nom_transp = nom_transp;
         this.cel_transp = cel_transp;
         this.placa = placa;
-    }
+    }*/
 
     public int getIdtransportista() {
         return idtransportista;

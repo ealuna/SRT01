@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.zxing.Result;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -47,7 +48,8 @@ public class FragmentProducto extends Fragment implements FragmentIterationListe
     public void onAttach(Context context) {
         super.onAttach(context);
         try{
-            mCallback = (FragmentIterationListener) context;
+            //revisar el attach, original mCallback = (FragmentIterarionListener) context;
+            mCallback = (CuerpoActivity) context;
         }catch(Exception e){
             Log.e("ExampleFragment", "El Activity debe implementar la interfaz FragmentIterationListener");
         }
@@ -117,6 +119,8 @@ public class FragmentProducto extends Fragment implements FragmentIterationListe
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode,resultCode,intent);
+
+
 
         startActivityForResult(intent,requestCode);
 
