@@ -3,6 +3,7 @@ package com.example.rusbellgutierrez.SRT;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -30,8 +31,6 @@ import org.json.JSONObject;
 
 
 public class Activity_Acceso extends AppCompatActivity {
-
-    Clase_Transportista nom = new Clase_Transportista();
 
     Button boton_acceso;
     ImageView logo;
@@ -172,7 +171,8 @@ public class Activity_Acceso extends AppCompatActivity {
                     ja = new JSONArray(response);
                     String contra = ja.getString(0);
                     //PARA MYSQL
-                    nom.setNom_transp("Lucho");
+                    Clase_Transportista nom=new Clase_Transportista(100,"Lucho",123456789,"A123");
+                    //nom.setNom_transp("Lucho");
 
                     /*INICIA
                     //declarando objeto JSON para sql server
@@ -219,10 +219,8 @@ public class Activity_Acceso extends AppCompatActivity {
                 Progreso_Post();
 
                 System.out.print(error);
-                Toast.makeText(getApplicationContext(),"Error al validar datos "+nom.getNom_transp()+" y "+contra.getBytes().toString(),Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Error al validar datos ",Toast.LENGTH_SHORT).show();
 
-                Log.v("nombre",nom.getNom_transp());
-                Log.v("contra",contra.getBytes().toString());
             }
         });
 

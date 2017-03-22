@@ -129,8 +129,6 @@ public class Activity_Central extends AppCompatActivity implements Interface_Fra
 
     }
 
-
-
     //FUNCION QUE RECIBIRA DATOS DEL SCAN
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode,resultCode,intent);
@@ -151,16 +149,11 @@ public class Activity_Central extends AppCompatActivity implements Interface_Fra
             bundle.putString("contenido", scanContent);//String.valueOf(art.getCod_barra())}
 
 
-
             if (bundle != null) {
 
-
+                //llamamos al metodo newInstance y le pasamos el bundle con datos
                 Fragment_Producto.newInstance(bundle);
                 Log.d("Fragment_Producto", "Tenemos data: "+bundle+", "+bundle.getString("contenido")+", "+bundle.getString("formato"));
-
-                //codigo que puede corregir el problema
-
-
 
             } else {
                 Log.d("Fragment_Producto", "No hay data");

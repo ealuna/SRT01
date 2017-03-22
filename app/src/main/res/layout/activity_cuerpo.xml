@@ -30,12 +30,12 @@
         <!--el scrollview permite ver la vista completamente, debe contener un layout obligatoriamente-->
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:scrollbars="vertical">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
                 <!-- Aca cambiaran entre los diferentes fragment -->
                 <FrameLayout
@@ -46,12 +46,12 @@
                     <!--mostraremos una ventana de inicio-->
                     <include
                         layout="@layout/fragment_inicio"
-                        android:layout_width="320dp"
+                        android:layout_width="match_parent"
                         android:layout_height="460dp" />
 
                 </FrameLayout>
 
-            </LinearLayout>
+            </RelativeLayout>
 
         </ScrollView>
 

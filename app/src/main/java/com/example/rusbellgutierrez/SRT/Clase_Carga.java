@@ -1,6 +1,10 @@
 package com.example.rusbellgutierrez.SRT;
 
+import android.content.ContentValues;
+
 import java.util.Date;
+
+import static com.example.rusbellgutierrez.SRT.SQL_Columnas.ArticuloEntry.*;
 
 /**
  * Created by Rusbell Gutierrez on 17/03/2017.
@@ -12,10 +16,14 @@ public class Clase_Carga {
     private int idarticulo;
     private String almacen;
     private int cantidad;
-    private Date fecha;
+    private String fecha;
 
-    public Clase_Carga() {
-
+    public Clase_Carga(int idtransportista, int idarticulo, String almacen, int cantidad, String fecha) {
+        this.idtransportista = idtransportista;
+        this.idarticulo = idarticulo;
+        this.almacen = almacen;
+        this.cantidad = cantidad;
+        this.fecha = fecha;
     }
 
     public int getIdtransportista() {
@@ -50,11 +58,24 @@ public class Clase_Carga {
         this.cantidad = cantidad;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
+    }
+
+    /*PARES DE CLAVE-VALOR*/
+    public ContentValues toContentValues() {
+        //contenedor de valores para carga
+        ContentValues val= new ContentValues();
+        //en el put, el primer valor es la etiqueta, el segundo el tipo
+        val.put(SQL_Columnas.CargaEntry.idtransportista,idtransportista);
+        val.put(SQL_Columnas.CargaEntry.idarticulo,idarticulo);
+        val.put(SQL_Columnas.CargaEntry.almacen,almacen);
+        val.put(SQL_Columnas.CargaEntry.cantidad,cantidad);
+        val.put(SQL_Columnas.CargaEntry.fecha,fecha);
+        return val;
     }
 }
