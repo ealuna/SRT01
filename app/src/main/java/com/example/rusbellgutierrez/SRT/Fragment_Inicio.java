@@ -6,12 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class FragmentInicio extends Fragment {
+public class Fragment_Inicio extends Fragment {
 
     //simple texto de etiqueta
-    public static final String TAG= "FragmentInicio";
+    public static final String TAG= "Fragment_Inicio";
 
-    public FragmentInicio() {
+    public Fragment_Inicio() {
         // Required empty public constructor
     }
 

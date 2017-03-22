@@ -35,7 +35,7 @@ public class Dialogo_Alerta extends DialogFragment {
             LayoutInflater inflater = getActivity().getLayoutInflater();
 
             //se infla el dialog con el layout creado
-            View v = inflater.inflate(R.layout.cuerpo_dialog, null);
+            View v = inflater.inflate(R.layout.dialog_customize, null);
             //le enviamos el view al builder del dialog
             builder.setView(v);
 
@@ -57,7 +57,7 @@ public class Dialogo_Alerta extends DialogFragment {
                         @Override
                         public void onClick(View v) {
                             // Sale del sistema
-                            Intent inicio=new Intent(getActivity(),AccesoActivity.class);
+                            Intent inicio=new Intent(getActivity(),Activity_Acceso.class);
                             //limpia el intent para no regresar con back
                             startActivity(inicio);
                             System.exit(0);

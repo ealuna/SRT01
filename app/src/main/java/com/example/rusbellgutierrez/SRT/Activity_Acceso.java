@@ -29,9 +29,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class AccesoActivity extends AppCompatActivity {
+public class Activity_Acceso extends AppCompatActivity {
 
-    Transportista nom;
+    Clase_Transportista nom = new Clase_Transportista();
 
     Button boton_acceso;
     ImageView logo;
@@ -55,16 +55,17 @@ public class AccesoActivity extends AppCompatActivity {
     FrameLayout progressBarHolder;
 
     //URL para conexion
-    String ip="192.168.1.233:80";
+    String ip_trabajo="192.168.1.233:80";
+    String ip_casa="192.168.0.101:80";
     String ip_geny="10.0.3.2";
     String ip_android="10.0.2.2";
 
-    String url_pass_nom="http://"+ip+"/ejemplologin/index.php?codigo=";
+    //String url_pass_nom="http://"+ip+"/ejemplologin/index.php?codigo=";
 
     //String url_pass_nom="http://"+ip+"/ejemplologin/index.php?codigo=";
 
     //para mysql
-    //String url_pass_nom="http://"+ip_geny+"/ejemplologin/consultarusuario.php?codigo=";
+    String url_pass_nom="http://"+ip_casa+"/ejemplologin/consultarusuario.php?codigo=";
 
 
     @Override
@@ -168,26 +169,25 @@ public class AccesoActivity extends AppCompatActivity {
                 try {//error no se puede convertir string a JSON array
 
                     //declarando array JSON para mysql
-                    //ja = new JSONArray(response);
-                    //String contra = ja.getString(0);
+                    ja = new JSONArray(response);
+                    String contra = ja.getString(0);
+                    //PARA MYSQL
+                    nom.setNom_transp("Lucho");
 
-                    //nom = new Transportista(100,"Jose Perez",986861992,"A123");
-
-                    //revisar el metodo constructor para obtener datos, no debe ser null
-                    nom = new Transportista();
-
+                    /*INICIA
                     //declarando objeto JSON para sql server
                     array_json = new JSONObject(response);
                     //se agrego el campo .get().toString() para poder obtener el json de sql server
                     contra = array_json.get("0").toString();
                     nom.setNom_transp(array_json.get("1").toString());
+                    TERMINA*/
 
 
 
                     if(contra.equals(contraseña.getText().toString())){
 
                         Toast.makeText(getApplicationContext(),"Bienvenido",Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(AccesoActivity.this, CuerpoActivity.class);
+                        Intent intent = new Intent(Activity_Acceso.this, Activity_Central.class);
                         intent.putExtra("nombre",nom.getNom_transp());
                         startActivity(intent);
                         finish();
@@ -217,7 +217,8 @@ public class AccesoActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
 
                 Progreso_Post();
-System.out.print(error);
+
+                System.out.print(error);
                 Toast.makeText(getApplicationContext(),"Error al validar datos "+nom.getNom_transp()+" y "+contra.getBytes().toString(),Toast.LENGTH_LONG).show();
 
                 Log.v("nombre",nom.getNom_transp());
@@ -225,52 +226,6 @@ System.out.print(error);
             }
         });
 
-
-       /* //Este stringRequest obtiene el nombre del usuario, falta tratar los datos obtenidos (eliminar espacios en blanco, codigos, etc)
-        StringRequest requestNom =  new StringRequest(Request.Method.GET, URL_Nom, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                try {//error no se puede convertir string a JSON array
-
-                    //declarando array JSON para mysql
-                    //ja = new JSONArray(response);
-                    //String contra = ja.getString(0);
-
-                    //declarando objeto JSON para sql server
-                    aj_nom = new JSONObject(response);
-                    //se agrego el campo .get().toString() para poder obtener el json de sql server
-                    String nombre = aj_nom.get("0").toString();
-
-                    Intent datos = new Intent (AccesoActivity.this, CuerpoActivity.class);
-                    datos.putExtra("nombre", nombre);
-                    startActivity(datos);
-
-                        Progreso_Post();
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-
-                    Progreso_Post();
-
-                    Toast.makeText(getApplicationContext(),"El código no existe en la base de datos",Toast.LENGTH_LONG).show();
-                }
-
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-                Progreso_Post();
-
-                Toast.makeText(getApplicationContext(),"Error al validar datos",Toast.LENGTH_LONG).show();
-            }
-        });
-
-        //de esta forma, se agrega una peticion a la cola de peticiones
-        queue.add(requestNom);*/
         queue.add(requestDatos);
     }
 }

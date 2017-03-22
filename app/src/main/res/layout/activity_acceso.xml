@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    android:focusableInTouchMode="true"
-    tools:context="com.example.rusbellgutierrez.SRT.AccesoActivity">
+    tools:context="com.example.rusbellgutierrez.SRT.Activity_Acceso">
 
     <ImageView
         android:id="@+id/logo"

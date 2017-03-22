@@ -10,9 +10,9 @@ import android.view.ViewGroup;
  * Created by Rusbell Gutierrez on 14/03/2017.
  */
 
-public class FragmentCliente extends Fragment{
+public class Fragment_Perfil extends Fragment{
 
-    public FragmentCliente() {
+    public Fragment_Perfil() {
         // Required empty public constructor
     }
 
@@ -20,6 +20,6 @@ public class FragmentCliente extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cliente, container, false);
+        return inflater.inflate(R.layout.fragment_perfil, container, false);
     }
 }

@@ -6,7 +6,7 @@ import java.util.Date;
  * Created by Rusbell Gutierrez on 17/03/2017.
  */
 
-public class Carga {
+public class Clase_Carga {
 
     private int idtransportista;
     private int idarticulo;
@@ -14,12 +14,8 @@ public class Carga {
     private int cantidad;
     private Date fecha;
 
-    public Carga(int idtransportista, int idarticulo, String almacen, int cantidad, Date fecha) {
-        this.idtransportista = idtransportista;
-        this.idarticulo = idarticulo;
-        this.almacen = almacen;
-        this.cantidad = cantidad;
-        this.fecha = fecha;
+    public Clase_Carga() {
+
     }
 
     public int getIdtransportista() {

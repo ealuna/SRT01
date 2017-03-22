@@ -2,15 +2,15 @@ package com.example.rusbellgutierrez.SRT;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
@@ -21,7 +21,7 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 
-public class CuerpoActivity extends AppCompatActivity implements FragmentIterationListener{
+public class Activity_Central extends AppCompatActivity implements Interface_FragmentListener {
 
     //elementos para crear un drawer layout
     ListView lista_drawer;
@@ -32,8 +32,8 @@ public class CuerpoActivity extends AppCompatActivity implements FragmentIterati
     //boton del toolbar
     ActionBarDrawerToggle drawerToggle;
 
-    public FragmentIterationListener mCallback=null;
-
+    //Clase para guardar los datos;
+    Clase_Articulo art;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +41,7 @@ public class CuerpoActivity extends AppCompatActivity implements FragmentIterati
         setContentView(R.layout.activity_cuerpo);
 
         //obtener los datos del intent
-        Bundle extras =getIntent().getExtras();
+        Bundle extras =this.getIntent().getExtras();
         String nombre=extras.getString("nombre");
 
         //lista desplegable izquierda
@@ -62,19 +62,6 @@ public class CuerpoActivity extends AppCompatActivity implements FragmentIterati
         setSupportActionBar(toolbar);
         //muestra el nombre de la apliación
         getSupportActionBar().setDisplayShowTitleEnabled(true);
-        //habilita el boton de la apliacion
-        /*getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //accion del boton en toolbar
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                //Toast.makeText(getApplicationContext(),"presiono",Toast.LENGTH_SHORT).show();
-                //revisar llamado
-                new Dialogo_Alerta().show(getSupportFragmentManager(), "SimpleDialog");
-            }
-        });*/
 
         //Aplicar el boton para desplegar el drawer
         drawerToggle = new ActionBarDrawerToggle(this,  drawer, toolbar,R.string.drawer_open, R.string.drawer_close);
@@ -96,27 +83,27 @@ public class CuerpoActivity extends AppCompatActivity implements FragmentIterati
 
                         switch (menuItem.getItemId()) {
                             case R.id.inicio:
-                                fragment = new FragmentInicio();
+                                fragment = new Fragment_Inicio();
                                 fragmentTransaction = true;
                                 break;
                             case R.id.ruta:
-                                fragment = new FragmentRuta();
+                                fragment = new Fragment_Ruta();
                                 fragmentTransaction = true;
                                 break;
                             case R.id.cliente:
-                                fragment = new FragmentCliente();
+                                fragment = new Fragment_Cliente();
                                 fragmentTransaction = true;
                                 break;
                             case R.id.documento:
-                                fragment = new FragmentDocumento();
+                                fragment = new Fragment_Documento();
                                 fragmentTransaction = true;
                                 break;
                             case R.id.producto:
-                                fragment = new FragmentProducto();
+                                fragment = new Fragment_Producto();
                                 fragmentTransaction = true;
                                 break;
                             case R.id.perfil:
-                                fragment = new FragmentPerfil();
+                                fragment = new Fragment_Perfil();
                                 fragmentTransaction = true;
                                 break;
                             case R.id.sesion:
@@ -142,33 +129,54 @@ public class CuerpoActivity extends AppCompatActivity implements FragmentIterati
 
     }
 
-    /*public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+
+
+    //FUNCION QUE RECIBIRA DATOS DEL SCAN
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode,resultCode,intent);
         //retrieve scan result
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
 
         if (scanningResult != null) {
             //we have a result
+            Log.d("Inicio", "Tenemos data");
+
             String scanContent = scanningResult.getContents();
             String scanFormat = scanningResult.getFormatName();
 
-            Bundle ob_bundle= new Bundle();
-            ob_bundle.putString("contenido",scanContent);
-            ob_bundle.putString("formato",scanFormat);
-            mCallback.onFragmentIteration(ob_bundle);
-            Intent i =new Intent(this,FragmentProducto.class);
-            startActivity(i);
+            Fragment_Producto fp=new Fragment_Producto();
+
+            Bundle bundle= new Bundle();
+            bundle.putString("formato",scanFormat);//art.getNombre()
+            bundle.putString("contenido", scanContent);//String.valueOf(art.getCod_barra())}
+
+
+
+            if (bundle != null) {
+
+
+                Fragment_Producto.newInstance(bundle);
+                Log.d("Fragment_Producto", "Tenemos data: "+bundle+", "+bundle.getString("contenido")+", "+bundle.getString("formato"));
+
+                //codigo que puede corregir el problema
+
+
+
+            } else {
+                Log.d("Fragment_Producto", "No hay data");
+
+            }
+
         }
         else{
             Toast toast = Toast.makeText(getApplicationContext(),
-                    "No scan data received!", Toast.LENGTH_SHORT);
+                    "No scan data received!", Toast.LENGTH_LONG);
             toast.show();
         }
-    }*/
-
-
+    }
 
     @Override
-    public void onFragmentIteration(Bundle parameters) {
+    public void onFragmentListener(Bundle parameters) {
 
     }
 }

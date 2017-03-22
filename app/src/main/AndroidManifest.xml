@@ -18,9 +18,8 @@
         android:label="S.R.T"
         android:supportsRtl="true">
 
-        <activity android:name="com.example.rusbellgutierrez.SRT.AccesoActivity"
+        <activity android:name="com.example.rusbellgutierrez.SRT.Activity_Acceso"
             android:theme="@style/Sin_Bar"
-            android:windowSoftInputMode="stateHidden"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,7 +32,7 @@
 
         <activity
 
-            android:name="com.example.rusbellgutierrez.SRT.CuerpoActivity"
+            android:name="com.example.rusbellgutierrez.SRT.Activity_Central"
             android:theme="@style/Sin_Bar">
 
             <intent-filter>
