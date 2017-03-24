@@ -4,7 +4,7 @@ import android.content.ContentValues;
 
 import java.util.Date;
 
-import static com.example.rusbellgutierrez.SRT.SQL_Columnas.ArticuloEntry.*;
+import static com.example.rusbellgutierrez.SRT.SQL_Columnas.CargaEntry;
 
 /**
  * Created by Rusbell Gutierrez on 17/03/2017.
@@ -17,13 +17,33 @@ public class Clase_Carga {
     private String almacen;
     private int cantidad;
     private String fecha;
+    private int viaje;
+    private int estado;
 
-    public Clase_Carga(int idtransportista, int idarticulo, String almacen, int cantidad, String fecha) {
+    public Clase_Carga(int idtransportista, int idarticulo, String almacen, int cantidad, String fecha, int viaje,int estado) {
         this.idtransportista = idtransportista;
         this.idarticulo = idarticulo;
         this.almacen = almacen;
         this.cantidad = cantidad;
         this.fecha = fecha;
+        this.viaje = viaje;
+        this.estado=estado;
+    }
+
+    public int getEstado() {
+        return estado;
+    }
+
+    public void setEstado(int estado) {
+        this.estado = estado;
+    }
+
+    public int getViaje() {
+        return viaje;
+    }
+
+    public void setViaje(int viaje) {
+        this.viaje = viaje;
     }
 
     public int getIdtransportista() {
@@ -64,18 +84,5 @@ public class Clase_Carga {
 
     public void setFecha(String fecha) {
         this.fecha = fecha;
-    }
-
-    /*PARES DE CLAVE-VALOR*/
-    public ContentValues toContentValues() {
-        //contenedor de valores para carga
-        ContentValues val= new ContentValues();
-        //en el put, el primer valor es la etiqueta, el segundo el tipo
-        val.put(SQL_Columnas.CargaEntry.idtransportista,idtransportista);
-        val.put(SQL_Columnas.CargaEntry.idarticulo,idarticulo);
-        val.put(SQL_Columnas.CargaEntry.almacen,almacen);
-        val.put(SQL_Columnas.CargaEntry.cantidad,cantidad);
-        val.put(SQL_Columnas.CargaEntry.fecha,fecha);
-        return val;
     }
 }

@@ -2,6 +2,7 @@ package com.example.rusbellgutierrez.SRT;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.rey.material.widget.ProgressView;
 
 
 public class Activity_Central extends AppCompatActivity implements Interface_FragmentListener {
@@ -31,6 +33,8 @@ public class Activity_Central extends AppCompatActivity implements Interface_Fra
     Toolbar toolbar;
     //boton del toolbar
     ActionBarDrawerToggle drawerToggle;
+
+    ProgressView pblinear;
 
     //Clase para guardar los datos;
     Clase_Articulo art;
@@ -53,6 +57,7 @@ public class Activity_Central extends AppCompatActivity implements Interface_Fra
         TextView nom_usuario = (TextView)header.findViewById(R.id.username);
         //seteamos
         nom_usuario.setText(nombre);
+
 
         //toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);

@@ -13,7 +13,7 @@ public class SQL_Columnas {
 
         public static final String idarticulo = "idarticulo";
         public static final String nombre = "nombre";
-        public static final String cod_barra = "cod_barra";
+        public static final String codbarra = "codbarra";
     }
 
     public static abstract class TransportistaEntry implements BaseColumns{
@@ -33,5 +33,7 @@ public class SQL_Columnas {
         public static final String almacen = "almacen";
         public static final String cantidad = "cantidad";
         public static final String fecha = "fecha";
+        public static final String viaje = "viaje";
+        public static final String estado = "estado";
     }
 }

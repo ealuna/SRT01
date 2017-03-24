@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -32,12 +33,12 @@ import org.json.JSONObject;
 
 public class Activity_Acceso extends AppCompatActivity {
 
-    Button boton_acceso;
+    static Button boton_acceso;
     ImageView logo;
     CheckBox recordar;
     EditText codigo, contraseña;
     CardView carta;
-    private String cod_recordar,contra;
+    private String cod_recordar;
     //clases necesarias para realizar checkbox "remember me"
     private SharedPreferences loginPreferences;
     private SharedPreferences.Editor loginPrefsEditor;
@@ -47,14 +48,24 @@ public class Activity_Acceso extends AppCompatActivity {
     //JSON object para obtener los datos del sql server
     JSONObject array_json;
 
+    Volley_Peticiones vp=new Volley_Peticiones();
+
+    /**RECUERDA* SI VES QUE SALTA UN ERROR DE JAVA.LANG.NULL.POINTER ES POSIBLE QUE NECESITES INSTANCIAR UN OBJETO QUE ESTES USANDO*/
+
+    //SQLITE
+    Context context=this;
+    SQL_Helper helper=new SQL_Helper(context);
+    SQLiteDatabase db;
+    SQL_Sentencias sql=new SQL_Sentencias();
+
+
     //declaraciones para la animacion
-    AlphaAnimation inAnimation;
-    AlphaAnimation outAnimation;
+    static AlphaAnimation animation;
     //declaramos el framelayout
-    FrameLayout progressBarHolder;
+    static FrameLayout progressBarHolder;
 
     //URL para conexion
-    String ip_trabajo="192.168.1.233:80";
+    String ip_trabajo="192.168.1.128:80";
     String ip_casa="192.168.0.101:80";
     String ip_geny="10.0.3.2";
     String ip_android="10.0.2.2";
@@ -65,6 +76,7 @@ public class Activity_Acceso extends AppCompatActivity {
 
     //para mysql
     String url_pass_nom="http://"+ip_casa+"/ejemplologin/consultarusuario.php?codigo=";
+    String url_detalle="http://"+ip_trabajo+"/ejemplologin/detalle.php?codigo=";
 
 
     @Override
@@ -72,6 +84,8 @@ public class Activity_Acceso extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_acceso);
 
+        //BORRA LA BD
+        //this.deleteDatabase("DB_SRT");
 
         boton_acceso =(Button)findViewById(R.id.boton_acceso);
         logo =(ImageView) findViewById(R.id.logo);
@@ -87,7 +101,7 @@ public class Activity_Acceso extends AppCompatActivity {
         loginPrefsEditor = loginPreferences.edit();
 
         saveLogin = loginPreferences.getBoolean("saveLogin", false);
-        if (saveLogin == true) {
+        if (saveLogin) {
             codigo.setText(loginPreferences.getString("codigo", ""));
             recordar.setChecked(true);
         }
@@ -107,123 +121,22 @@ public class Activity_Acceso extends AppCompatActivity {
                     if (recordar.isChecked()) {
                         loginPrefsEditor.putBoolean("saveLogin", true);
                         loginPrefsEditor.putString("codigo", cod_recordar);
-                        loginPrefsEditor.commit();
+                        loginPrefsEditor.apply();
                     } else {
                         loginPrefsEditor.clear();
                         loginPrefsEditor.commit();
                     }
 
+                    //enviamos el campo del edittext a un string
+                String pass=contraseña.getText().toString();
+
+
                    //aca se inicia la URL para conectar con el JSON
 
-                //la dirección 10.0.3.2 hace referencia al emulador de genymotion, puede variar
-                //ConsultaPass("http://10.0.3.2/ejemplologin/consultarusuario.php?codigo="+codigo.getText().toString());
 
-                //configuracion para emulador android, modificar conexion remota
-                Consulta(url_pass_nom+codigo.getText().toString());
-                //configuracion para emulador android, CONEXION REMOTA
-                //ConsultaPass("http://10.0.2.2/ejemplologin/conectar_sql.php?codigo="+codigo.getText().toString());
-            }
-        });
-
-
-    }
-
-    public void Progreso_Pre(){
-
-        //experimental-->simulando metodo OnPreExecute
-        boton_acceso.setEnabled(false);
-        inAnimation = new AlphaAnimation(0f, 1f);
-        inAnimation.setDuration(200);
-        progressBarHolder.setAnimation(inAnimation);
-        progressBarHolder.setVisibility(View.VISIBLE);
-        //termina metodo OnPreExecute
-    }
-
-    public void Progreso_Post(){
-
-        //experimental-->simulando metodo OnPostExecute
-                outAnimation = new AlphaAnimation(1f, 0f);
-                outAnimation.setDuration(200);
-                progressBarHolder.setAnimation(outAnimation);
-                progressBarHolder.setVisibility(View.GONE);
-                boton_acceso.setEnabled(true);
-                //termina metodo OnPostExecute
-    }
-
-    public void Consulta(String URL) {
-
-        Log.i("url",""+URL);
-        //Log.i("url",""+URL_Nom);
-
-        Progreso_Pre();
-
-        //solicitud volley para realizar un get, cola de peticiones
-        RequestQueue queue = Volley.newRequestQueue(this);
-
-        //peticion para obtener la contraseña del usuario
-        StringRequest requestDatos =  new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                try {//error no se puede convertir string a JSON array
-
-                    //declarando array JSON para mysql
-                    ja = new JSONArray(response);
-                    String contra = ja.getString(0);
-                    //PARA MYSQL
-                    Clase_Transportista nom=new Clase_Transportista(100,"Lucho",123456789,"A123");
-                    //nom.setNom_transp("Lucho");
-
-                    /*INICIA
-                    //declarando objeto JSON para sql server
-                    array_json = new JSONObject(response);
-                    //se agrego el campo .get().toString() para poder obtener el json de sql server
-                    contra = array_json.get("0").toString();
-                    nom.setNom_transp(array_json.get("1").toString());
-                    TERMINA*/
-
-
-
-                    if(contra.equals(contraseña.getText().toString())){
-
-                        Toast.makeText(getApplicationContext(),"Bienvenido",Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(Activity_Acceso.this, Activity_Central.class);
-                        intent.putExtra("nombre",nom.getNom_transp());
-                        startActivity(intent);
-                        finish();
-
-                        Progreso_Post();
-
-                    }else{
-
-                        Progreso_Post();
-
-                        Toast.makeText(getApplicationContext(),"Verifique la contraseña",Toast.LENGTH_SHORT).show();
-
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-
-                    Progreso_Post();
-
-                    Toast.makeText(getApplicationContext(),"El código no existe en la base de datos",Toast.LENGTH_LONG).show();
-                }
-
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-                Progreso_Post();
-
-                System.out.print(error);
-                Toast.makeText(getApplicationContext(),"Error al validar datos ",Toast.LENGTH_SHORT).show();
+                vp.Consulta(url_pass_nom+codigo.getText().toString(),context,pass,progressBarHolder,boton_acceso,animation);
 
             }
         });
-
-        queue.add(requestDatos);
     }
 }
