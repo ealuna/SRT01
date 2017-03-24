@@ -31,12 +31,15 @@ class SQL_Helper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db){
 
+        /*db.execSQL("drop table "+ArticuloEntry.TABLE_NAME);
+        db.execSQL("drop table "+CargaEntry.TABLE_NAME);
+        db.execSQL("drop table "+TransportistaEntry.TABLE_NAME);*/
         //CREAR TABLA CON SENTENCIAS
         //tabla Articulo
         db.execSQL("CREATE TABLE " + ArticuloEntry.TABLE_NAME + " ("
                 + ArticuloEntry.idarticulo + " INTEGER PRIMARY KEY NOT NULL,"
                 + ArticuloEntry.nombre + " VARCHAR(50) NOT NULL,"
-                + ArticuloEntry.codbarra+ " INTEGER NOT NULL)");
+                + ArticuloEntry.codbarra+ " INT16 NOT NULL)");
         //tabla Transportista
         db.execSQL("CREATE TABLE " + TransportistaEntry.TABLE_NAME+ " ("
                 + TransportistaEntry.idtransportista + " INTEGER PRIMARY KEY NOT NULL,"

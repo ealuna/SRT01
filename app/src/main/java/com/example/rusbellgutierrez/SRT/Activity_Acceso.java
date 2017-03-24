@@ -31,7 +31,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class Activity_Acceso extends AppCompatActivity {
+public class Activity_Acceso extends AppCompatActivity implements Interface_FragmentListener {
 
     static Button boton_acceso;
     ImageView logo;
@@ -51,6 +51,8 @@ public class Activity_Acceso extends AppCompatActivity {
     Volley_Peticiones vp=new Volley_Peticiones();
 
     /**RECUERDA* SI VES QUE SALTA UN ERROR DE JAVA.LANG.NULL.POINTER ES POSIBLE QUE NECESITES INSTANCIAR UN OBJETO QUE ESTES USANDO*/
+
+
 
     //SQLITE
     Context context=this;
@@ -75,7 +77,7 @@ public class Activity_Acceso extends AppCompatActivity {
     //String url_pass_nom="http://"+ip+"/ejemplologin/index.php?codigo=";
 
     //para mysql
-    String url_pass_nom="http://"+ip_casa+"/ejemplologin/consultarusuario.php?codigo=";
+    String url_pass_nom="http://"+ip_trabajo+"/ejemplologin/consultarusuario.php?codigo=";
     String url_detalle="http://"+ip_trabajo+"/ejemplologin/detalle.php?codigo=";
 
 
@@ -85,7 +87,7 @@ public class Activity_Acceso extends AppCompatActivity {
         setContentView(R.layout.activity_acceso);
 
         //BORRA LA BD
-        //this.deleteDatabase("DB_SRT");
+        this.deleteDatabase("DB_SRT");
 
         boton_acceso =(Button)findViewById(R.id.boton_acceso);
         logo =(ImageView) findViewById(R.id.logo);
@@ -138,5 +140,10 @@ public class Activity_Acceso extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onFragmentListener(Bundle parameters) {
+
     }
 }

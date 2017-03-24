@@ -23,6 +23,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -60,8 +61,8 @@ import java.util.HashMap;
                     for(int i=0; i<ja.length(); i++){
                         JSONObject jdata = ja.getJSONObject(i);
 
-                        Clase_Articulo art= new Clase_Articulo(jdata.getInt("idarticulo"),jdata.getString("nombre"),jdata.getInt("codbarra"));
-                        Clase_Carga car= new Clase_Carga(jdata.getInt("idtransportista"),jdata.getInt("idarticulo"),jdata.getString("almacen"),jdata.getInt("cantidad"),jdata.getString("fecha"),jdata.getInt("viaje"),jdata.getInt("estado"));
+                        Clase_Articulo art= new Clase_Articulo(BigInteger.valueOf(jdata.getInt("idarticulo")),jdata.getString("nombre"),BigInteger.valueOf(jdata.getInt("codbarra")));
+                        Clase_Carga car= new Clase_Carga(jdata.getInt("idtransportista"),BigInteger.valueOf(jdata.getInt("idarticulo")),jdata.getString("almacen"),jdata.getInt("cantidad"),jdata.getString("fecha"),jdata.getInt("viaje"),jdata.getInt("estado"));
 
                         Log.i("LOG_TAG", "idarticulo: " + jdata.getInt("idarticulo") +
                                 ", nombre: " + jdata.getString("nombre") +
@@ -74,6 +75,8 @@ import java.util.HashMap;
                                 ", estado: " + jdata.getInt("estado"));
 
                         sql.guardar_detalleBD(art,car,helper);
+
+                        //Toast.makeText(context,"Los datos de los productos se cargaron",Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (JSONException e) {
@@ -145,6 +148,7 @@ import java.util.HashMap;
                         Toast.makeText(context,"Bienvenido",Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(context, Activity_Central.class);
                         intent.putExtra("nombre",t.getNom_transp());
+                        intent.putExtra("codigo",cod);
                         context.startActivity(intent);
                         ((Activity)context).finish();
 

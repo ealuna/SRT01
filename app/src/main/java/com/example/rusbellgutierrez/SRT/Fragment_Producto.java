@@ -38,8 +38,11 @@ public class Fragment_Producto extends Fragment implements View.OnClickListener{
         Fragment_Producto f = new Fragment_Producto();
         if(arguments != null){
             f.setArguments(arguments);
-            cod_barra.setText(f.getArguments().getString("contenido"));
-            nom_articulo.setText(f.getArguments().getString("formato"));
+            cod_barra.setText(f.getArguments().getString("codbarra"));
+            cod_articulo.setText(f.getArguments().getString("idarticulo"));
+            nom_articulo.setText(f.getArguments().getString("nombre"));
+            almacen.setText(f.getArguments().getString("almacen"));
+            cantidad.setText(f.getArguments().getString("cantidad"));
             Log.d("RESULTADO", "Tenemos data: "+f);
         }else {
             Log.d("RESULTADO", "No tenemos data");}

@@ -85,7 +85,7 @@ class SQL_Sentencias {
                 }else {
                     ContentValues ca = new ContentValues();
                     ca.put("idtransportista",car.getIdtransportista());
-                    ca.put("idarticulo",car.getIdarticulo());
+                    ca.put("idarticulo",car.getIdarticulo().toString());
                     ca.put("almacen",car.getAlmacen());
                     ca.put("cantidad",car.getCantidad());
                     ca.put("fecha",car.getFecha());
@@ -95,9 +95,9 @@ class SQL_Sentencias {
                     db.insert("carga",null,ca);
 
                     ContentValues ar = new ContentValues();
-                    ar.put("idarticulo",art.getIdarticulo());
+                    ar.put("idarticulo",art.getIdarticulo().toString());
                     ar.put("nombre",art.getNombre());
-                    ar.put("codbarra",art.getCodbarra());
+                    ar.put("codbarra",art.getCodbarra().toString());
 
                     db.insert("articulo",null,ar);
                 }
@@ -105,7 +105,7 @@ class SQL_Sentencias {
             }else {
                 ContentValues ca = new ContentValues();
                 ca.put("idtransportista",car.getIdtransportista());
-                ca.put("idarticulo",car.getIdarticulo());
+                ca.put("idarticulo",car.getIdarticulo().toString());
                 ca.put("almacen",car.getAlmacen());
                 ca.put("cantidad",car.getCantidad());
                 ca.put("fecha",car.getFecha());
@@ -115,12 +115,42 @@ class SQL_Sentencias {
                 db.insert("carga",null,ca);
 
                 ContentValues ar = new ContentValues();
-                ar.put("idarticulo",art.getIdarticulo());
+                ar.put("idarticulo",art.getIdarticulo().toString());
                 ar.put("nombre",art.getNombre());
-                ar.put("codbarra",art.getCodbarra());
+                ar.put("codbarra",art.getCodbarra().toString());
 
                 db.insert("articulo",null,ar);
             }
         }
+    }
+
+    String[] consultar_detalleBD(String scanContent,SQL_Helper helper){
+        /*Clase_Articulo art;
+        Clase_Carga car;*/
+        String[] data=new String[5];
+
+        SQLiteDatabase db;
+        db=helper.getReadableDatabase();
+        if (db!=null){
+            String[] args=new String[] {scanContent};
+
+            Cursor c=db.rawQuery("select a.codbarra, a.idarticulo, a.nombre, c.almacen, SUM(c.cantidad) from carga c inner join articulo a on a.idarticulo=c.idarticulo where a.codbarra=? group by a.idarticulo",args);
+
+            if (c.moveToFirst()){
+                do {
+                    String codbarra=c.getString(0);
+                    String idarticulo=c.getString(1);
+                    String nombre=c.getString(2);
+                    String almacen=c.getString(3);
+                    String cantidad=c.getString(4);
+
+                    data=new String[]{codbarra,idarticulo,nombre,almacen,cantidad};
+
+                    /*art=new Clase_Articulo(Integer.parseInt(idarticulo),nombre,Integer.parseInt(codbarra));
+                    car=new Clase_Carga(,Integer.parseInt(idarticulo),almacen,Integer.parseInt(cantidad),);*/
+                }while (c.moveToNext());
+            }
+        }
+        return data;
     }
 }

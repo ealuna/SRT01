@@ -1,5 +1,6 @@
 package com.example.rusbellgutierrez.SRT;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -32,9 +33,13 @@ public class Activity_Central extends AppCompatActivity implements Interface_Fra
     //toolbar
     Toolbar toolbar;
     //boton del toolbar
+    Context context=this;
     ActionBarDrawerToggle drawerToggle;
 
-    ProgressView pblinear;
+    Interface_FragmentListener mCallback=null;
+
+    SQL_Sentencias sql=new SQL_Sentencias();
+    SQL_Helper helper=new SQL_Helper(this);
 
     //Clase para guardar los datos;
     Clase_Articulo art;
@@ -47,6 +52,7 @@ public class Activity_Central extends AppCompatActivity implements Interface_Fra
         //obtener los datos del intent
         Bundle extras =this.getIntent().getExtras();
         String nombre=extras.getString("nombre");
+        String codigo=extras.getString("codigo");
 
         //lista desplegable izquierda
         drawer =(DrawerLayout)findViewById(R.id.drawer_layout);
@@ -55,9 +61,12 @@ public class Activity_Central extends AppCompatActivity implements Interface_Fra
         View header=nav.getHeaderView(0);
         //se crea el objeto que contendra el nombre
         TextView nom_usuario = (TextView)header.findViewById(R.id.username);
+        TextView cod_usuario= (TextView)header.findViewById(R.id.code);
         //seteamos
         nom_usuario.setText(nombre);
+        cod_usuario.setText(codigo);
 
+        Log.i("CODIGO","DATO DEL CODIGO "+cod_usuario.getText().toString());
 
         //toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -77,6 +86,14 @@ public class Activity_Central extends AppCompatActivity implements Interface_Fra
         getSupportActionBar().setHomeButtonEnabled(true);
         drawerToggle.syncState();
 
+        final Bundle bundle = new Bundle();
+        bundle.putString("codigo", codigo);
+        //Fragment_Inicio myFragment = new Fragment_Inicio ();
+//Agrega bundle como argumento al fragment.
+        //myFragment.setArguments(bundle);
+
+        Log.i("CODIGO","DATO DEL BUNDLE "+bundle);
+
         //redirige a los fragmente, lógica para toda la funcionalidad
         nav.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
@@ -89,6 +106,7 @@ public class Activity_Central extends AppCompatActivity implements Interface_Fra
                         switch (menuItem.getItemId()) {
                             case R.id.inicio:
                                 fragment = new Fragment_Inicio();
+                                fragment.setArguments(bundle);
                                 fragmentTransaction = true;
                                 break;
                             case R.id.ruta:
@@ -132,6 +150,14 @@ public class Activity_Central extends AppCompatActivity implements Interface_Fra
                     }
                 });
 
+        /*Bundle bundle = new Bundle();
+        bundle.putString("codigo", codigo);
+        Fragment_Inicio myFragment = new Fragment_Inicio ();
+//Agrega bundle como argumento al fragment.
+        myFragment.setArguments(bundle);
+
+        Log.i("CODIGO","DATO DEL BUNDLE "+myFragment.getArguments());*/
+
     }
 
     //FUNCION QUE RECIBIRA DATOS DEL SCAN
@@ -147,11 +173,26 @@ public class Activity_Central extends AppCompatActivity implements Interface_Fra
             String scanContent = scanningResult.getContents();
             String scanFormat = scanningResult.getFormatName();
 
+            if (scanContent==null || scanFormat==null){
+                Log.i("AVISO","No registro ningun producto");
+            }
+
+            String[] data=sql.consultar_detalleBD(scanContent,helper);
+
             Fragment_Producto fp=new Fragment_Producto();
 
-            Bundle bundle= new Bundle();
-            bundle.putString("formato",scanFormat);//art.getNombre()
-            bundle.putString("contenido", scanContent);//String.valueOf(art.getCod_barra())}
+            String codbarra=data[0];
+            String idarticulo=data[1];
+            String nombre=data[2];
+            String almacen=data[3];
+            String cantidad=data[4];
+
+            Bundle bundle= new Bundle();//art.getNombre()
+            bundle.putString("codbarra", codbarra);
+            bundle.putString("idarticulo",idarticulo);
+            bundle.putString("nombre",nombre);
+            bundle.putString("almacen",almacen);
+            bundle.putString("cantidad",cantidad);//String.valueOf(art.getCod_barra())}
 
 
             if (bundle != null) {

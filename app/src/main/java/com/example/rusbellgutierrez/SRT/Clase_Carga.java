@@ -2,6 +2,7 @@ package com.example.rusbellgutierrez.SRT;
 
 import android.content.ContentValues;
 
+import java.math.BigInteger;
 import java.util.Date;
 
 import static com.example.rusbellgutierrez.SRT.SQL_Columnas.CargaEntry;
@@ -13,14 +14,14 @@ import static com.example.rusbellgutierrez.SRT.SQL_Columnas.CargaEntry;
 public class Clase_Carga {
 
     private int idtransportista;
-    private int idarticulo;
+    private BigInteger idarticulo;
     private String almacen;
     private int cantidad;
     private String fecha;
     private int viaje;
     private int estado;
 
-    public Clase_Carga(int idtransportista, int idarticulo, String almacen, int cantidad, String fecha, int viaje,int estado) {
+    public Clase_Carga(int idtransportista, BigInteger idarticulo, String almacen, int cantidad, String fecha, int viaje,int estado) {
         this.idtransportista = idtransportista;
         this.idarticulo = idarticulo;
         this.almacen = almacen;
@@ -54,11 +55,11 @@ public class Clase_Carga {
         this.idtransportista = idtransportista;
     }
 
-    public int getIdarticulo() {
+    public BigInteger getIdarticulo() {
         return idarticulo;
     }
 
-    public void setIdarticulo(int idarticulo) {
+    public void setIdarticulo(BigInteger idarticulo) {
         this.idarticulo = idarticulo;
     }
 
