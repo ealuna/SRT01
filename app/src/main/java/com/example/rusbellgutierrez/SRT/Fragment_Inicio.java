@@ -52,7 +52,7 @@ public class Fragment_Inicio extends Fragment implements Interface_FragmentListe
     //String url_pass_nom="http://"+ip+"/ejemplologin/index.php?codigo=";
 
     //para mysql
-    String url_detalle="http://"+ip_trabajo+"/ejemplologin/detalle.php?codigo=";
+    String url_detalle="http://"+ip_casa+"/ejemplologin/detalle.php?codigo=";
 
 
     public static Fragment_Inicio newInstance(Bundle arguments){

@@ -23,6 +23,8 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.rey.material.widget.ProgressView;
 
+import java.util.Arrays;
+
 
 public class Activity_Central extends AppCompatActivity implements Interface_FragmentListener {
 
@@ -46,6 +48,8 @@ public class Activity_Central extends AppCompatActivity implements Interface_Fra
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cuerpo);
 
@@ -173,39 +177,48 @@ public class Activity_Central extends AppCompatActivity implements Interface_Fra
             String scanContent = scanningResult.getContents();
             String scanFormat = scanningResult.getFormatName();
 
-            if (scanContent==null || scanFormat==null){
-                Log.i("AVISO","No registro ningun producto");
-            }
+            Log.i("SCAN", "DATOS DEL SCANEO " + scanContent + " y " + scanFormat);
+            if (scanContent == null || scanFormat == null) {
+                Log.i("AVISO", "No registro ningun producto");
+            }else{
 
-            String[] data=sql.consultar_detalleBD(scanContent,helper);
+            String[] data = sql.consultar_detalleBD(scanContent, helper);
 
-            Fragment_Producto fp=new Fragment_Producto();
+            Log.i("DATO", "ARRAY FINAL" + Arrays.toString(data));
+            //Fragment_Producto fp=new Fragment_Producto();
 
-            String codbarra=data[0];
-            String idarticulo=data[1];
-            String nombre=data[2];
-            String almacen=data[3];
-            String cantidad=data[4];
+            String codbarra = data[0].toString();
+            String idarticulo = data[1].toString();
+            String nombre = data[2].toString();
+            String almacen = data[3].toString();
+            String cantidad = data[4].toString();
 
-            Bundle bundle= new Bundle();//art.getNombre()
+            //REvisar pasar datos de un array a un string
+            Log.i("LOG_TAG", "codbarra: " + codbarra +
+                    ", idarticulo: " + idarticulo +
+                    ", nombre: " + nombre +
+                    ", almacen: " + almacen +
+                    ", cantidad: " + cantidad);
+
+            Bundle bundle = new Bundle();//art.getNombre()
             bundle.putString("codbarra", codbarra);
-            bundle.putString("idarticulo",idarticulo);
-            bundle.putString("nombre",nombre);
-            bundle.putString("almacen",almacen);
-            bundle.putString("cantidad",cantidad);//String.valueOf(art.getCod_barra())}
+            bundle.putString("idarticulo", idarticulo);
+            bundle.putString("nombre", nombre);
+            bundle.putString("almacen", almacen);
+            bundle.putString("cantidad", cantidad);//String.valueOf(art.getCod_barra())}
 
 
             if (bundle != null) {
 
                 //llamamos al metodo newInstance y le pasamos el bundle con datos
                 Fragment_Producto.newInstance(bundle);
-                Log.d("Fragment_Producto", "Tenemos data: "+bundle+", "+bundle.getString("contenido")+", "+bundle.getString("formato"));
+                Log.d("Fragment_Producto", "Tenemos data: " + bundle + ", " + bundle.getString("contenido") + ", " + bundle.getString("formato"));
 
             } else {
                 Log.d("Fragment_Producto", "No hay data");
 
             }
-
+            }
         }
         else{
             Toast toast = Toast.makeText(getApplicationContext(),

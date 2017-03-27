@@ -5,6 +5,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * Created by Russbell on 22/03/2017.
  */
@@ -72,6 +76,8 @@ class SQL_Sentencias {
             //se revisa si las tablas estan pobladas
             if (icount>0){
 
+                Log.i("AVISO","YA EXISTEN DATOS");
+                /*
                 //esta sentencia revisa que sea el primer viaje del transportista
                 Cursor vcursor = db.rawQuery("SELECT MAX(viaje) FROM carga", null);
 
@@ -100,7 +106,8 @@ class SQL_Sentencias {
                     ar.put("codbarra",art.getCodbarra().toString());
 
                     db.insert("articulo",null,ar);
-                }
+                    Log.i("AVISO","Viajes nuevos cargados");
+                }*/
 
             }else {
                 ContentValues ca = new ContentValues();
@@ -127,30 +134,66 @@ class SQL_Sentencias {
     String[] consultar_detalleBD(String scanContent,SQL_Helper helper){
         /*Clase_Articulo art;
         Clase_Carga car;*/
-        String[] data=new String[5];
-
+        String[] array=new String[5];
         SQLiteDatabase db;
+        db=helper.getReadableDatabase();
+
+        if (db!=null){
+            String[] args= new String[]{scanContent};
+            Cursor c=db.rawQuery("select a.codbarra, a.idarticulo, a.nombre, c.almacen, SUM(c.cantidad) from carga c, articulo a where a.idarticulo=c.idarticulo and a.codbarra=? group by a.idarticulo",args);//group by a.idarticulo
+            //("select codbarra,nombre,idarticulo from articulo where codbarra=?",args)
+            //("select a.codbarra, a.idarticulo, a.nombre, c.almacen, SUM(c.cantidad) from carga c, articulo a where a.idarticulo=c.idarticulo and a.codbarra=? group by a.idarticulo",args)
+            Log.i("INFO CURSOR", "¿EL CURSOR ES TRUE O FALSE? "+c.moveToFirst());
+                if (c.moveToFirst()) {
+
+                        array[0] = c.getString(0);
+                        array[1] = c.getString(1);
+                        array[2] = c.getString(2);
+                        array[3] = c.getString(3);
+                        array[4] = c.getString(4);
+
+                        Log.i("DATOS DEL ARRAY", Arrays.toString(array));
+                        Log.i("DATOS DEL ARRAY SUMA", array[4]);
+
+                    c.close();
+
+                } else Log.i("INFO", "EL CURSOR NO USA MOVETOFIRST");
+        }
+
+        return array;
+
+
+        /*SQLiteDatabase db;
         db=helper.getReadableDatabase();
         if (db!=null){
             String[] args=new String[] {scanContent};
+            String[] data;
 
             Cursor c=db.rawQuery("select a.codbarra, a.idarticulo, a.nombre, c.almacen, SUM(c.cantidad) from carga c inner join articulo a on a.idarticulo=c.idarticulo where a.codbarra=? group by a.idarticulo",args);
 
-            if (c.moveToFirst()){
-                do {
-                    String codbarra=c.getString(0);
-                    String idarticulo=c.getString(1);
-                    String nombre=c.getString(2);
-                    String almacen=c.getString(3);
-                    String cantidad=c.getString(4);
+            if (c!=null){
+                data=new String[c.getCount()];
+                Log.i("AVISO","TENEMOS CURSOR "+c);
+            }else
+            Log.i("AVISO","NO TENEMOS CURSOR");
 
-                    data=new String[]{codbarra,idarticulo,nombre,almacen,cantidad};
 
-                    /*art=new Clase_Articulo(Integer.parseInt(idarticulo),nombre,Integer.parseInt(codbarra));
-                    car=new Clase_Carga(,Integer.parseInt(idarticulo),almacen,Integer.parseInt(cantidad),);*/
-                }while (c.moveToNext());
-            }
+
+
+
+
+
+
+
+                    data[0]=codbarra;
+
+            //Log.i("DATOS"," codbarra: "+codbarra+" idarticulo: "+idarticulo+" nombre: "+nombre+" almacen: "+almacen+" cantidad: "+cantidad);
         }
-        return data;
+        if (data==null){
+            Log.i("DATA","DATA NULL "+data);
+        }
+        Log.i("DATA","RESULTADO DE LA DATA "+ Arrays.toString(data));
+        return data;*/
+
     }
 }

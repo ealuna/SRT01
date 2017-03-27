@@ -56,7 +56,7 @@ public class Activity_Acceso extends AppCompatActivity implements Interface_Frag
 
     //SQLITE
     Context context=this;
-    SQL_Helper helper=new SQL_Helper(context);
+    SQL_Helper helper=new SQL_Helper(this);
     SQLiteDatabase db;
     SQL_Sentencias sql=new SQL_Sentencias();
 
@@ -77,7 +77,7 @@ public class Activity_Acceso extends AppCompatActivity implements Interface_Frag
     //String url_pass_nom="http://"+ip+"/ejemplologin/index.php?codigo=";
 
     //para mysql
-    String url_pass_nom="http://"+ip_trabajo+"/ejemplologin/consultarusuario.php?codigo=";
+    String url_pass_nom="http://"+ip_casa+"/ejemplologin/consultarusuario.php?codigo=";
     String url_detalle="http://"+ip_trabajo+"/ejemplologin/detalle.php?codigo=";
 
 
@@ -86,8 +86,8 @@ public class Activity_Acceso extends AppCompatActivity implements Interface_Frag
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_acceso);
 
-        //BORRA LA BD
-        this.deleteDatabase("DB_SRT");
+        //BORRA LA BD, cada que inicie la aplicacion, se borra la base de datos
+        this.context.deleteDatabase("DB_SRT");
 
         boton_acceso =(Button)findViewById(R.id.boton_acceso);
         logo =(ImageView) findViewById(R.id.logo);

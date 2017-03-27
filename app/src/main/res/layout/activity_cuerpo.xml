@@ -28,14 +28,15 @@
             tools:ignore="UnusedAttribute" />
 
         <!--el scrollview permite ver la vista completamente, debe contener un layout obligatoriamente-->
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scrollbars="vertical">
 
                 <!-- Aca cambiaran entre los diferentes fragment -->
                 <FrameLayout
@@ -43,17 +44,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <!--mostraremos una ventana de inicio-->
-                    <include
-                        layout="@layout/fragment_inicio"
-                        android:layout_width="match_parent"
-                        android:layout_height="460dp" />
+                    <ImageView
+                        android:layout_width="114dp"
+                        android:layout_height="112dp"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/student_login" />
+
 
                 </FrameLayout>
 
-            </RelativeLayout>
+                </ScrollView>
 
-        </ScrollView>
+            </RelativeLayout>
 
     </LinearLayout>
 

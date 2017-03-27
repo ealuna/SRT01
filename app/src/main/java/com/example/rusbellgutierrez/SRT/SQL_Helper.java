@@ -23,36 +23,37 @@ class SQL_Helper extends SQLiteOpenHelper {
             + ArticuloEntry.TABLE_NAME + " ADD COLUMN " + COLUMN_STADIUM + " string;";*/
 
     //metodo para constructor
-    SQL_Helper(Context context){
-        super(context,db_name,null,1);
+    SQL_Helper(Context context1){
+        super(context1,db_name,null,1);
+        //context1.deleteDatabase("DB_SRT");
         /*no se necesita mas*/
     }
 
     @Override
     public void onCreate(SQLiteDatabase db){
 
-        /*db.execSQL("drop table "+ArticuloEntry.TABLE_NAME);
-        db.execSQL("drop table "+CargaEntry.TABLE_NAME);
-        db.execSQL("drop table "+TransportistaEntry.TABLE_NAME);*/
+        db.execSQL("drop table if exists "+ArticuloEntry.TABLE_NAME);
+        db.execSQL("drop table if exists "+CargaEntry.TABLE_NAME);
+        db.execSQL("drop table if exists "+TransportistaEntry.TABLE_NAME);
         //CREAR TABLA CON SENTENCIAS
         //tabla Articulo
         db.execSQL("CREATE TABLE " + ArticuloEntry.TABLE_NAME + " ("
                 + ArticuloEntry.idarticulo + " INTEGER PRIMARY KEY NOT NULL,"
-                + ArticuloEntry.nombre + " VARCHAR(50) NOT NULL,"
-                + ArticuloEntry.codbarra+ " INT16 NOT NULL)");
+                + ArticuloEntry.nombre + " TEXT NOT NULL,"
+                + ArticuloEntry.codbarra+ " INTEGER NOT NULL)");
         //tabla Transportista
         db.execSQL("CREATE TABLE " + TransportistaEntry.TABLE_NAME+ " ("
                 + TransportistaEntry.idtransportista + " INTEGER PRIMARY KEY NOT NULL,"
-                + TransportistaEntry.nom_transp + " VARCHAR(50) NOT NULL,"
+                + TransportistaEntry.nom_transp + " TEXT NOT NULL,"
                 + TransportistaEntry.cel_transp + " INTEGER NOT NULL,"
-                + TransportistaEntry.placa + " VARCHAR(10) NOT NULL)");
+                + TransportistaEntry.placa + " TEXT NOT NULL)");
         //tabla Carga
         db.execSQL("CREATE TABLE " + CargaEntry.TABLE_NAME + " ("
                 + CargaEntry.idtransportista + " INTEGER NOT NULL,"
                 + CargaEntry.idarticulo + " INTEGER NOT NULL,"
-                + CargaEntry.almacen + " VARCHAR(50) NOT NULL,"
+                + CargaEntry.almacen + " TEXT NOT NULL,"
                 + CargaEntry.cantidad + " INTEGER NOT NULL,"
-                + CargaEntry.fecha + " VARCHAR(20) NOT NULL,"//AÑO-MES-DIA
+                + CargaEntry.fecha + " TEXT NOT NULL,"//AÑO-MES-DIA
                 + CargaEntry.viaje + " INTEGER NOT NULL,"
                 + CargaEntry.estado + " INTEGER NOT NULL)");
 
@@ -62,11 +63,11 @@ class SQL_Helper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
 
         //ejecutar una vez mas
-        db.execSQL("drop table "+ArticuloEntry.TABLE_NAME);
-        db.execSQL("drop table "+CargaEntry.TABLE_NAME);
-        db.execSQL("drop table "+TransportistaEntry.TABLE_NAME);
+        //db.execSQL("delete from "+ArticuloEntry.TABLE_NAME);
+       // db.execSQL("delete from "+CargaEntry.TABLE_NAME);
+       // db.execSQL("delete from "+TransportistaEntry.TABLE_NAME);
 
-        onCreate(db);
+
 
     }
 }

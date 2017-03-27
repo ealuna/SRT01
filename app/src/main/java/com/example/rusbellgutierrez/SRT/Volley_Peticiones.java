@@ -61,12 +61,14 @@ import java.util.HashMap;
                     for(int i=0; i<ja.length(); i++){
                         JSONObject jdata = ja.getJSONObject(i);
 
-                        Clase_Articulo art= new Clase_Articulo(BigInteger.valueOf(jdata.getInt("idarticulo")),jdata.getString("nombre"),BigInteger.valueOf(jdata.getInt("codbarra")));
+                        Clase_Articulo art= new Clase_Articulo(BigInteger.valueOf(jdata.getInt("idarticulo")),jdata.getString("nombre"),BigInteger.valueOf(Long.parseLong(jdata.getString("codbarra"))));
                         Clase_Carga car= new Clase_Carga(jdata.getInt("idtransportista"),BigInteger.valueOf(jdata.getInt("idarticulo")),jdata.getString("almacen"),jdata.getInt("cantidad"),jdata.getString("fecha"),jdata.getInt("viaje"),jdata.getInt("estado"));
+                        Log.i("DATOS DE CLASES","DATOS ART "+art.getIdarticulo()+", "+art.getNombre()+", "+art.getCodbarra()+"  "+
+                        "DATOS CAR "+car.getIdtransportista()+", "+car.getIdarticulo()+", "+car.getAlmacen()+", "+car.getCantidad()+", "+car.getFecha()+", "+car.getViaje()+", "+car.getEstado());
 
                         Log.i("LOG_TAG", "idarticulo: " + jdata.getInt("idarticulo") +
                                 ", nombre: " + jdata.getString("nombre") +
-                                ", codbarra: " + jdata.getInt("codbarra") +
+                                ", codbarra: " + jdata.getString("codbarra") +
                                 ", idtransportista: " + jdata.getInt("idtransportista") +
                                 ", almacen: " + jdata.getString("almacen") +
                                 ", cantidad: " + jdata.getInt("cantidad") +
