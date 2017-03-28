@@ -1,66 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:scrollbars="vertical"
+    android:fillViewport="true"
+    android:background="@color/Honeydew">
 
-    <ImageView
-        android:id="@+id/fondo"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp" />
+        android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/boton_escaner"
+                android:layout_width="214dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="28dp"
+                android:drawableLeft="@drawable/barcode_scan"
+                android:drawablePadding="-20dp"
+                android:paddingLeft="50dp"
+                android:text="Escanear"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:theme="@style/ColorBoton2"
+                tools:layout_editor_absoluteX="53dp"
+                tools:layout_editor_absoluteY="29dp" />
 
-        <TextView
-            android:id="@+id/cod_barra"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/boton_escaner"
-            android:layout_marginTop="18dp"
-            android:gravity="center"
-            android:text=""
-            android:textColor="@color/color_hint"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="116dp" />
-
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/boton_escaner"
-            android:layout_width="214dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="28dp"
-            android:drawableLeft="@drawable/barcode_scan"
-            android:drawablePadding="-20dp"
-            android:paddingLeft="50dp"
-            android:text="Escanear"
-            android:textColor="@android:color/white"
-            android:textStyle="bold"
-            android:theme="@style/ColorBoton2"
-            tools:layout_editor_absoluteX="53dp"
-            tools:layout_editor_absoluteY="29dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+            <TextView
+                android:id="@+id/cod_barra"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/boton_escaner"
+                android:layout_marginTop="18dp"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@color/color_hint"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="116dp" />
 
         <android.support.v7.widget.CardView
             android:id="@+id/carta_articulo"
             android:layout_width="299dp"
             android:layout_height="330dp"
-            android:layout_below="@+id/cod_barra"
-            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="16dp"
             app:cardCornerRadius="20dp"
             app:cardElevation="9dp"
-            app:cardUseCompatPadding="true"
-            tools:layout_editor_absoluteX="10dp"
-            tools:layout_editor_absoluteY="157dp">
+            app:cardUseCompatPadding="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -149,7 +144,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_weight="0.01"
                         android:gravity="center"
                         android:text="Cantidad:"
                         android:textColor="@color/color_hint" />
@@ -169,7 +163,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_weight="0.02"
+                        android:layout_weight="0.01"
                         android:gravity="center"
                         android:text="Real:"
                         android:textColor="@color/color_hint" />
@@ -179,7 +173,7 @@
                         android:layout_width="46dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_weight="0.01"
+                        android:layout_weight="0.00"
                         android:gravity="center"
                         android:hint="N°"
                         android:inputType="number"
@@ -192,8 +186,7 @@
                     android:layout_width="220dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="05dp"
                     android:drawableLeft="@drawable/clipboard_check"
                     android:drawablePadding="-20dp"
                     android:paddingLeft="50dp"
@@ -207,6 +200,6 @@
 
         </android.support.v7.widget.CardView>
 
-    </RelativeLayout>
+    </LinearLayout>
 
-</FrameLayout>
+</ScrollView>

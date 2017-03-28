@@ -3,10 +3,8 @@ package com.example.rusbellgutierrez.SRT;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -21,7 +19,6 @@ import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-import com.rey.material.widget.ProgressView;
 
 import java.util.Arrays;
 
@@ -92,7 +89,7 @@ public class Activity_Central extends AppCompatActivity implements Interface_Fra
 
         final Bundle bundle = new Bundle();
         bundle.putString("codigo", codigo);
-        //Fragment_Inicio myFragment = new Fragment_Inicio ();
+        //Fragment_Dato myFragment = new Fragment_Dato ();
 //Agrega bundle como argumento al fragment.
         //myFragment.setArguments(bundle);
 
@@ -110,6 +107,10 @@ public class Activity_Central extends AppCompatActivity implements Interface_Fra
                         switch (menuItem.getItemId()) {
                             case R.id.inicio:
                                 fragment = new Fragment_Inicio();
+                                fragmentTransaction = true;
+                                break;
+                            case R.id.data:
+                                fragment = new Fragment_Dato();
                                 fragment.setArguments(bundle);
                                 fragmentTransaction = true;
                                 break;
@@ -156,7 +157,7 @@ public class Activity_Central extends AppCompatActivity implements Interface_Fra
 
         /*Bundle bundle = new Bundle();
         bundle.putString("codigo", codigo);
-        Fragment_Inicio myFragment = new Fragment_Inicio ();
+        Fragment_Dato myFragment = new Fragment_Dato ();
 //Agrega bundle como argumento al fragment.
         myFragment.setArguments(bundle);
 

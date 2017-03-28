@@ -111,7 +111,7 @@ public class Fragment_Producto extends Fragment implements View.OnClickListener{
             almacen =(TextView)v.findViewById(R.id.almacen);
             cantidad =(TextView)v.findViewById(R.id.cantidad);
             carta_articulo =(CardView)v.findViewById(R.id.carta_articulo);
-            fondo =(ImageView)v.findViewById(R.id.fondo);
+            //fondo =(ImageView)v.findViewById(R.id.fondo);
 
             boton_escaner =(Button)v.findViewById(R.id.boton_escaner);
             boton_verificar =(Button)v.findViewById(R.id.boton_verificar);

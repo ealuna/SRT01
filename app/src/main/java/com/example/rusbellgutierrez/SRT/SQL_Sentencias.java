@@ -1,6 +1,7 @@
 package com.example.rusbellgutierrez.SRT;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
@@ -65,18 +66,8 @@ class SQL_Sentencias {
         //primero comprobamos si la bd es null
         if (db!=null){
             //aca creamos pequeños artefactos para jugar con las sentencias
-            String[] args=new String[] {String.valueOf(car.getViaje())};
 
-            Cursor mcursor = db.rawQuery("SELECT count(*) FROM carga", null);
-            //la sentencia de arriba, verifica que la tabla tenga datos
 
-            mcursor.moveToFirst();
-            int icount = mcursor.getInt(0);
-
-            //se revisa si las tablas estan pobladas
-            if (icount>0){
-
-                Log.i("AVISO","YA EXISTEN DATOS");
                 /*
                 //esta sentencia revisa que sea el primer viaje del transportista
                 Cursor vcursor = db.rawQuery("SELECT MAX(viaje) FROM carga", null);
@@ -109,7 +100,7 @@ class SQL_Sentencias {
                     Log.i("AVISO","Viajes nuevos cargados");
                 }*/
 
-            }else {
+
                 ContentValues ca = new ContentValues();
                 ca.put("idtransportista",car.getIdtransportista());
                 ca.put("idarticulo",car.getIdarticulo().toString());
@@ -127,7 +118,7 @@ class SQL_Sentencias {
                 ar.put("codbarra",art.getCodbarra().toString());
 
                 db.insert("articulo",null,ar);
-            }
+
         }
     }
 
@@ -140,7 +131,7 @@ class SQL_Sentencias {
 
         if (db!=null){
             String[] args= new String[]{scanContent};
-            Cursor c=db.rawQuery("select a.codbarra, a.idarticulo, a.nombre, c.almacen, SUM(c.cantidad) from carga c, articulo a where a.idarticulo=c.idarticulo and a.codbarra=? group by a.idarticulo",args);//group by a.idarticulo
+            Cursor c=db.rawQuery("select a.codbarra, a.idarticulo, a.nombre, c.almacen, c.cantidad from carga c, articulo a where a.idarticulo=c.idarticulo and a.codbarra=?",args);//group by a.idarticulo
             //("select codbarra,nombre,idarticulo from articulo where codbarra=?",args)
             //("select a.codbarra, a.idarticulo, a.nombre, c.almacen, SUM(c.cantidad) from carga c, articulo a where a.idarticulo=c.idarticulo and a.codbarra=? group by a.idarticulo",args)
             Log.i("INFO CURSOR", "¿EL CURSOR ES TRUE O FALSE? "+c.moveToFirst());
@@ -161,39 +152,20 @@ class SQL_Sentencias {
         }
 
         return array;
-
-
-        /*SQLiteDatabase db;
+    }
+    int existe_Registro(Context context){
+        int cursor=0;
+        SQLiteDatabase db;
+        SQL_Helper helper=new SQL_Helper(context);
         db=helper.getReadableDatabase();
+
         if (db!=null){
-            String[] args=new String[] {scanContent};
-            String[] data;
-
-            Cursor c=db.rawQuery("select a.codbarra, a.idarticulo, a.nombre, c.almacen, SUM(c.cantidad) from carga c inner join articulo a on a.idarticulo=c.idarticulo where a.codbarra=? group by a.idarticulo",args);
-
-            if (c!=null){
-                data=new String[c.getCount()];
-                Log.i("AVISO","TENEMOS CURSOR "+c);
-            }else
-            Log.i("AVISO","NO TENEMOS CURSOR");
-
-
-
-
-
-
-
-
-
-                    data[0]=codbarra;
-
-            //Log.i("DATOS"," codbarra: "+codbarra+" idarticulo: "+idarticulo+" nombre: "+nombre+" almacen: "+almacen+" cantidad: "+cantidad);
+            Cursor mcursor = db.rawQuery("SELECT count(*) FROM carga", null);
+            mcursor.moveToFirst();
+            cursor = mcursor.getInt(0);
+        }else {
+            Log.i("AVISO","D:");
         }
-        if (data==null){
-            Log.i("DATA","DATA NULL "+data);
-        }
-        Log.i("DATA","RESULTADO DE LA DATA "+ Arrays.toString(data));
-        return data;*/
-
+        return cursor;
     }
 }

@@ -9,7 +9,7 @@
     porque replicar el código del navigation satura memoria
     <include layout="@layout/activity_contenedor"/>-->
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:orientation="vertical"
@@ -29,35 +29,35 @@
 
         <!--el scrollview permite ver la vista completamente, debe contener un layout obligatoriamente-->
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+        <!--android:id="@+id/content_frame"-->
+        <!--ScrollView
+             android:id="@+id/content_frame"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:scrollbars="vertical"
+             android:layout_below="@+id/toolbar"-->
 
-                <ScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scrollbars="vertical">
+            <!--Aca cambiaran entre los diferentes fragment -->
+            <FrameLayout
+                android:id="@+id/content_frame"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/Honeydew"
+                android:layout_below="@+id/toolbar"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true">
 
-                <!-- Aca cambiaran entre los diferentes fragment -->
-                <FrameLayout
-                    android:id="@+id/content_frame"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <ImageView
-                        android:layout_width="114dp"
-                        android:layout_height="112dp"
-                        android:layout_gravity="center"
-                        app:srcCompat="@drawable/student_login" />
+                <include layout="@layout/fragment_inicio"/>
 
 
-                </FrameLayout>
+            </FrameLayout>
 
-                </ScrollView>
+        <!--/ScrollView-->
 
-            </RelativeLayout>
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav"

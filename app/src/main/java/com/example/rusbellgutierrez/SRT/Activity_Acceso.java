@@ -67,7 +67,8 @@ public class Activity_Acceso extends AppCompatActivity implements Interface_Frag
     static FrameLayout progressBarHolder;
 
     //URL para conexion
-    String ip_trabajo="192.168.1.128:80";
+    String ip_trabajo_lap="192.168.1.128:80";
+    String ip_trabajo_pc="192.168.1.62:80";
     String ip_casa="192.168.0.101:80";
     String ip_geny="10.0.3.2";
     String ip_android="10.0.2.2";
@@ -77,8 +78,8 @@ public class Activity_Acceso extends AppCompatActivity implements Interface_Frag
     //String url_pass_nom="http://"+ip+"/ejemplologin/index.php?codigo=";
 
     //para mysql
-    String url_pass_nom="http://"+ip_casa+"/ejemplologin/consultarusuario.php?codigo=";
-    String url_detalle="http://"+ip_trabajo+"/ejemplologin/detalle.php?codigo=";
+    String url_pass_nom="http://"+ip_trabajo_lap+"/ejemplologin/consultarusuario.php?codigo=";
+    String url_detalle="http://"+ip_trabajo_lap+"/ejemplologin/detalle.php?codigo=";
 
 
     @Override

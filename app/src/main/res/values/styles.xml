@@ -42,6 +42,9 @@
     </style>
 
     <style name="ColorBotonDialog" parent="Theme.AppCompat.Light">
-        <item name="colorControlHighlight">#edb355</item>
+        <item name="colorControlHighlight">#8dedaa</item>
+    </style>
+    <style name="FAB1">
+        <item name="colorAccent">#d70ba7</item>
     </style>
 </resources>

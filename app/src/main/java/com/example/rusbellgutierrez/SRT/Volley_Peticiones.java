@@ -56,7 +56,13 @@ import java.util.HashMap;
                     JSONObject jo = new JSONObject(response);
                     JSONArray ja = jo.getJSONArray("detalle");
 
+                    //int c=sql.existe_Registro(helper);
+
                     System.out.println("*****JARRAY*****  " + ja.length());
+
+                    /*if (c>0){
+                        Log.i("INFORMACION"," LA TABLA YA TIENE DATOS");
+                    }else{*/
 
                     for(int i=0; i<ja.length(); i++){
                         JSONObject jdata = ja.getJSONObject(i);
@@ -80,6 +86,7 @@ import java.util.HashMap;
 
                         //Toast.makeText(context,"Los datos de los productos se cargaron",Toast.LENGTH_SHORT).show();
                     }
+                //}
 
                 } catch (JSONException e) {
                     e.printStackTrace();

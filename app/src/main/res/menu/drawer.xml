@@ -7,6 +7,10 @@
                     android:icon="@drawable/home"
                     android:title="Inicio"/>
                 <item
+                    android:id="@+id/data"
+                    android:icon="@drawable/package_down"
+                    android:title="Datos"/>
+                <item
                     android:id="@+id/ruta"
                     android:icon="@drawable/truck"
                     android:title="Ruta"/>
