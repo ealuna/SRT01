@@ -65,41 +65,6 @@ class SQL_Sentencias {
         db=helper.getWritableDatabase();
         //primero comprobamos si la bd es null
         if (db!=null){
-            //aca creamos pequeños artefactos para jugar con las sentencias
-
-
-                /*
-                //esta sentencia revisa que sea el primer viaje del transportista
-                Cursor vcursor = db.rawQuery("SELECT MAX(viaje) FROM carga", null);
-
-                //cursor para viaje
-                vcursor.moveToFirst();
-                int via = vcursor.getInt(0);
-
-                //aca se juega con el viaje, para no volver a cargar datos iguales
-                if (via==1){
-                    Log.i("AVISO","Este viaje ya está cargado");
-                }else {
-                    ContentValues ca = new ContentValues();
-                    ca.put("idtransportista",car.getIdtransportista());
-                    ca.put("idarticulo",car.getIdarticulo().toString());
-                    ca.put("almacen",car.getAlmacen());
-                    ca.put("cantidad",car.getCantidad());
-                    ca.put("fecha",car.getFecha());
-                    ca.put("viaje",car.getViaje());
-                    ca.put("estado",car.getEstado());
-
-                    db.insert("carga",null,ca);
-
-                    ContentValues ar = new ContentValues();
-                    ar.put("idarticulo",art.getIdarticulo().toString());
-                    ar.put("nombre",art.getNombre());
-                    ar.put("codbarra",art.getCodbarra().toString());
-
-                    db.insert("articulo",null,ar);
-                    Log.i("AVISO","Viajes nuevos cargados");
-                }*/
-
 
                 ContentValues ca = new ContentValues();
                 ca.put("idtransportista",car.getIdtransportista());

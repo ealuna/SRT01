@@ -27,16 +27,6 @@
             android:minHeight="?attr/actionBarSize"
             tools:ignore="UnusedAttribute" />
 
-        <!--el scrollview permite ver la vista completamente, debe contener un layout obligatoriamente-->
-
-        <!--android:id="@+id/content_frame"-->
-        <!--ScrollView
-             android:id="@+id/content_frame"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:scrollbars="vertical"
-             android:layout_below="@+id/toolbar"-->
-
             <!--Aca cambiaran entre los diferentes fragment -->
             <FrameLayout
                 android:id="@+id/content_frame"
@@ -54,9 +44,6 @@
 
             </FrameLayout>
 
-        <!--/ScrollView-->
-
-
     </RelativeLayout>
 
     <android.support.design.widget.NavigationView
@@ -67,6 +54,6 @@
         android:layout_gravity="left"
         android:scrollbarThumbVertical="@drawable/scroll_bar"
         app:headerLayout="@layout/header_drawernav_layout"
-        app:menu="@menu/drawer"/>
+        app:menu="@menu/menu_drawer"/>
 
 </android.support.v4.widget.DrawerLayout>

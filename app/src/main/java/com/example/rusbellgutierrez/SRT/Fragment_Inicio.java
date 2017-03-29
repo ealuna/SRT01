@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 
 public class Fragment_Inicio extends Fragment {
 
+    public static final String TAG="Inicio";
+
     public Fragment_Inicio() {
         // Required empty public constructor
     }

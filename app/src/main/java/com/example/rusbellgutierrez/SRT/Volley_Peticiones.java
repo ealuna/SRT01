@@ -3,13 +3,10 @@ package com.example.rusbellgutierrez.SRT;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.view.animation.AlphaAnimation;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -24,8 +21,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Created by Russbell on 22/03/2017.
@@ -68,7 +63,7 @@ import java.util.HashMap;
                         JSONObject jdata = ja.getJSONObject(i);
 
                         Clase_Articulo art= new Clase_Articulo(BigInteger.valueOf(jdata.getInt("idarticulo")),jdata.getString("nombre"),BigInteger.valueOf(Long.parseLong(jdata.getString("codbarra"))));
-                        Clase_Carga car= new Clase_Carga(jdata.getInt("idtransportista"),BigInteger.valueOf(jdata.getInt("idarticulo")),jdata.getString("almacen"),jdata.getInt("cantidad"),jdata.getString("fecha"),jdata.getInt("viaje"),jdata.getInt("estado"));
+                        Clase_Carga car= new Clase_Carga(jdata.getInt("idtransportista"),BigInteger.valueOf(jdata.getInt("idarticulo")),jdata.getString("almacen"),jdata.getInt("cantidad"),jdata.getString("fecha"),jdata.getInt("viaje"),jdata.getString("estado"));
                         Log.i("DATOS DE CLASES","DATOS ART "+art.getIdarticulo()+", "+art.getNombre()+", "+art.getCodbarra()+"  "+
                         "DATOS CAR "+car.getIdtransportista()+", "+car.getIdarticulo()+", "+car.getAlmacen()+", "+car.getCantidad()+", "+car.getFecha()+", "+car.getViaje()+", "+car.getEstado());
 
@@ -80,7 +75,7 @@ import java.util.HashMap;
                                 ", cantidad: " + jdata.getInt("cantidad") +
                                 ", viaje: " + jdata.getInt("viaje") +
                                 ", fecha: " + jdata.getString("fecha") +
-                                ", estado: " + jdata.getInt("estado"));
+                                ", estado: " + jdata.getString("estado"));
 
                         sql.guardar_detalleBD(art,car,helper);
 
@@ -155,11 +150,13 @@ import java.util.HashMap;
                     if(contra.equals(contraseña)){
 
                         Toast.makeText(context,"Bienvenido",Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(context, Activity_Central.class);
+                        Intent intent = new Intent(context, Activity_Cuerpo.class);
                         intent.putExtra("nombre",t.getNom_transp());
-                        intent.putExtra("codigo",cod);
+                        intent.putExtra("codigo",String.valueOf(t.getIdtransportista()));
                         context.startActivity(intent);
                         ((Activity)context).finish();
+
+                        Log.i("DATOS DE CODIGO","cod: "+cod+" y t.getIdTransportista: "+t.getIdtransportista());
 
                         pb.Progreso_Post(frame,button,animation);
 

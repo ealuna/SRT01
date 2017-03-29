@@ -35,7 +35,7 @@ public class Dialogo_Alerta extends DialogFragment {
             LayoutInflater inflater = getActivity().getLayoutInflater();
 
             //se infla el dialog con el layout creado
-            View v = inflater.inflate(R.layout.dialog_customize, null);
+            View v = inflater.inflate(R.layout.dialog_sesion, null);
             //le enviamos el view al builder del dialog
             builder.setView(v);
 
@@ -46,7 +46,7 @@ public class Dialogo_Alerta extends DialogFragment {
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            // Crear Cuenta...
+                            // No hace nada
                             dismiss();
                         }
                     }

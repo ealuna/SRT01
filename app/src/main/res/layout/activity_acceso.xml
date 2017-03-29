@@ -67,7 +67,7 @@
                         android:drawableLeft="@drawable/account"
                         android:id="@+id/codigo"
                         android:layout_weight="0.37"
-                        android:theme="@style/CampoTextoNaranja"/>
+                        android:theme="@style/CampoTextoVerde"/>
                 </android.support.design.widget.TextInputLayout>
 
             <CheckBox
@@ -98,7 +98,7 @@
                     android:drawableLeft="@drawable/key"
                     android:id="@+id/contraseña"
                     android:layout_weight="0.37"
-                    android:theme="@style/CampoTextoNaranja"/>
+                    android:theme="@style/CampoTextoVerde"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.v7.widget.AppCompatButton
@@ -121,25 +121,26 @@
 
     <FrameLayout
         android:id="@+id/progressBarHolder"
-        android:animateLayoutChanges="true"
-        android:visibility="gone"
-        android:alpha="0.4"
-        android:background="#000000"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:alpha="0.4"
+        android:elevation="10dp"
+        android:animateLayoutChanges="true"
+        android:background="#000000"
+        android:visibility="gone">
 
         <!--material design para progressbar, compilado desde build.gradle-->
         <com.rey.material.widget.ProgressView
             android:layout_width="48dp"
             android:layout_height="48dp"
-            app:pv_autostart="true"
-            app:pv_circular="true"
-            app:pv_progressStyle="@style/Material.Drawable.CircularProgress"
-            app:pv_progressMode="indeterminate"
             android:layout_gravity="center"
             android:indeterminate="true"
-            />
+            android:elevation="11dp"
+            app:pv_autostart="true"
+            app:pv_circular="true"
+            app:pv_progressMode="indeterminate"
+            app:pv_progressStyle="@style/Material.Drawable.CircularProgress" />
     </FrameLayout>
 
 </RelativeLayout>

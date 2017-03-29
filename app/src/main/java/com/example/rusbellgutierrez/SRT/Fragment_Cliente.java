@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 
 public class Fragment_Cliente extends Fragment{
 
+    public static final String TAG="Cliente";
+
     public Fragment_Cliente() {
         // Required empty public constructor
     }

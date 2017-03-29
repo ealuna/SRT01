@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 
 public class Fragment_Perfil extends Fragment{
 
+    public static final String TAG="Perfil";
+
     public Fragment_Perfil() {
         // Required empty public constructor
     }

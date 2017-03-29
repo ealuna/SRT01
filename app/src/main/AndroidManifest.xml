@@ -33,7 +33,7 @@
 
         <activity
 
-            android:name="com.example.rusbellgutierrez.SRT.Activity_Central"
+            android:name="com.example.rusbellgutierrez.SRT.Activity_Cuerpo"
             android:theme="@style/Sin_Bar">
 
             <intent-filter>

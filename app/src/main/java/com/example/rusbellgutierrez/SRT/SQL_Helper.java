@@ -55,7 +55,7 @@ class SQL_Helper extends SQLiteOpenHelper {
                 + CargaEntry.cantidad + " INTEGER NOT NULL,"
                 + CargaEntry.fecha + " TEXT NOT NULL,"//AÑO-MES-DIA
                 + CargaEntry.viaje + " INTEGER NOT NULL,"
-                + CargaEntry.estado + " INTEGER NOT NULL)");
+                + CargaEntry.estado + " TEXT NOT NULL)");
 
     }
 

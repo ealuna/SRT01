@@ -8,6 +8,8 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -21,9 +23,11 @@ public class Fragment_Dato extends Fragment implements Interface_FragmentListene
     private int progressStatus = 0;
     private Handler handler = new Handler();
 
+    public static final String TAG="Dato";
+
     CardView carta;
     ProgressBar pb;
-    static TextView tv,oculto_cod,contador;
+    TextView tv,oculto_cod,contador;
     FloatingActionButton btn;
     String cod_transp="";
     TextView fecha;
@@ -92,6 +96,9 @@ public class Fragment_Dato extends Fragment implements Interface_FragmentListene
             oculto_cod= (TextView)v.findViewById(R.id.oculto_cod);
             fecha= (TextView)v.findViewById(R.id.fecha);
 
+            //hacemos visible el menu
+            setHasOptionsMenu(true);
+
             //pequeña funcion para poner fecha
             fecha_Actual();
 
@@ -118,6 +125,7 @@ public class Fragment_Dato extends Fragment implements Interface_FragmentListene
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
+        //se inicia para obtener los datos del activity mediante bundle
         if(getArguments()!= null) {
             cod_transp=getArguments().getString("codigo");
             //oculto_cod.setText(String.valueOf(result));
@@ -125,15 +133,6 @@ public class Fragment_Dato extends Fragment implements Interface_FragmentListene
             Log.i("AVISO","No se obtuvo arguments");
             //oculto_cod.setText("result not included");
         }
-        //Bundle extras =this.getArguments();
-
-        //cod_transp=extras.getString("codigo");
-        /*new Thread(new Runnable() {
-            @Override
-            public void run() {
-                vp.Detalle(url_detalle+"100",getActivity());
-            }
-        }).start();*/
     }
 
     @Override
@@ -209,26 +208,6 @@ public class Fragment_Dato extends Fragment implements Interface_FragmentListene
 
                         }
                     });
-
-                    // Update the progress bar
-                   /* handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            ProgressBar pb=new ProgressBar(getContext());
-                            TextView tv=new TextView(getContext());
-                            pb.setProgress(progressStatus);
-                            // Show the progress on TextView
-                            tv.setText(progressStatus+"");
-                            // If task execution completed
-                            if(progressStatus == 100){
-                                // Hide the progress bar from layout after finishing task
-                                pb.setVisibility(View.GONE);
-                                // Set a message of completion
-                                tv.setText("Operation completed...");
-                            }
-                        }
-                    });*/
-
                 }
             }).start();
             //FINAL
@@ -250,5 +229,11 @@ public class Fragment_Dato extends Fragment implements Interface_FragmentListene
         } else {
             fecha.setText(dia + " : " + mes + " : " + anio); //cambiamos el texto que tiene el TextView por la fecha actual.
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_dato, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 }

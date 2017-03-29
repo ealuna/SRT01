@@ -19,9 +19,9 @@ public class Clase_Carga {
     private int cantidad;
     private String fecha;
     private int viaje;
-    private int estado;
+    private String estado;
 
-    public Clase_Carga(int idtransportista, BigInteger idarticulo, String almacen, int cantidad, String fecha, int viaje,int estado) {
+    public Clase_Carga(int idtransportista, BigInteger idarticulo, String almacen, int cantidad, String fecha, int viaje,String estado) {
         this.idtransportista = idtransportista;
         this.idarticulo = idarticulo;
         this.almacen = almacen;
@@ -31,11 +31,11 @@ public class Clase_Carga {
         this.estado=estado;
     }
 
-    public int getEstado() {
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(int estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
 

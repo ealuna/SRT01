@@ -1,34 +1,33 @@
 <resources>
 
-    <!-- Tema con ActionBar. -->
-    <style name="Con_Bar" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
-
     <!-- Tema sin ActionBar. -->
 
     <style name="Sin_Bar" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">#FFD70B3B</item>
         <item name="android:textColorPrimary">@android:color/black</item>
         <item name="android:textColorHint">@color/color_hint</item>
     </style>
 
     <!-- Color borde inferior -->
-    <style name="CampoTextoNaranja" parent="Theme.AppCompat.Light">
-        <item name="colorControlNormal">#50e263</item>
-        <item name="colorControlActivated">#0bd726</item>
-        <item name="android:textColorHighlight">#86ed93</item>
+    <style name="CampoTextoVerde" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">#e15074</item>
+        <item name="colorControlActivated">#d70b3e</item>
+        <item name="android:textColorHighlight">#ea859e</item>
+    </style>
+
+    <style name="CampoTextoMorado" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">#d70b3b</item>
+        <item name="colorControlNormal">#e25072</item>
+        <item name="colorControlActivated">#d70b3b</item>
+        <item name="android:textColorHighlight">#ea859d</item>
     </style>
 
     <style name="ColorBoton" parent="Theme.AppCompat.Light">
-        <item name="colorControlHighlight">#86ed93</item>
-        <item name="colorButtonNormal">#0bd726</item>
+        <item name="colorControlHighlight">#ea85b9</item>
+        <item name="colorButtonNormal">#d70b74</item>
     </style>
 
     <style name="ColorBoton3" parent="Theme.AppCompat.Light">
@@ -42,7 +41,10 @@
     </style>
 
     <style name="ColorBotonDialog" parent="Theme.AppCompat.Light">
-        <item name="colorControlHighlight">#8dedaa</item>
+        <item name="colorControlHighlight">#e789ba</item>
+    </style>
+    <style name="ColorBotonDialog2" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">#a1a3d2</item>
     </style>
     <style name="FAB1">
         <item name="colorAccent">#d70ba7</item>

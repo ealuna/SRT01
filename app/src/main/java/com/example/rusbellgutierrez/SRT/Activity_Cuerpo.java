@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -23,9 +25,9 @@ import com.google.zxing.integration.android.IntentResult;
 import java.util.Arrays;
 
 
-public class Activity_Central extends AppCompatActivity implements Interface_FragmentListener {
+public class Activity_Cuerpo extends AppCompatActivity implements Interface_FragmentListener {
 
-    //elementos para crear un drawer layout
+    //elementos para crear un menu_drawer layout
     ListView lista_drawer;
     NavigationView nav;
     DrawerLayout drawer;
@@ -40,8 +42,9 @@ public class Activity_Central extends AppCompatActivity implements Interface_Fra
     SQL_Sentencias sql=new SQL_Sentencias();
     SQL_Helper helper=new SQL_Helper(this);
 
-    //Clase para guardar los datos;
-    Clase_Articulo art;
+    //Int para guardar la posicion
+    int position=0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +81,7 @@ public class Activity_Central extends AppCompatActivity implements Interface_Fra
         //muestra el nombre de la apliación
         getSupportActionBar().setDisplayShowTitleEnabled(true);
 
-        //Aplicar el boton para desplegar el drawer
+        //Aplicar el boton para desplegar el menu_drawer
         drawerToggle = new ActionBarDrawerToggle(this,  drawer, toolbar,R.string.drawer_open, R.string.drawer_close);
         drawer.addDrawerListener(drawerToggle);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -106,31 +109,33 @@ public class Activity_Central extends AppCompatActivity implements Interface_Fra
 
                         switch (menuItem.getItemId()) {
                             case R.id.inicio:
-                                fragment = new Fragment_Inicio();
-                                fragmentTransaction = true;
+                                position=0;
+                                finish();
+                                startActivity(getIntent());
                                 break;
                             case R.id.data:
+                                position=1;
                                 fragment = new Fragment_Dato();
                                 fragment.setArguments(bundle);
                                 fragmentTransaction = true;
                                 break;
                             case R.id.ruta:
+                                position=2;
                                 fragment = new Fragment_Ruta();
                                 fragmentTransaction = true;
                                 break;
                             case R.id.cliente:
+                                position=3;
                                 fragment = new Fragment_Cliente();
                                 fragmentTransaction = true;
                                 break;
-                            case R.id.documento:
-                                fragment = new Fragment_Documento();
-                                fragmentTransaction = true;
-                                break;
                             case R.id.producto:
+                                position=5;
                                 fragment = new Fragment_Producto();
                                 fragmentTransaction = true;
                                 break;
                             case R.id.perfil:
+                                position=6;
                                 fragment = new Fragment_Perfil();
                                 fragmentTransaction = true;
                                 break;
@@ -155,14 +160,6 @@ public class Activity_Central extends AppCompatActivity implements Interface_Fra
                     }
                 });
 
-        /*Bundle bundle = new Bundle();
-        bundle.putString("codigo", codigo);
-        Fragment_Dato myFragment = new Fragment_Dato ();
-//Agrega bundle como argumento al fragment.
-        myFragment.setArguments(bundle);
-
-        Log.i("CODIGO","DATO DEL BUNDLE "+myFragment.getArguments());*/
-
     }
 
     //FUNCION QUE RECIBIRA DATOS DEL SCAN
@@ -185,6 +182,9 @@ public class Activity_Central extends AppCompatActivity implements Interface_Fra
 
             String[] data = sql.consultar_detalleBD(scanContent, helper);
 
+            if (data==null){
+                Log.i("DATO", "ARRAY FINAL" + Arrays.toString(data));
+            }else{
             Log.i("DATO", "ARRAY FINAL" + Arrays.toString(data));
             //Fragment_Producto fp=new Fragment_Producto();
 
@@ -212,13 +212,20 @@ public class Activity_Central extends AppCompatActivity implements Interface_Fra
             if (bundle != null) {
 
                 //llamamos al metodo newInstance y le pasamos el bundle con datos
-                Fragment_Producto.newInstance(bundle);
+                //Fragment_Producto.newInstance(bundle);
+                //codigo opcional para evitar fuga de memoria por contenedores statics
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                Fragment_Producto fp=new Fragment_Producto();
+                ft.replace(R.id.content_frame, fp.newInstance(bundle));
+                ft.addToBackStack(null);
+                ft.commit();
+
                 Log.d("Fragment_Producto", "Tenemos data: " + bundle + ", " + bundle.getString("contenido") + ", " + bundle.getString("formato"));
 
             } else {
                 Log.d("Fragment_Producto", "No hay data");
 
-            }
+            }}
             }
         }
         else{
@@ -231,5 +238,16 @@ public class Activity_Central extends AppCompatActivity implements Interface_Fra
     @Override
     public void onFragmentListener(Bundle parameters) {
 
+    }
+    //funcion para refrescar activity
+    @Override
+    public void onBackPressed(){
+
+        if (position>0){
+            finish();
+            startActivity(getIntent());
+        }else{
+            new Dialogo_Alerta().show(getSupportFragmentManager(), "SimpleDialog");
+        }
     }
 }

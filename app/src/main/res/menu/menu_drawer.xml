@@ -16,12 +16,8 @@
                     android:title="Ruta"/>
                 <item
                     android:id="@+id/cliente"
-                    android:icon="@drawable/cart"
-                    android:title="Clientes"/>
-                <item
-                    android:id="@+id/documento"
                     android:icon="@drawable/clipboard_text"
-                    android:title="Documentos"/>
+                    android:title="Clientes"/>
                 <item
                     android:id="@+id/producto"
                     android:icon="@drawable/product"

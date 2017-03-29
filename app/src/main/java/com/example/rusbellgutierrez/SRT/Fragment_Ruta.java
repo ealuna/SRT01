@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 
 public class Fragment_Ruta extends Fragment {
 
+    public static final String TAG="Ruta";
+
     public Fragment_Ruta() {
         // Required empty public constructor
     }

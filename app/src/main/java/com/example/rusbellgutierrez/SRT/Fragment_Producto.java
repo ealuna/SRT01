@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,27 +24,27 @@ import java.lang.reflect.Array;
 
 public class Fragment_Producto extends Fragment implements View.OnClickListener{
 
+    public static final String TAG="Producto";
+
     Button boton_escaner, boton_verificar;
-    private static TextView cod_barra,cod_articulo,nom_articulo,almacen,cantidad;
-    EditText can_real;
+    TextView cod_barra,cod_articulo,nom_articulo,almacen,cantidad,obs_text;
+    CheckBox ch_estado;
     CardView carta_articulo;
-    ImageView fondo;
-    String format,content;
+
+
+    String content;
 
     //creamos un objetos de la interface
     private Interface_FragmentListener mCallback=null;
 
     /*NOTA: para poder usar los datos provenientes del bundle del activity, se usa este metodo static y de ahi se puede instanciar
     * o llamar o enviar SOLAMENTE a campos y metodos del tipo static*/
+
+    /*NOTA2: usar views de tipo static ocasionan fuga de memoria*/
     public static Fragment_Producto newInstance(Bundle arguments){
         Fragment_Producto f = new Fragment_Producto();
         if(arguments != null){
             f.setArguments(arguments);
-            cod_barra.setText(f.getArguments().getString("codbarra"));
-            cod_articulo.setText(f.getArguments().getString("idarticulo"));
-            nom_articulo.setText(f.getArguments().getString("nombre"));
-            almacen.setText(f.getArguments().getString("almacen"));
-            cantidad.setText(f.getArguments().getString("cantidad"));
             Log.d("RESULTADO", "Tenemos data: "+f);
         }else {
             Log.d("RESULTADO", "No tenemos data");}
@@ -61,25 +63,6 @@ public class Fragment_Producto extends Fragment implements View.OnClickListener{
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
-
-        //realizaremos una condicional para ver si recibimos datos del actitivy_central
-        /*if (getArguments()!=null){
-
-            Bundle extras= this.getArguments();
-            String contenido= extras.getString("contenido");
-            String formato= extras.getString("formato");
-            cod_barra.setText(extras.getString("contenido"));
-            nom_articulo.setText(extras.getString("formato"));
-            Toast toast = Toast.makeText(getContext(),
-                    "contenido: "+contenido+" y formato: "+formato, Toast.LENGTH_LONG);
-            toast.show();
-
-            can_real.setEnabled(true);
-            boton_verificar.setEnabled(true);
-
-        }else {
-
-        }*/
     }
 
     //Se adjunta el fragment con el activity para poder pasar datos entre ellos
@@ -111,21 +94,28 @@ public class Fragment_Producto extends Fragment implements View.OnClickListener{
             almacen =(TextView)v.findViewById(R.id.almacen);
             cantidad =(TextView)v.findViewById(R.id.cantidad);
             carta_articulo =(CardView)v.findViewById(R.id.carta_articulo);
-            //fondo =(ImageView)v.findViewById(R.id.fondo);
+            //campo invisible que obtiene el estado
+            obs_text =(TextView)v.findViewById(R.id.observacion_text);
 
             boton_escaner =(Button)v.findViewById(R.id.boton_escaner);
             boton_verificar =(Button)v.findViewById(R.id.boton_verificar);
-            can_real =(EditText)v.findViewById(R.id.can_real);
+            ch_estado =(CheckBox)v.findViewById(R.id.ch_estado);
         }
 
         boton_escaner.setOnClickListener(this);
         boton_verificar.setOnClickListener(this);
+
+        ch_estado.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    //llamamos al dialogo de observacion
+                    new Dialogo_Observacion().show(getFragmentManager(), "RadioDialog");
+                }
+            }
+        });
         // retornamos el view para visualizar el fragment
         return v;
-
-        /*if (Fragment_Producto.newInstance(savedInstanceState).getArguments()!=null){
-            String hola=Fragment_Producto.newInstance(savedInstanceState).getArguments().getString("contenido");
-        }*/
     }
 
         //metodos onClick
@@ -146,7 +136,7 @@ public class Fragment_Producto extends Fragment implements View.OnClickListener{
                     nom_articulo.setText("");
                     almacen.setText("");
                     cantidad.setText("");
-                    can_real.setEnabled(false);
+                    ch_estado.setEnabled(false);
                     boton_verificar.setEnabled(false);
                 }
             }
@@ -156,30 +146,30 @@ public class Fragment_Producto extends Fragment implements View.OnClickListener{
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-            can_real.setEnabled(true);
-            boton_verificar.setEnabled(true);
-
     }
     @Override
     public void onResume(){
         super.onResume();
+        if(getArguments()!= null) {
+            cod_barra.setText(getArguments().getString("codbarra"));
+            cod_articulo.setText(getArguments().getString("idarticulo"));
+            nom_articulo.setText(getArguments().getString("nombre"));
+            almacen.setText(getArguments().getString("almacen"));
+            cantidad.setText(getArguments().getString("cantidad"));
+
+        } else {
+            Log.i("AVISO","No se obtuvo arguments");
+        }
         if (cod_barra.getText().equals("")){
 
-            can_real.setEnabled(false);
+            ch_estado.setEnabled(false);
             boton_verificar.setEnabled(false);
 
         }else {
 
-            can_real.setEnabled(true);
+            ch_estado.setEnabled(true);
             boton_verificar.setEnabled(true);
         }
     }
-
-    //quitamos el fragment del activity despues de ejecutar
-    /*@Override
-    public void onDetach(){
-        mCallback=null;
-        super.onDetach();
-    }*/
 
 }

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="260dp"
+        android:layout_height="330dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:orientation="vertical"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:paddingTop="24dp"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/titulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:ems="10"
+            android:text="Estado..."
+            android:textColor="@color/color_hint"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:id="@+id/radio_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="50dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/rb_completo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Completo" />
+
+            <RadioButton
+                android:id="@+id/rb_faltante"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Faltante" />
+
+            <RadioButton
+                android:id="@+id/rb_stock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sin stock" />
+
+            <RadioButton
+                android:id="@+id/rb_dañado"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Dañado" />
+        </RadioGroup>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp">
+
+            <EditText
+                android:id="@+id/obser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="15"
+                android:enabled="false"
+                android:gravity="center"
+                android:hint="Observación"
+                android:textAlignment="center"
+                android:inputType="text"
+                android:theme="@style/CampoTextoMorado" />
+        </android.support.design.widget.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/cancel"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cancelar"
+                android:textColor="#0e1197"
+                android:theme="@style/ColorBotonDialog2" />
+
+            <Button
+                android:id="@+id/ok"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="Aceptar"
+                android:textColor="#0e1197"
+                android:theme="@style/ColorBotonDialog2" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

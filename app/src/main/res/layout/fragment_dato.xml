@@ -109,6 +109,7 @@
                     android:src="@drawable/download"
                     android:theme="@style/FAB1"
                     app:fabSize="normal"
+                    android:elevation="10dp"
                     app:fab_elevation="3dp"
                     app:rippleColor="@color/Orchid"
                     android:layout_marginBottom="18dp"
