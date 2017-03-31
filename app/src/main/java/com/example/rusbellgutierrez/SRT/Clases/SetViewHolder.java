@@ -30,6 +30,9 @@ public class SetViewHolder extends RecyclerView.ViewHolder {
         almprod=(TextView)itemView.findViewById(R.id.almprod);
         canprod=(TextView)itemView.findViewById(R.id.canprod);
 
+        //experimental
+
+
         fab_edit=(FloatingActionButton)itemView.findViewById(R.id.fab_edit);
     }
 

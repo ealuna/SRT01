@@ -151,6 +151,7 @@ public class Fragment_Producto extends Fragment implements View.OnClickListener{
                     almacen.setText("");
                     cantidad.setText("");
                     ch_estado.setEnabled(false);
+                    ch_estado.setChecked(false);
                     boton_verificar.setEnabled(false);
                 }
             }
@@ -199,14 +200,14 @@ public class Fragment_Producto extends Fragment implements View.OnClickListener{
         switch (item.getItemId()) {
             case R.id.m_buscar:
 
-                mCallback.onSetTitle("Producto");
+                mCallback.onSetTitle("Productos");
 
-                Bundle bun =new Bundle();
-                bun.putString("codtransp",codoculto);
+                /*Bundle bun =new Bundle();
+                bun.putString("codtransp",codoculto);*/
 
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 Fragment_Busqueda fb=new Fragment_Busqueda();
-                fb.setArguments(bun);
+                //fb.setArguments(bun);
                 ft.replace(R.id.content_frame, fb);
                 ft.addToBackStack(null);
                 ft.commit();

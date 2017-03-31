@@ -72,7 +72,7 @@ public class Activity_Acceso extends AppCompatActivity implements OnFragmentList
     //String url_pass_nom="http://"+ip+"/ejemplologin/index.php?codigo=";
 
     //para mysql
-    String url_pass_nom="http://"+ip_casa+"/ejemplologin/consultarusuario.php?codigo=";
+    String url_pass_nom="http://"+ip_trabajo_lap+"/ejemplologin/consultarusuario.php?codigo=";
 
 
     @Override
@@ -126,11 +126,15 @@ public class Activity_Acceso extends AppCompatActivity implements OnFragmentList
                     //enviamos el campo del edittext a un string
                 String pass=contraseña.getText().toString();
 
+                recordar.setEnabled(false);
+                boton_acceso.setEnabled(false);
 
                    //aca se inicia la URL para conectar con el JSON
-
-
                 vp.Consulta(url_pass_nom+codigo.getText().toString(),context,pass,progressBarHolder,boton_acceso,animation);
+
+                recordar.setEnabled(true);
+                boton_acceso.setEnabled(true);
+
 
             }
         });

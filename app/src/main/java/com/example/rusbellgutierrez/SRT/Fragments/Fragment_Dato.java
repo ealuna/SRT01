@@ -55,8 +55,8 @@ public class Fragment_Dato extends Fragment implements OnFragmentListener,View.O
     //String url_pass_nom="http://"+ip+"/ejemplologin/index.php?codigo=";
 
     //para mysql
-    String url_detalle="http://"+ip_casa+"/ejemplologin/detalle.php?codigo=";
-    String url_verificar="http://"+ip_casa+"/ejemplologin/obtener.php?codigo=";
+    String url_detalle="http://"+ip_trabajo_lap+"/ejemplologin/detalle.php?codigo=";
+    String url_verificar="http://"+ip_trabajo_lap+"/ejemplologin/obtener.php?codigo=";
 
 
     public static Fragment_Dato newInstance(Bundle arguments){

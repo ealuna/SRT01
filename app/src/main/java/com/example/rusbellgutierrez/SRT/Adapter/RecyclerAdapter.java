@@ -1,9 +1,13 @@
 package com.example.rusbellgutierrez.SRT.Adapter;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +22,7 @@ import com.example.rusbellgutierrez.SRT.R;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Russbell on 30/03/2017.
@@ -27,6 +32,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<SetViewHolder> {
     private Activity activity;
     List<Clase_FeedItem> feed= Collections.emptyList();
     private OnTapListener onTapListener;
+    //string para obtener la cantidad de caracteres que coinciden
+    public String searchText="";
 
     private OnFragmentListener onFragmentListener;
 
@@ -42,11 +49,75 @@ public class RecyclerAdapter extends RecyclerView.Adapter<SetViewHolder> {
 
     @Override
     public void onBindViewHolder(final SetViewHolder holder, final int position) {
-        holder.codbar.setText(feed.get(position).getCodbar());
-        holder.codprod.setText(feed.get(position).getCodprod());
-        holder.nomprod.setText(feed.get(position).getNomprod());
-        holder.almprod.setText(feed.get(position).getAlmprod());
-        holder.canprod.setText(feed.get(position).getCanprod());
+
+        String barra=feed.get(position).getCodbar();
+        String codigo=feed.get(position).getCodprod();
+        String nombre=feed.get(position).getNomprod();
+        String almacen=feed.get(position).getAlmprod();
+        String cantidad=feed.get(position).getCanprod();
+
+        holder.codbar.setText(barra);
+        holder.codprod.setText(codigo);
+        holder.nomprod.setText(nombre);
+        holder.almprod.setText(almacen);
+        holder.canprod.setText(cantidad);
+
+        Clase_FeedItem txt= feed.get(position);
+        String cobar=txt.getCodbar().toLowerCase(Locale.getDefault());
+        if (cobar.contains(searchText)){
+
+            int startPos=cobar.indexOf(searchText);
+            int endPos=startPos+searchText.length();
+
+            Spannable spanString=Spannable.Factory.getInstance().newSpannable(holder.codbar.getText());
+            spanString.setSpan(new ForegroundColorSpan(Color.RED),startPos,endPos,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            holder.codbar.setText(spanString);
+        }
+        String prod=txt.getCodprod().toLowerCase(Locale.getDefault());
+        if (prod.contains(searchText)){
+
+            int startPos=prod.indexOf(searchText);
+            int endPos=startPos+searchText.length();
+
+            Spannable spanString=Spannable.Factory.getInstance().newSpannable(holder.codprod.getText());
+            spanString.setSpan(new ForegroundColorSpan(Color.RED),startPos,endPos,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            holder.codprod.setText(spanString);
+        }
+        String name=txt.getNomprod().toLowerCase(Locale.getDefault());
+        if (name.contains(searchText)){
+
+            int startPos=name.indexOf(searchText);
+            int endPos=startPos+searchText.length();
+
+            Spannable spanString=Spannable.Factory.getInstance().newSpannable(holder.nomprod.getText());
+            spanString.setSpan(new ForegroundColorSpan(Color.RED),startPos,endPos,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            holder.nomprod.setText(spanString);
+        }
+        String alm=txt.getAlmprod().toLowerCase(Locale.getDefault());
+        if (alm.contains(searchText)){
+
+            int startPos=alm.indexOf(searchText);
+            int endPos=startPos+searchText.length();
+
+            Spannable spanString=Spannable.Factory.getInstance().newSpannable(holder.almprod.getText());
+            spanString.setSpan(new ForegroundColorSpan(Color.RED),startPos,endPos,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            holder.almprod.setText(spanString);
+        }
+        String can=txt.getCanprod().toLowerCase(Locale.getDefault());
+        if (can.contains(searchText)){
+
+            int startPos=can.indexOf(searchText);
+            int endPos=startPos+searchText.length();
+
+            Spannable spanString=Spannable.Factory.getInstance().newSpannable(holder.canprod.getText());
+            spanString.setSpan(new ForegroundColorSpan(Color.RED),startPos,endPos,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            holder.canprod.setText(spanString);
+        }
 
         //realizamos el listener para los floatingactionbuton de cada item del recyclerview
         holder.fab_edit.setOnClickListener(new View.OnClickListener() {
@@ -84,6 +155,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<SetViewHolder> {
     public void setFilter(List<Clase_FeedItem> clase_feedItems) {
         feed = new ArrayList<>();
         feed.addAll(clase_feedItems);
+        this.searchText = searchText;
         notifyDataSetChanged();
     }
 }
