@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/m_buscar"
+        android:icon="@drawable/magnify"
+        app:showAsAction="always"
+        android:title="Buscar"/>
+    <item android:id="@+id/m_inicio"
+        android:icon="@drawable/home"
+        app:showAsAction="ifRoom"
+        android:title="Inicio"/>
+    <item android:id="@+id/m_sesion"
+        android:icon="@drawable/account_remove"
+        app:showAsAction="ifRoom"
+        android:title="Cerrar Sesion"/>
+</menu>

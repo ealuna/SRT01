@@ -1,4 +1,4 @@
-package com.example.rusbellgutierrez.SRT;
+package com.example.rusbellgutierrez.SRT.Misc;
 
 import android.view.View;
 import android.view.animation.AlphaAnimation;

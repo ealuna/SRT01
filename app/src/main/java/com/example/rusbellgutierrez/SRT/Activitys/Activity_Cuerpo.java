@@ -1,11 +1,10 @@
-package com.example.rusbellgutierrez.SRT;
+package com.example.rusbellgutierrez.SRT.Activitys;
 
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -19,13 +18,23 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.rusbellgutierrez.SRT.Dialogs.Dialogo_Sesion;
+import com.example.rusbellgutierrez.SRT.Fragments.Fragment_Cliente;
+import com.example.rusbellgutierrez.SRT.Fragments.Fragment_Dato;
+import com.example.rusbellgutierrez.SRT.Fragments.Fragment_Perfil;
+import com.example.rusbellgutierrez.SRT.Fragments.Fragment_Producto;
+import com.example.rusbellgutierrez.SRT.Fragments.Fragment_Ruta;
+import com.example.rusbellgutierrez.SRT.Interfaces.OnFragmentListener;
+import com.example.rusbellgutierrez.SRT.R;
+import com.example.rusbellgutierrez.SRT.SQL.SQL_Helper;
+import com.example.rusbellgutierrez.SRT.SQL.SQL_Sentencias;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import java.util.Arrays;
 
 
-public class Activity_Cuerpo extends AppCompatActivity implements Interface_FragmentListener {
+public class Activity_Cuerpo extends AppCompatActivity implements OnFragmentListener {
 
     //elementos para crear un menu_drawer layout
     ListView lista_drawer;
@@ -37,7 +46,18 @@ public class Activity_Cuerpo extends AppCompatActivity implements Interface_Frag
     Context context=this;
     ActionBarDrawerToggle drawerToggle;
 
-    Interface_FragmentListener mCallback=null;
+    OnFragmentListener mCallback=null;
+
+    //Volley_Peticiones vp= new Volley_Peticiones();
+
+    String ip_trabajo_lap="192.168.1.128:80";
+    String ip_trabajo_pc="192.168.1.62:80";
+    String ip_casa="192.168.0.101:80";
+    String ip_geny="10.0.3.2";
+    String ip_android="10.0.2.2";
+
+    //para mysql
+    //String url_verificar="http://"+ip_casa+"/ejemplologin/obtener.php?codigo=";
 
     SQL_Sentencias sql=new SQL_Sentencias();
     SQL_Helper helper=new SQL_Helper(this);
@@ -48,8 +68,6 @@ public class Activity_Cuerpo extends AppCompatActivity implements Interface_Frag
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cuerpo);
 
@@ -66,9 +84,12 @@ public class Activity_Cuerpo extends AppCompatActivity implements Interface_Frag
         //se crea el objeto que contendra el nombre
         TextView nom_usuario = (TextView)header.findViewById(R.id.username);
         TextView cod_usuario= (TextView)header.findViewById(R.id.code);
+        TextView oculto= (TextView)header.findViewById(R.id.oculto);
         //seteamos
         nom_usuario.setText(nombre);
         cod_usuario.setText(codigo);
+
+        //vp.consultarDetalle(url_verificar + codigo, this, oculto);
 
         Log.i("CODIGO","DATO DEL CODIGO "+cod_usuario.getText().toString());
 
@@ -92,9 +113,13 @@ public class Activity_Cuerpo extends AppCompatActivity implements Interface_Frag
 
         final Bundle bundle = new Bundle();
         bundle.putString("codigo", codigo);
+        //bundle.putString("respuesta",oculto.getText().toString());
         //Fragment_Dato myFragment = new Fragment_Dato ();
 //Agrega bundle como argumento al fragment.
         //myFragment.setArguments(bundle);
+
+        //enviar el codigo al fragment de busqueda
+
 
         Log.i("CODIGO","DATO DEL BUNDLE "+bundle);
 
@@ -140,7 +165,7 @@ public class Activity_Cuerpo extends AppCompatActivity implements Interface_Frag
                                 fragmentTransaction = true;
                                 break;
                             case R.id.sesion:
-                                new Dialogo_Alerta().show(getSupportFragmentManager(), "SimpleDialog");
+                                new Dialogo_Sesion().show(getSupportFragmentManager(), "SimpleDialog");
                                 break;
                         }
 
@@ -182,7 +207,18 @@ public class Activity_Cuerpo extends AppCompatActivity implements Interface_Frag
 
             String[] data = sql.consultar_detalleBD(scanContent, helper);
 
-            if (data==null){
+            if (data[0]==null){
+                //si el array es null, en lugar de lanzar error, redirige al fragment
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                Fragment_Producto fp=new Fragment_Producto();
+                ft.replace(R.id.content_frame, fp);
+                ft.addToBackStack(null);
+                ft.commit();
+
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "Producto no pertenece al pedido", Toast.LENGTH_SHORT);
+                toast.show();
+
                 Log.i("DATO", "ARRAY FINAL" + Arrays.toString(data));
             }else{
             Log.i("DATO", "ARRAY FINAL" + Arrays.toString(data));
@@ -235,10 +271,18 @@ public class Activity_Cuerpo extends AppCompatActivity implements Interface_Frag
         }
     }
 
+    //INICIO DE METODOS DE LA INTERFACE
     @Override
     public void onFragmentListener(Bundle parameters) {
 
     }
+
+    @Override
+    public void onSetTitle(String title) {
+        toolbar.setTitle(title);
+    }
+    //FIN DE LOS METODOS DE LA INTERFACE
+
     //funcion para refrescar activity
     @Override
     public void onBackPressed(){
@@ -247,7 +291,7 @@ public class Activity_Cuerpo extends AppCompatActivity implements Interface_Frag
             finish();
             startActivity(getIntent());
         }else{
-            new Dialogo_Alerta().show(getSupportFragmentManager(), "SimpleDialog");
+            new Dialogo_Sesion().show(getSupportFragmentManager(), "SimpleDialog");
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.example.rusbellgutierrez.SRT;
+package com.example.rusbellgutierrez.SRT.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -6,11 +6,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class Fragment_Ruta extends Fragment {
+import com.example.rusbellgutierrez.SRT.R;
 
-    public static final String TAG="Ruta";
+/**
+ * Created by Rusbell Gutierrez on 14/03/2017.
+ */
 
-    public Fragment_Ruta() {
+public class Fragment_Cliente extends Fragment{
+
+    public static final String TAG="Cliente";
+
+    public Fragment_Cliente() {
         // Required empty public constructor
     }
 
@@ -18,6 +24,6 @@ public class Fragment_Ruta extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_ruta, container, false);
+        return inflater.inflate(R.layout.fragment_cliente, container, false);
     }
 }

@@ -18,6 +18,7 @@
                 android:id="@+id/oculto_cod"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:layout_alignParentStart="true" />
 
             <TextView
@@ -52,11 +53,11 @@
                     android:layout_height="350dp"
                     android:layout_gravity="center"
                     android:layout_marginBottom="35dp"
-                    android:layout_marginLeft="18dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginStart="18dp"
+                    android:layout_marginEnd="20dp"
                     android:layout_marginTop="30dp"
                     app:cardCornerRadius="10dp"
-                    app:cardElevation="9dp">
+                    app:cardElevation="5dp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -104,15 +105,13 @@
                     android:id="@+id/btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:src="@drawable/download"
                     android:theme="@style/FAB1"
                     app:fabSize="normal"
-                    android:elevation="10dp"
                     app:fab_elevation="3dp"
+                    app:layout_anchor="@id/carta"
+                    app:layout_anchorGravity="bottom|end"
                     app:rippleColor="@color/Orchid"
-                    android:layout_marginBottom="18dp"
+                    app:srcCompat="@drawable/download"
                     android:layout_alignParentBottom="true"
                     android:layout_alignEnd="@+id/carta" />
 

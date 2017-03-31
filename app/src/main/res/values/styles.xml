@@ -44,7 +44,7 @@
         <item name="colorControlHighlight">#e789ba</item>
     </style>
     <style name="ColorBotonDialog2" parent="Theme.AppCompat.Light">
-        <item name="colorControlHighlight">#a1a3d2</item>
+        <item name="colorControlHighlight">#cf9fae</item>
     </style>
     <style name="FAB1">
         <item name="colorAccent">#d70ba7</item>

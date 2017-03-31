@@ -1,4 +1,4 @@
-package com.example.rusbellgutierrez.SRT;
+package com.example.rusbellgutierrez.SRT.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -6,15 +6,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.rusbellgutierrez.SRT.R;
+
 /**
  * Created by Rusbell Gutierrez on 14/03/2017.
  */
 
-public class Fragment_Cliente extends Fragment{
+public class Fragment_Inicio extends Fragment {
 
-    public static final String TAG="Cliente";
+    public static final String TAG="Inicio";
 
-    public Fragment_Cliente() {
+    public Fragment_Inicio() {
         // Required empty public constructor
     }
 
@@ -22,6 +24,6 @@ public class Fragment_Cliente extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cliente, container, false);
+        return inflater.inflate(R.layout.fragment_inicio, container, false);
     }
 }

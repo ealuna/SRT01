@@ -1,4 +1,4 @@
-package com.example.rusbellgutierrez.SRT;
+package com.example.rusbellgutierrez.SRT.SQL;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,18 +6,24 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import java.lang.reflect.Array;
+import com.example.rusbellgutierrez.SRT.Clases.Clase_Articulo;
+import com.example.rusbellgutierrez.SRT.Clases.Clase_Carga;
+import com.example.rusbellgutierrez.SRT.Clases.Clase_FeedItem;
+import com.example.rusbellgutierrez.SRT.Clases.Clase_Transportista;
+import com.example.rusbellgutierrez.SRT.SQL.SQL_Helper;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Russbell on 22/03/2017.
  */
 
-class SQL_Sentencias {
+public class SQL_Sentencias {
 
 
-    void guardar_transportistaBD(Clase_Transportista t, SQL_Helper helper){
+    public void guardar_transportistaBD(Clase_Transportista t, SQL_Helper helper){
 
         String codigo="";
 
@@ -57,7 +63,7 @@ class SQL_Sentencias {
         }
     }
 
-    void guardar_detalleBD(Clase_Articulo art,Clase_Carga car,SQL_Helper helper){
+    public void guardar_detalleBD(Clase_Articulo art, Clase_Carga car, SQL_Helper helper){
 
         SQLiteDatabase db;
 
@@ -87,7 +93,7 @@ class SQL_Sentencias {
         }
     }
 
-    String[] consultar_detalleBD(String scanContent,SQL_Helper helper){
+    public String[] consultar_detalleBD(String scanContent, SQL_Helper helper){
         /*Clase_Articulo art;
         Clase_Carga car;*/
         String[] array=new String[5];
@@ -118,7 +124,7 @@ class SQL_Sentencias {
 
         return array;
     }
-    int existe_Registro(Context context){
+    public int existe_Registro(Context context){
         int cursor=0;
         SQLiteDatabase db;
         SQL_Helper helper=new SQL_Helper(context);

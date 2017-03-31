@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.rusbellgutierrez.SRT">
-    <uses-sdk android:minSdkVersion="19" android:targetSdkVersion="23"/>
+    <uses-sdk android:minSdkVersion="19" android:targetSdkVersion="25"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <supports-screens android:resizeable="true"
     android:smallScreens="false"
@@ -19,7 +19,7 @@
         android:label="S.R.T"
         android:supportsRtl="true">
 
-        <activity android:name="com.example.rusbellgutierrez.SRT.Activity_Acceso"
+        <activity android:name="com.example.rusbellgutierrez.SRT.Activitys.Activity_Acceso"
             android:theme="@style/Sin_Bar"
             >
             <intent-filter>
@@ -33,7 +33,7 @@
 
         <activity
 
-            android:name="com.example.rusbellgutierrez.SRT.Activity_Cuerpo"
+            android:name="com.example.rusbellgutierrez.SRT.Activitys.Activity_Cuerpo"
             android:theme="@style/Sin_Bar">
 
             <intent-filter>

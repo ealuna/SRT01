@@ -1,17 +1,15 @@
-package com.example.rusbellgutierrez.SRT;
+package com.example.rusbellgutierrez.SRT.SQL;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import static com.example.rusbellgutierrez.SRT.SQL_Columnas.ArticuloEntry;
-import static com.example.rusbellgutierrez.SRT.SQL_Columnas.TransportistaEntry;
-import static com.example.rusbellgutierrez.SRT.SQL_Columnas.CargaEntry;
+import static com.example.rusbellgutierrez.SRT.SQL.SQL_Columnas.ArticuloEntry;
+import static com.example.rusbellgutierrez.SRT.SQL.SQL_Columnas.TransportistaEntry;
+import static com.example.rusbellgutierrez.SRT.SQL.SQL_Columnas.CargaEntry;
 
 
-class SQL_Helper extends SQLiteOpenHelper {
+public class SQL_Helper extends SQLiteOpenHelper {
 
     //creamos la BD
     private static final String db_name="DB_SRT";
@@ -23,7 +21,7 @@ class SQL_Helper extends SQLiteOpenHelper {
             + ArticuloEntry.TABLE_NAME + " ADD COLUMN " + COLUMN_STADIUM + " string;";*/
 
     //metodo para constructor
-    SQL_Helper(Context context1){
+    public SQL_Helper(Context context1){
         super(context1,db_name,null,1);
         //context1.deleteDatabase("DB_SRT");
         /*no se necesita mas*/

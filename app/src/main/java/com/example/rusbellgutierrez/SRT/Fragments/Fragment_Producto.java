@@ -1,41 +1,41 @@
-package com.example.rusbellgutierrez.SRT;
+package com.example.rusbellgutierrez.SRT.Fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.rusbellgutierrez.SRT.Dialogs.Dialogo_Observacion;
+import com.example.rusbellgutierrez.SRT.Dialogs.Dialogo_Sesion;
+import com.example.rusbellgutierrez.SRT.Interfaces.OnFragmentListener;
+import com.example.rusbellgutierrez.SRT.R;
 import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
-
-import java.lang.reflect.Array;
 
 public class Fragment_Producto extends Fragment implements View.OnClickListener{
 
     public static final String TAG="Producto";
 
     Button boton_escaner, boton_verificar;
-    TextView cod_barra,cod_articulo,nom_articulo,almacen,cantidad,obs_text;
+    TextView cod_barra,cod_articulo,nom_articulo,almacen,cantidad,obs_text,cod_oculto;
     CheckBox ch_estado;
     CardView carta_articulo;
 
-
-    String content;
+    String codoculto="";
 
     //creamos un objetos de la interface
-    private Interface_FragmentListener mCallback=null;
+    OnFragmentListener mCallback=null;
 
     /*NOTA: para poder usar los datos provenientes del bundle del activity, se usa este metodo static y de ahi se puede instanciar
     * o llamar o enviar SOLAMENTE a campos y metodos del tipo static*/
@@ -63,6 +63,15 @@ public class Fragment_Producto extends Fragment implements View.OnClickListener{
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
+        //se inicia para obtener los datos del activity mediante bundle
+        if(getArguments()!= null) {
+            codoculto=getArguments().getString("codigo");
+
+            //oculto_cod.setText(String.valueOf(result));
+        } else {
+            Log.i("AVISO","No se obtuvo arguments");
+            //oculto_cod.setText("result not included");
+        }
     }
 
     //Se adjunta el fragment con el activity para poder pasar datos entre ellos
@@ -71,9 +80,9 @@ public class Fragment_Producto extends Fragment implements View.OnClickListener{
         super.onAttach(context);
         try{
             //revisar el attach, original mCallback = (FragmentIterarionListener) context;
-            mCallback = (Interface_FragmentListener) context;
+            mCallback = (OnFragmentListener) context;
         }catch(Exception e){
-            Log.e("ExampleFragment", "El Activity debe implementar la interfaz Interface_FragmentListener");
+            Log.e("ExampleFragment", "El Activity debe implementar la interfaz OnFragmentListener");
         }
     }
 
@@ -100,6 +109,11 @@ public class Fragment_Producto extends Fragment implements View.OnClickListener{
             boton_escaner =(Button)v.findViewById(R.id.boton_escaner);
             boton_verificar =(Button)v.findViewById(R.id.boton_verificar);
             ch_estado =(CheckBox)v.findViewById(R.id.ch_estado);
+
+
+
+            //hacemos visible el menu
+            setHasOptionsMenu(true);
         }
 
         boton_escaner.setOnClickListener(this);
@@ -172,4 +186,48 @@ public class Fragment_Producto extends Fragment implements View.OnClickListener{
         }
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_producto, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    //funciona
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.m_buscar:
+
+                mCallback.onSetTitle("Producto");
+
+                Bundle bun =new Bundle();
+                bun.putString("codtransp",codoculto);
+
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                Fragment_Busqueda fb=new Fragment_Busqueda();
+                fb.setArguments(bun);
+                ft.replace(R.id.content_frame, fb);
+                ft.addToBackStack(null);
+                ft.commit();
+
+
+                return true;
+            case R.id.m_inicio:
+
+                mCallback.onSetTitle("S.R.T");
+                FragmentTransaction f = getFragmentManager().beginTransaction();
+                Fragment_Inicio fi=new Fragment_Inicio();
+                f.replace(R.id.content_frame, fi);
+                f.addToBackStack(null);
+                f.commit();
+
+                return true;
+            case R.id.m_sesion:
+                new Dialogo_Sesion().show(getFragmentManager(), "SimpleDialog");
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }

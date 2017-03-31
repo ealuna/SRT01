@@ -1,4 +1,4 @@
-package com.example.rusbellgutierrez.SRT;
+package com.example.rusbellgutierrez.SRT.Volley;
 
 import android.app.Activity;
 import android.content.Context;
@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -15,6 +16,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.rusbellgutierrez.SRT.Activitys.Activity_Cuerpo;
+import com.example.rusbellgutierrez.SRT.Clases.Clase_Articulo;
+import com.example.rusbellgutierrez.SRT.Clases.Clase_Carga;
+import com.example.rusbellgutierrez.SRT.Clases.Clase_Transportista;
+import com.example.rusbellgutierrez.SRT.Misc.Progress_Bar;
+import com.example.rusbellgutierrez.SRT.SQL.SQL_Helper;
+import com.example.rusbellgutierrez.SRT.SQL.SQL_Sentencias;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,11 +34,11 @@ import java.math.BigInteger;
  * Created by Russbell on 22/03/2017.
  */
 
- class Volley_Peticiones {
+public class Volley_Peticiones {
 
     SQL_Sentencias sql=new SQL_Sentencias();
 
-     void Detalle(String url, final Context context){
+     public void Detalle(String url, final Context context){
 
         final SQL_Helper helper= new SQL_Helper(context);
 
@@ -103,7 +111,7 @@ import java.math.BigInteger;
         queue.add(requestDetalle);
     }
 
-    void Consulta(String URL, final Context context, final String contraseña, final FrameLayout frame, final Button button, final AlphaAnimation animation) {
+    public void Consulta(String URL, final Context context, final String contraseña, final FrameLayout frame, final Button button, final AlphaAnimation animation) {
 
         final Progress_Bar pb= new Progress_Bar();
 
@@ -191,5 +199,54 @@ import java.math.BigInteger;
         });
 
         queue.add(requestDatos);
+    }
+
+    public void consultarDetalle(String URL, final Context context, final TextView oculto){
+        Log.i("URL: ",URL);
+
+        final int[] data = {0};
+
+        RequestQueue queue = Volley.newRequestQueue(context);
+
+        //peticion para obtener la contraseña del usuario
+        StringRequest requestDetTrans =  new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+
+                    //declarando array JSON para mysql
+                    JSONArray ja = new JSONArray(response);
+                    data[0] = Integer.parseInt(ja.getString(0));
+
+                    if(data[0] >0){
+
+                        oculto.setText("Tiene data");
+
+                    }else if (data[0] ==0){
+
+                        oculto.setText("No tiene data");
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+
+                    Toast.makeText(context,"El código no existe en la base de datos",Toast.LENGTH_LONG).show();
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                System.out.print(error);
+                Toast.makeText(context,"Error al validar datos ",Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        queue.add(requestDetTrans);
     }
 }

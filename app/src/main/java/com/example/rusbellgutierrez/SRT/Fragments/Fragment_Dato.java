@@ -1,4 +1,4 @@
-package com.example.rusbellgutierrez.SRT;
+package com.example.rusbellgutierrez.SRT.Fragments;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -16,9 +16,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.os.Handler;
 
+import com.example.rusbellgutierrez.SRT.Dialogs.Dialogo_Alerta;
+import com.example.rusbellgutierrez.SRT.Interfaces.OnFragmentListener;
+import com.example.rusbellgutierrez.SRT.R;
+import com.example.rusbellgutierrez.SRT.SQL.SQL_Sentencias;
+import com.example.rusbellgutierrez.SRT.Volley.Volley_Peticiones;
+
 import java.util.Calendar;
 
-public class Fragment_Dato extends Fragment implements Interface_FragmentListener,View.OnClickListener{
+public class Fragment_Dato extends Fragment implements OnFragmentListener,View.OnClickListener{
 
     private int progressStatus = 0;
     private Handler handler = new Handler();
@@ -27,7 +33,7 @@ public class Fragment_Dato extends Fragment implements Interface_FragmentListene
 
     CardView carta;
     ProgressBar pb;
-    TextView tv,oculto_cod,contador;
+    TextView tv,oculto_resp,contador;
     FloatingActionButton btn;
     String cod_transp="";
     TextView fecha;
@@ -35,7 +41,7 @@ public class Fragment_Dato extends Fragment implements Interface_FragmentListene
     Volley_Peticiones vp=new Volley_Peticiones();
     SQL_Sentencias sql=new SQL_Sentencias();
 
-    private Interface_FragmentListener mCallback=null;
+    private OnFragmentListener mCallback=null;
 
     //URL para conexion
     String ip_trabajo_lap="192.168.1.128:80";
@@ -49,7 +55,8 @@ public class Fragment_Dato extends Fragment implements Interface_FragmentListene
     //String url_pass_nom="http://"+ip+"/ejemplologin/index.php?codigo=";
 
     //para mysql
-    String url_detalle="http://"+ip_trabajo_lap+"/ejemplologin/detalle.php?codigo=";
+    String url_detalle="http://"+ip_casa+"/ejemplologin/detalle.php?codigo=";
+    String url_verificar="http://"+ip_casa+"/ejemplologin/obtener.php?codigo=";
 
 
     public static Fragment_Dato newInstance(Bundle arguments){
@@ -74,9 +81,9 @@ public class Fragment_Dato extends Fragment implements Interface_FragmentListene
         super.onAttach(context);
         try{
             //revisar el attach, original mCallback = (FragmentIterarionListener) context;
-            mCallback = (Interface_FragmentListener) context;
+            mCallback = (OnFragmentListener) context;
         }catch(Exception e){
-            Log.e("ExampleFragment", "El Activity debe implementar la interfaz Interface_FragmentListener");
+            Log.e("ExampleFragment", "El Activity debe implementar la interfaz OnFragmentListener");
         }
     }
 
@@ -93,8 +100,11 @@ public class Fragment_Dato extends Fragment implements Interface_FragmentListene
             tv=(TextView)v.findViewById(R.id.tv);
             btn = (FloatingActionButton) v.findViewById(R.id.btn);
             contador =(TextView)v.findViewById(R.id.contador);
-            oculto_cod= (TextView)v.findViewById(R.id.oculto_cod);
+            oculto_resp= (TextView)v.findViewById(R.id.oculto_cod);
             fecha= (TextView)v.findViewById(R.id.fecha);
+
+            //validacion para saber si tiene datos
+            vp.consultarDetalle(url_verificar + cod_transp, getActivity(), oculto_resp);
 
             //hacemos visible el menu
             setHasOptionsMenu(true);
@@ -122,12 +132,18 @@ public class Fragment_Dato extends Fragment implements Interface_FragmentListene
     }
 
     @Override
+    public void onSetTitle(String title) {
+
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
         //se inicia para obtener los datos del activity mediante bundle
         if(getArguments()!= null) {
             cod_transp=getArguments().getString("codigo");
+            //respuesta=getArguments().getString("respuesta");
             //oculto_cod.setText(String.valueOf(result));
         } else {
             Log.i("AVISO","No se obtuvo arguments");
@@ -138,80 +154,94 @@ public class Fragment_Dato extends Fragment implements Interface_FragmentListene
     @Override
     public void onClick(View v) {
 
-        int c=sql.existe_Registro(getContext());
+        //validacion para saber si tiene datos
+        //vp.consultarDetalle(url_verificar + cod_transp, getActivity(), oculto_resp);
+
+        if (oculto_resp.getText().toString().equals("No tiene data")) {
+
+            new Dialogo_Alerta().show(getFragmentManager(),"SimpleAlert");
+
+        } else if (oculto_resp.getText().toString().equals("Tiene data")) {
+
+        int c = sql.existe_Registro(getContext());
 
         //instruccion para verificar la tabla antes de hacer una peticion volley
-        if (c>0){
-            progressStatus = 0;
-            // Visible the progress bar and text view
-            pb.setVisibility(View.VISIBLE);
-            tv.setVisibility(View.VISIBLE);
-
-            //SENTENCIA PARA EJECUTAR EN SEGUNDO PLANO
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-
-                    // Try to sleep the thread for 20 milliseconds
-                    try {
-                        Log.i("AVISO",":D");
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-
-                            // If task execution completed
-
-                            // Hide the progress bar from layout after finishing task
-                            pb.setVisibility(View.GONE);
-                            contador.setVisibility(View.VISIBLE);
-                            contador.setTextColor(Color.BLUE);
-                            // Set a message of completion
-                            contador.setText("Productos fueron cargados...");
-
-                        }
-                    });
-
-                }
-            }).start();
-        }else {
-
-            progressStatus = 0;
-            // Visible the progress bar and text view
-            pb.setVisibility(View.VISIBLE);
-            tv.setVisibility(View.VISIBLE);
-
-            //SENTENCIA PARA EJECUTAR EN SEGUNDO PLANO
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-
-                    // Try to sleep the thread for 20 milliseconds
-                    try {
-                        vp.Detalle(url_detalle + cod_transp, getActivity());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-
-                            // If task execution completed
-
-                            // Hide the progress bar from layout after finishing task
-                            pb.setVisibility(View.GONE);
-                            contador.setVisibility(View.VISIBLE);
-                            // Set a message of completion
-                            contador.setText("Datos de productos listo...");
-
-                        }
-                    });
-                }
-            }).start();
-            //FINAL
+        if (c > 0) {
+            Hilo1();
+        } else {
+            Hilo2();
         }
+    }
+    }
+    public void Hilo1(){
+        progressStatus = 0;
+        // Visible the progress bar and text view
+        pb.setVisibility(View.VISIBLE);
+        tv.setVisibility(View.VISIBLE);
+
+        //SENTENCIA PARA EJECUTAR EN SEGUNDO PLANO
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                // Try to sleep the thread for 20 milliseconds
+                try {
+                    Log.i("AVISO", ":D");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        // If task execution completed
+
+                        // Hide the progress bar from layout after finishing task
+                        pb.setVisibility(View.GONE);
+                        contador.setVisibility(View.VISIBLE);
+                        contador.setTextColor(Color.BLUE);
+                        // Set a message of completion
+                        contador.setText("Productos fueron cargados...");
+
+                    }
+                });
+
+            }
+        }).start();
+    }
+    public void Hilo2(){
+        progressStatus = 0;
+        // Visible the progress bar and text view
+        pb.setVisibility(View.VISIBLE);
+        tv.setVisibility(View.VISIBLE);
+
+        //SENTENCIA PARA EJECUTAR EN SEGUNDO PLANO
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                // Try to sleep the thread for 20 milliseconds
+                try {
+                    vp.Detalle(url_detalle + cod_transp, getActivity());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        // If task execution completed
+
+                        // Hide the progress bar from layout after finishing task
+                        pb.setVisibility(View.GONE);
+                        contador.setVisibility(View.VISIBLE);
+                        // Set a message of completion
+                        contador.setText("Datos de productos listo...");
+
+                    }
+                });
+            }
+        }).start();
     }
     public void fecha_Actual() {
         Calendar c = Calendar.getInstance();

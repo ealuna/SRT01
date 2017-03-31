@@ -91,7 +91,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Cancelar"
-                android:textColor="#0e1197"
+                android:textColor="#970e3a"
                 android:theme="@style/ColorBotonDialog2" />
 
             <Button
@@ -101,7 +101,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:text="Aceptar"
-                android:textColor="#0e1197"
+                android:textColor="#970e3a"
                 android:theme="@style/ColorBotonDialog2" />
         </LinearLayout>
     </LinearLayout>

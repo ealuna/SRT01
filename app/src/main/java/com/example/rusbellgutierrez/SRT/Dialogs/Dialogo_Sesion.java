@@ -1,4 +1,4 @@
-package com.example.rusbellgutierrez.SRT;
+package com.example.rusbellgutierrez.SRT.Dialogs;
 
 import android.app.Dialog;
 import android.support.v4.app.DialogFragment;
@@ -10,13 +10,16 @@ import android.view.View;
 import android.support.annotation.NonNull;
 import android.widget.Button;
 
+import com.example.rusbellgutierrez.SRT.Activitys.Activity_Acceso;
+import com.example.rusbellgutierrez.SRT.R;
+
 /**
  * Created by Rusbell Gutierrez on 10/03/2017.
  */
 
-public class Dialogo_Alerta extends DialogFragment {
+public class Dialogo_Sesion extends DialogFragment {
 
-    public Dialogo_Alerta() {
+    public Dialogo_Sesion() {
     }
 
     @NonNull

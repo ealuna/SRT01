@@ -1,8 +1,4 @@
-package com.example.rusbellgutierrez.SRT;
-
-import android.content.ContentValues;
-
-import static com.example.rusbellgutierrez.SRT.SQL_Columnas.TransportistaEntry;
+package com.example.rusbellgutierrez.SRT.Clases;
 
 /**
  * Created by Rusbell Gutierrez on 17/03/2017.

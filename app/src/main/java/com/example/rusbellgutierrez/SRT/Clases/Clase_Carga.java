@@ -1,11 +1,6 @@
-package com.example.rusbellgutierrez.SRT;
-
-import android.content.ContentValues;
+package com.example.rusbellgutierrez.SRT.Clases;
 
 import java.math.BigInteger;
-import java.util.Date;
-
-import static com.example.rusbellgutierrez.SRT.SQL_Columnas.CargaEntry;
 
 /**
  * Created by Rusbell Gutierrez on 17/03/2017.

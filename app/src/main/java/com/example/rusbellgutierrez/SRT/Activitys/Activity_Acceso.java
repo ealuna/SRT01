@@ -1,14 +1,11 @@
-package com.example.rusbellgutierrez.SRT;
+package com.example.rusbellgutierrez.SRT.Activitys;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.inputmethod.InputMethodManager;
@@ -17,21 +14,18 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+import com.example.rusbellgutierrez.SRT.Interfaces.OnFragmentListener;
+import com.example.rusbellgutierrez.SRT.R;
+import com.example.rusbellgutierrez.SRT.SQL.SQL_Helper;
+import com.example.rusbellgutierrez.SRT.SQL.SQL_Sentencias;
+import com.example.rusbellgutierrez.SRT.Volley.Volley_Peticiones;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class Activity_Acceso extends AppCompatActivity implements Interface_FragmentListener {
+public class Activity_Acceso extends AppCompatActivity implements OnFragmentListener {
 
     static Button boton_acceso;
     ImageView logo;
@@ -78,8 +72,7 @@ public class Activity_Acceso extends AppCompatActivity implements Interface_Frag
     //String url_pass_nom="http://"+ip+"/ejemplologin/index.php?codigo=";
 
     //para mysql
-    String url_pass_nom="http://"+ip_trabajo_lap+"/ejemplologin/consultarusuario.php?codigo=";
-    String url_detalle="http://"+ip_trabajo_lap+"/ejemplologin/detalle.php?codigo=";
+    String url_pass_nom="http://"+ip_casa+"/ejemplologin/consultarusuario.php?codigo=";
 
 
     @Override
@@ -145,6 +138,11 @@ public class Activity_Acceso extends AppCompatActivity implements Interface_Frag
 
     @Override
     public void onFragmentListener(Bundle parameters) {
+
+    }
+
+    @Override
+    public void onSetTitle(String title) {
 
     }
 }
