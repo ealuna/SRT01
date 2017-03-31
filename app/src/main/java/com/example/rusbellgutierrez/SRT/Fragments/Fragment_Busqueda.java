@@ -7,10 +7,15 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -31,7 +36,7 @@ import java.util.List;
  * Created by Russbell on 30/03/2017.
  */
 
-public class Fragment_Busqueda extends Fragment implements OnFragmentListener {
+public class Fragment_Busqueda extends Fragment implements OnFragmentListener, SearchView.OnQueryTextListener {
 
     private RecyclerView recyclerView;
     private ArrayList<Clase_FeedItem> feed=new ArrayList<Clase_FeedItem>();
@@ -72,6 +77,8 @@ public class Fragment_Busqueda extends Fragment implements OnFragmentListener {
         ViewGroup viewGroup=(ViewGroup)inflater.inflate(R.layout.fragment_busqueda,container,false);
         recyclerView=(RecyclerView)viewGroup.findViewById(R.id.recycler_view);
         progressView=(ProgressView)viewGroup.findViewById(R.id.progress);
+
+        setHasOptionsMenu(true);
 
         progressView.setVisibility(View.VISIBLE);
 
@@ -125,12 +132,6 @@ public class Fragment_Busqueda extends Fragment implements OnFragmentListener {
 
             }
         });
-        /*recyclerAdapter.setOnTapListener(new OnTapListener() {
-            @Override
-            public void OnTapView(int position) {
-                Toast.makeText(getContext(), "Eligio "+position, Toast.LENGTH_SHORT).show();
-            }
-        });*/
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(recyclerAdapter);
@@ -162,5 +163,69 @@ public class Fragment_Busqueda extends Fragment implements OnFragmentListener {
     @Override
     public void onSetTitle(String title) {
 
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_search, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+
+        //comienza la implementacion del searchview
+        final MenuItem item = menu.findItem(R.id.action_search);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
+        searchView.setOnQueryTextListener(this);
+
+        MenuItemCompat.setOnActionExpandListener(item,
+                new MenuItemCompat.OnActionExpandListener() {
+                    @Override
+                    public boolean onMenuItemActionCollapse(MenuItem item) {
+// Do something when collapsed
+                        recyclerAdapter.setFilter(feed);
+                        return true; // Return true to collapse action view
+                    }
+
+                    @Override
+                    public boolean onMenuItemActionExpand(MenuItem item) {
+// Do something when expanded
+                        return true; // Return true to expand action view
+                    }
+                });
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        final List<Clase_FeedItem> feedList = filter(feed, newText);
+
+        recyclerAdapter.setFilter(feedList);
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    private List<Clase_FeedItem> filter(List<Clase_FeedItem> models, String query) {
+        query = query.toLowerCase();final List<Clase_FeedItem> feedList = new ArrayList<>();
+        for (Clase_FeedItem feed : models) {
+            final String codbarra = feed.getCodbar().toLowerCase();
+            final String codprod = feed.getCodprod().toLowerCase();
+            final String nomprod = feed.getNomprod().toLowerCase();
+            final String almprod = feed.getAlmprod().toLowerCase();
+            final String canprod = feed.getCanprod().toLowerCase();
+
+            if (codbarra.contains(query)) {
+                feedList.add(feed);
+            }else if (codprod.contains(query)){
+                feedList.add(feed);
+            }else if (nomprod.contains(query)){
+                feedList.add(feed);
+            }else if (almprod.contains(query)){
+                feedList.add(feed);
+            }else if (canprod.contains(query)){
+                feedList.add(feed);
+            }
+        }
+        return feedList;
     }
 }

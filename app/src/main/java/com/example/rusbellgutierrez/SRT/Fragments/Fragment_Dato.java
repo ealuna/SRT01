@@ -107,7 +107,7 @@ public class Fragment_Dato extends Fragment implements OnFragmentListener,View.O
             vp.consultarDetalle(url_verificar + cod_transp, getActivity(), oculto_resp);
 
             //hacemos visible el menu
-            setHasOptionsMenu(true);
+            //setHasOptionsMenu(true);
 
             //pequeña funcion para poner fecha
             fecha_Actual();
@@ -261,9 +261,9 @@ public class Fragment_Dato extends Fragment implements OnFragmentListener,View.O
         }
     }
 
-    @Override
+    /*@Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_dato, menu);
         super.onCreateOptionsMenu(menu, inflater);
-    }
+    }*/
 }

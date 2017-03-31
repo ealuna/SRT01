@@ -32,4 +32,13 @@ public class SetViewHolder extends RecyclerView.ViewHolder {
 
         fab_edit=(FloatingActionButton)itemView.findViewById(R.id.fab_edit);
     }
+
+    public void bind(Clase_FeedItem feedItem) {
+
+        codbar.setText(feedItem.getCodbar());
+        codprod.setText(feedItem.getCodprod());
+        nomprod.setText(feedItem.getNomprod());
+        almprod.setText(feedItem.getAlmprod());
+        canprod.setText(feedItem.getCanprod());
+    }
 }

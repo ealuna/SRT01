@@ -15,6 +15,7 @@ import com.example.rusbellgutierrez.SRT.Interfaces.OnFragmentListener;
 import com.example.rusbellgutierrez.SRT.Interfaces.OnTapListener;
 import com.example.rusbellgutierrez.SRT.R;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -77,5 +78,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<SetViewHolder> {
 
     public void setOnFragmentListener(OnFragmentListener onFragmentListener){
         this.onFragmentListener=onFragmentListener;
+    }
+
+    //Nuevo, para el searchview
+    public void setFilter(List<Clase_FeedItem> clase_feedItems) {
+        feed = new ArrayList<>();
+        feed.addAll(clase_feedItems);
+        notifyDataSetChanged();
     }
 }
