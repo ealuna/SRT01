@@ -18,6 +18,8 @@ public class SetViewHolder extends RecyclerView.ViewHolder {
     public TextView nomprod;
     public TextView almprod;
     public TextView canprod;
+    //experimental
+    public TextView estado;
 
     public FloatingActionButton fab_edit;
 
@@ -31,6 +33,7 @@ public class SetViewHolder extends RecyclerView.ViewHolder {
         canprod=(TextView)itemView.findViewById(R.id.canprod);
 
         //experimental
+        estado=(TextView)itemView.findViewById(R.id.estado);
 
 
         fab_edit=(FloatingActionButton)itemView.findViewById(R.id.fab_edit);
@@ -43,5 +46,7 @@ public class SetViewHolder extends RecyclerView.ViewHolder {
         nomprod.setText(feedItem.getNomprod());
         almprod.setText(feedItem.getAlmprod());
         canprod.setText(feedItem.getCanprod());
+        //experimental
+        estado.setText(feedItem.getEstado());
     }
 }

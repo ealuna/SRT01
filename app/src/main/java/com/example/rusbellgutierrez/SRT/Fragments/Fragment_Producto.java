@@ -214,14 +214,26 @@ public class Fragment_Producto extends Fragment implements View.OnClickListener{
 
 
                 return true;
+            case R.id.m_detalle:
+
+                mCallback.onSetTitle("Productos");
+
+                FragmentTransaction f = getFragmentManager().beginTransaction();
+                Fragment_detBusq fdb=new Fragment_detBusq();
+                f.replace(R.id.content_frame, fdb);
+                f.addToBackStack(null);
+                f.commit();
+
+
+                return true;
             case R.id.m_inicio:
 
                 mCallback.onSetTitle("S.R.T");
-                FragmentTransaction f = getFragmentManager().beginTransaction();
+                FragmentTransaction ftr = getFragmentManager().beginTransaction();
                 Fragment_Inicio fi=new Fragment_Inicio();
-                f.replace(R.id.content_frame, fi);
-                f.addToBackStack(null);
-                f.commit();
+                ftr.replace(R.id.content_frame, fi);
+                ftr.addToBackStack(null);
+                ftr.commit();
 
                 return true;
             case R.id.m_sesion:

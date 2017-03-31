@@ -5,6 +5,10 @@
         android:icon="@drawable/magnify"
         app:showAsAction="always"
         android:title="Buscar"/>
+    <item android:id="@+id/m_detalle"
+        android:icon="@drawable/clipboard_text"
+        app:showAsAction="ifRoom"
+        android:title="Detalle"/>
     <item android:id="@+id/m_inicio"
         android:icon="@drawable/home"
         app:showAsAction="ifRoom"

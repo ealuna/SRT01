@@ -14,6 +14,17 @@ public class Clase_FeedItem {
     private String almprod;
     private String canprod;
 
+    //experimental
+    private String estado;
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
     public String getCodbar() {
         return codbar;
     }

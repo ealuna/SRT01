@@ -50,17 +50,35 @@ public class RecyclerAdapter extends RecyclerView.Adapter<SetViewHolder> {
     @Override
     public void onBindViewHolder(final SetViewHolder holder, final int position) {
 
-        String barra=feed.get(position).getCodbar();
-        String codigo=feed.get(position).getCodprod();
-        String nombre=feed.get(position).getNomprod();
-        String almacen=feed.get(position).getAlmprod();
-        String cantidad=feed.get(position).getCanprod();
+        /**EXPERIMENTAL*/
+        if (feed.get(position).getEstado()!=null){
+            String barra = feed.get(position).getCodbar();
+            String codigo = feed.get(position).getCodprod();
+            String nombre = feed.get(position).getNomprod();
+            String almacen = feed.get(position).getAlmprod();
+            String cantidad = feed.get(position).getCanprod();
+            String estado = feed.get(position).getEstado();
 
-        holder.codbar.setText(barra);
-        holder.codprod.setText(codigo);
-        holder.nomprod.setText(nombre);
-        holder.almprod.setText(almacen);
-        holder.canprod.setText(cantidad);
+            holder.codbar.setText(barra);
+            holder.codprod.setText(codigo);
+            holder.nomprod.setText(nombre);
+            holder.almprod.setText(almacen);
+            holder.canprod.setText(cantidad);
+            holder.estado.setText(estado);
+        }else {
+
+            String barra = feed.get(position).getCodbar();
+            String codigo = feed.get(position).getCodprod();
+            String nombre = feed.get(position).getNomprod();
+            String almacen = feed.get(position).getAlmprod();
+            String cantidad = feed.get(position).getCanprod();
+
+            holder.codbar.setText(barra);
+            holder.codprod.setText(codigo);
+            holder.nomprod.setText(nombre);
+            holder.almprod.setText(almacen);
+            holder.canprod.setText(cantidad);
+        }
 
         Clase_FeedItem txt= feed.get(position);
         String cobar=txt.getCodbar().toLowerCase(Locale.getDefault());
@@ -117,6 +135,21 @@ public class RecyclerAdapter extends RecyclerView.Adapter<SetViewHolder> {
             spanString.setSpan(new ForegroundColorSpan(Color.RED),startPos,endPos,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
             holder.canprod.setText(spanString);
+        }
+
+        /**EXPERIMENTAL*/
+        if (txt.getEstado()!=null){
+            String est=txt.getEstado().toLowerCase(Locale.getDefault());
+            if (est.contains(searchText)){
+
+                int startPos=est.indexOf(searchText);
+                int endPos=startPos+searchText.length();
+
+                Spannable spanString=Spannable.Factory.getInstance().newSpannable(holder.estado.getText());
+                spanString.setSpan(new ForegroundColorSpan(Color.RED),startPos,endPos,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                holder.estado.setText(spanString);
+            }
         }
 
         //realizamos el listener para los floatingactionbuton de cada item del recyclerview
