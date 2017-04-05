@@ -127,6 +127,8 @@ public class Activity_Acceso extends AppCompatActivity implements ConectivityRec
 
                    //aca se inicia la URL para conectar con el JSON
                 //vp.Consulta(url_pass_nom+codigo.getText().toString(),context,pass,progressBarHolder,boton_acceso,animation);
+
+                //metodo que verifica la conexion a internet antes de hacer algo
                 checkConexion();
 
                 recordar.setEnabled(true);
@@ -143,6 +145,7 @@ public class Activity_Acceso extends AppCompatActivity implements ConectivityRec
         VerifNetwork.getInstance().setConnectivityListener(this);
     }*/
 
+    //permite verificar la conexion a internet, todos los metodos que se declaran lineas abajo
     private void checkConexion(){
         boolean isConnected= ConectivityReceiver.isConnected(this);
         accionesNetwork(isConnected);
