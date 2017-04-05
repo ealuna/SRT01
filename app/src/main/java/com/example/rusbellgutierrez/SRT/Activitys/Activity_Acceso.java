@@ -3,6 +3,8 @@ package com.example.rusbellgutierrez.SRT.Activitys;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -14,20 +16,18 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.example.rusbellgutierrez.SRT.Interfaces.OnFragmentListener;
+import com.example.rusbellgutierrez.SRT.Network.ConectivityReceiver;
 import com.example.rusbellgutierrez.SRT.R;
 import com.example.rusbellgutierrez.SRT.SQL.SQL_Helper;
 import com.example.rusbellgutierrez.SRT.SQL.SQL_Sentencias;
 import com.example.rusbellgutierrez.SRT.Volley.Volley_Peticiones;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
 
+public class Activity_Acceso extends AppCompatActivity implements ConectivityReceiver.ConnectivityReceiverListener {
 
-public class Activity_Acceso extends AppCompatActivity implements OnFragmentListener {
-
-    static Button boton_acceso;
+    Button boton_acceso;
     ImageView logo;
     CheckBox recordar;
     EditText codigo, contraseña;
@@ -37,10 +37,6 @@ public class Activity_Acceso extends AppCompatActivity implements OnFragmentList
     private SharedPreferences loginPreferences;
     private SharedPreferences.Editor loginPrefsEditor;
     private boolean saveLogin;
-    //JSON array para obtener los datos devueltos por el JSON
-    JSONArray ja;
-    //JSON object para obtener los datos del sql server
-    JSONObject array_json;
 
     Volley_Peticiones vp=new Volley_Peticiones();
 
@@ -66,14 +62,14 @@ public class Activity_Acceso extends AppCompatActivity implements OnFragmentList
     String ip_casa="192.168.0.101:80";
     String ip_geny="10.0.3.2";
     String ip_android="10.0.2.2";
-
-    //String url_pass_nom="http://"+ip+"/ejemplologin/index.php?codigo=";
-
-    //String url_pass_nom="http://"+ip+"/ejemplologin/index.php?codigo=";
+    String ip_sql="192.168.1.204:80";
 
     //para mysql
-    String url_pass_nom="http://"+ip_trabajo_lap+"/ejemplologin/consultarusuario.php?codigo=";
+    //String url_pass_nom="http://"+ip_trabajo_lap+"/ejemplologin/consultarusuario.php?codigo=";
 
+    //para SQLSERVER
+    String url_pass_nom="http://"+ip_sql+"/REST/usuarioTransporte/";
+    String pass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,13 +120,14 @@ public class Activity_Acceso extends AppCompatActivity implements OnFragmentList
                     }
 
                     //enviamos el campo del edittext a un string
-                String pass=contraseña.getText().toString();
+                pass=contraseña.getText().toString();
 
                 recordar.setEnabled(false);
                 boton_acceso.setEnabled(false);
 
                    //aca se inicia la URL para conectar con el JSON
-                vp.Consulta(url_pass_nom+codigo.getText().toString(),context,pass,progressBarHolder,boton_acceso,animation);
+                //vp.Consulta(url_pass_nom+codigo.getText().toString(),context,pass,progressBarHolder,boton_acceso,animation);
+                checkConexion();
 
                 recordar.setEnabled(true);
                 boton_acceso.setEnabled(true);
@@ -140,13 +137,51 @@ public class Activity_Acceso extends AppCompatActivity implements OnFragmentList
         });
     }
 
-    @Override
-    public void onFragmentListener(Bundle parameters) {
+    /*@Override
+    public void onResume(){
+        super.onResume();
+        VerifNetwork.getInstance().setConnectivityListener(this);
+    }*/
 
+    private void checkConexion(){
+        boolean isConnected= ConectivityReceiver.isConnected(this);
+        accionesNetwork(isConnected);
     }
 
-    @Override
-    public void onSetTitle(String title) {
+    private void accionesNetwork(boolean isConnected){
+        String mesg=null;
+        int color=0;
+        if (isConnected){
+            vp.Consulta(url_pass_nom+codigo.getText().toString(),context,pass,progressBarHolder,boton_acceso,animation);
+        }else {
 
+            mesg="No existe conexion a internet";
+            color= Color.RED;
+        }
+
+        Snackbar snackbar = Snackbar
+                .make(findViewById(R.id.carta), mesg, Snackbar.LENGTH_LONG);
+
+        View sbView = snackbar.getView();
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(color);
+        snackbar.show();
+    }
+
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        String msg=null;
+        int color=0;
+        if(isConnected){
+            String nada="nada";
+        }else {
+            msg="No existe conexion a internet";
+            color= Color.WHITE;
+        }
+        Snackbar snackbar = Snackbar
+                .make(findViewById(R.id.carta), msg, Snackbar.LENGTH_LONG);
+        View sbView = snackbar.getView();
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(color);
+        snackbar.show();
     }
 }

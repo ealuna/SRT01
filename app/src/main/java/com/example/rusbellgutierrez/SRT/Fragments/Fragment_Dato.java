@@ -1,8 +1,10 @@
 package com.example.rusbellgutierrez.SRT.Fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
@@ -15,13 +17,29 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.os.Handler;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.rusbellgutierrez.SRT.Clases.Clase_Articulo;
+import com.example.rusbellgutierrez.SRT.Clases.Clase_Carga;
 import com.example.rusbellgutierrez.SRT.Dialogs.Dialogo_Alerta;
 import com.example.rusbellgutierrez.SRT.Interfaces.OnFragmentListener;
 import com.example.rusbellgutierrez.SRT.R;
+import com.example.rusbellgutierrez.SRT.SQL.SQL_Helper;
 import com.example.rusbellgutierrez.SRT.SQL.SQL_Sentencias;
 import com.example.rusbellgutierrez.SRT.Volley.Volley_Peticiones;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.math.BigInteger;
+import java.util.Arrays;
 import java.util.Calendar;
 
 public class Fragment_Dato extends Fragment implements OnFragmentListener,View.OnClickListener{
@@ -49,10 +67,10 @@ public class Fragment_Dato extends Fragment implements OnFragmentListener,View.O
     String ip_casa="192.168.0.101:80";
     String ip_geny="10.0.3.2";
     String ip_android="10.0.2.2";
+    String ip_sql="192.168.1.204:80";
 
-    //String url_pass_nom="http://"+ip+"/ejemplologin/index.php?codigo=";
-
-    //String url_pass_nom="http://"+ip+"/ejemplologin/index.php?codigo=";
+    //SQLSERVER
+    String url_carga="http://"+ip_sql+"/REST/generarCarga0/";
 
     //para mysql
     String url_detalle="http://"+ip_trabajo_lap+"/ejemplologin/detalle.php?codigo=";
@@ -104,7 +122,7 @@ public class Fragment_Dato extends Fragment implements OnFragmentListener,View.O
             fecha= (TextView)v.findViewById(R.id.fecha);
 
             //validacion para saber si tiene datos
-            vp.consultarDetalle(url_verificar + cod_transp, getActivity(), oculto_resp);
+            vp.consultarDetalle(url_carga + cod_transp, getActivity(), oculto_resp);
 
             //hacemos visible el menu
             //setHasOptionsMenu(true);
@@ -166,15 +184,16 @@ public class Fragment_Dato extends Fragment implements OnFragmentListener,View.O
         int c = sql.existe_Registro(getContext());
 
         //instruccion para verificar la tabla antes de hacer una peticion volley
-        if (c > 0) {
-            Hilo1();
-        } else {
-            Hilo2();
+            if (c > 0) {
+                Hilo();
+            } else {
+
+                pb.setVisibility(View.VISIBLE);
+                Detalle(url_carga + cod_transp, getActivity());
+            }
         }
     }
-    }
-    public void Hilo1(){
-        progressStatus = 0;
+    public void Hilo(){
         // Visible the progress bar and text view
         pb.setVisibility(View.VISIBLE);
         tv.setVisibility(View.VISIBLE);
@@ -193,9 +212,6 @@ public class Fragment_Dato extends Fragment implements OnFragmentListener,View.O
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-
-                        // If task execution completed
-
                         // Hide the progress bar from layout after finishing task
                         pb.setVisibility(View.GONE);
                         contador.setVisibility(View.VISIBLE);
@@ -209,40 +225,78 @@ public class Fragment_Dato extends Fragment implements OnFragmentListener,View.O
             }
         }).start();
     }
-    public void Hilo2(){
-        progressStatus = 0;
-        // Visible the progress bar and text view
-        pb.setVisibility(View.VISIBLE);
-        tv.setVisibility(View.VISIBLE);
 
-        //SENTENCIA PARA EJECUTAR EN SEGUNDO PLANO
-        new Thread(new Runnable() {
+    //METODO VOLLEY  PARA OBTENER EL DETALLE (POR EL MOMENTO DEBE DECLARARSE EN EL FRAGMENT)
+    public void Detalle(String url, Context context){
+
+        final SQL_Helper helper= new SQL_Helper(context);
+
+        Log.i("url",""+url);
+        //solicitud volley para realizar un get, cola de peticiones
+        final RequestQueue queue = Volley.newRequestQueue(context);
+        //peticion para obtener datos del json
+        StringRequest requestDetalle =  new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
-            public void run() {
+            public void onResponse(String response) {
 
-                // Try to sleep the thread for 20 milliseconds
+                Log.i("DATA","La data es "+response);
                 try {
-                    vp.Detalle(url_detalle + cod_transp, getActivity());
-                } catch (Exception e) {
+                    //SQLSERVER
+                    JSONArray jo = new JSONArray(response);
+                    for(int i=0; i<jo.length(); i++){
+                        JSONObject jdata = jo.getJSONObject(i);
+
+                        final Clase_Articulo art= new Clase_Articulo(BigInteger.valueOf(jdata.getInt("idArticulo")),jdata.getString("descripcionArticulo"),jdata.getString("codigoBarraUnidad"));
+                        final Clase_Carga car= new Clase_Carga(jdata.getInt("idTransportista"),BigInteger.valueOf(jdata.getInt("idArticulo")),jdata.getString("almacen"),jdata.getInt("unidades"),jdata.getString("fechaDocumento"),jdata.getInt("numeroReparto"),"0");//jdata.getString("estado")
+
+                        //SE DEBE EJECUTAR EL HILO EN SEGUNDO PLANO
+                        pb.setVisibility(View.VISIBLE);
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                boolean estado=sql.guardar_detalleBD(art,car, helper);
+                                //SI "estado" ES TRUE, EJECUTA EL HANDLER
+                                if (estado){
+                                    handler.post(new Runnable() {
+                                        @Override
+                                        public void run() {
+
+                                            // If task execution completed
+
+                                            // Hide the progress bar from layout after finishing task
+                                            pb.setVisibility(View.GONE);
+                                            contador.setVisibility(View.VISIBLE);
+                                            contador.setText("Datos de productos listo...");
+
+                                        }
+                                    });
+                                }
+
+                            }
+                        }).start();
+                    }Log.i("JSON CANTIDAD","ES "+jo.length());
+
+                } catch (JSONException e) {
                     e.printStackTrace();
+
+                    Toast.makeText(getActivity(),"Error al cargar datos",Toast.LENGTH_LONG).show();
                 }
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
 
-                        // If task execution completed
 
-                        // Hide the progress bar from layout after finishing task
-                        pb.setVisibility(View.GONE);
-                        contador.setVisibility(View.VISIBLE);
-                        // Set a message of completion
-                        contador.setText("Datos de productos listo...");
-
-                    }
-                });
             }
-        }).start();
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Log.i("ERROR_VOLLEY","El error es "+error);
+
+            }
+        });
+        queue.add(requestDetalle);
     }
+
+
     public void fecha_Actual() {
         Calendar c = Calendar.getInstance();
         int anio = c.get(Calendar.YEAR); //obtenemos el año
@@ -253,17 +307,21 @@ public class Fragment_Dato extends Fragment implements OnFragmentListener,View.O
         //sumaremos 1 a la variable entera MES.
         mes = mes + 1;
         int dia = c.get(Calendar.DAY_OF_MONTH);
-        if (String.valueOf(mes).length() == 1) {
-            // obtemos el día.
-            fecha.setText(dia + " : 0" + mes + " : " + anio);
-        } else {
-            fecha.setText(dia + " : " + mes + " : " + anio); //cambiamos el texto que tiene el TextView por la fecha actual.
+        if (String.valueOf(dia).length()==1){
+            if (String.valueOf(mes).length() == 1) {
+                // obtemos el día.
+                fecha.setText("0"+dia + " : 0" + mes + " : " + anio);
+            } else {
+                fecha.setText("0"+dia + " : " + mes + " : " + anio); //cambiamos el texto que tiene el TextView por la fecha actual.
+            }
+        }else {
+            if (String.valueOf(mes).length() == 1) {
+                // obtemos el día.
+                fecha.setText(dia + " : 0" + mes + " : " + anio);
+            } else {
+                fecha.setText(dia + " : " + mes + " : " + anio); //cambiamos el texto que tiene el TextView por la fecha actual.
+            }
         }
-    }
 
-    /*@Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_dato, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }*/
+    }
 }

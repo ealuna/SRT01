@@ -41,12 +41,20 @@ public class SetViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(Clase_FeedItem feedItem) {
 
-        codbar.setText(feedItem.getCodbar());
-        codprod.setText(feedItem.getCodprod());
-        nomprod.setText(feedItem.getNomprod());
-        almprod.setText(feedItem.getAlmprod());
-        canprod.setText(feedItem.getCanprod());
-        //experimental
-        estado.setText(feedItem.getEstado());
+        if (feedItem.getEstado()!=null) {
+            codbar.setText(feedItem.getCodbar());
+            codprod.setText(feedItem.getCodprod());
+            nomprod.setText(feedItem.getNomprod());
+            almprod.setText(feedItem.getAlmprod());
+            canprod.setText(feedItem.getCanprod());
+            //experimental
+            estado.setText(feedItem.getEstado());
+        }else {
+            codbar.setText(feedItem.getCodbar());
+            codprod.setText(feedItem.getCodprod());
+            nomprod.setText(feedItem.getNomprod());
+            almprod.setText(feedItem.getAlmprod());
+            canprod.setText(feedItem.getCanprod());
+        }
     }
 }

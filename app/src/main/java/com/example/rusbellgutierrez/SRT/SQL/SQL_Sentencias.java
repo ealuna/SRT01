@@ -5,12 +5,17 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.rusbellgutierrez.SRT.Clases.Clase_Articulo;
 import com.example.rusbellgutierrez.SRT.Clases.Clase_Carga;
 import com.example.rusbellgutierrez.SRT.Clases.Clase_FeedItem;
 import com.example.rusbellgutierrez.SRT.Clases.Clase_Transportista;
 import com.example.rusbellgutierrez.SRT.SQL.SQL_Helper;
+import com.rey.material.widget.ProgressView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -63,10 +68,9 @@ public class SQL_Sentencias {
         }
     }
 
-    public void guardar_detalleBD(Clase_Articulo art, Clase_Carga car, SQL_Helper helper){
+    public boolean guardar_detalleBD(final Clase_Articulo art, final Clase_Carga car, final SQL_Helper helper){
 
         SQLiteDatabase db;
-
         //en esta sentencia guardaremos el detalle de la carga, asociado con sus articulos
         db=helper.getWritableDatabase();
         //primero comprobamos si la bd es null
@@ -91,6 +95,7 @@ public class SQL_Sentencias {
                 db.insert("articulo",null,ar);
 
         }
+        return true;
     }
 
     public String[] consultar_detalleBD(String scanContent, SQL_Helper helper){
@@ -138,5 +143,52 @@ public class SQL_Sentencias {
             Log.i("AVISO","D:");
         }
         return cursor;
+    }
+
+    public boolean dataRecycler(SQL_Helper helper,Context context,ArrayList<Clase_FeedItem> feed){
+        helper=new SQL_Helper(context);
+        SQLiteDatabase db;
+        db=helper.getReadableDatabase();
+        Cursor cursor=db.rawQuery("select a.codbarra, a.idarticulo, a.nombre, c.almacen, c.cantidad from carga c, articulo a where a.idarticulo=c.idarticulo and c.estado like '0'",null);
+
+        if (cursor!=null){
+            if (cursor.moveToFirst()){
+                do{
+                    Clase_FeedItem feedItem=new Clase_FeedItem();
+                    feedItem.setCodbar(cursor.getString(0));
+                    feedItem.setCodprod(cursor.getString(1));
+                    feedItem.setNomprod(cursor.getString(2));
+                    feedItem.setAlmprod(cursor.getString(3));
+                    feedItem.setCanprod(cursor.getString(4));
+
+                    feed.add(feedItem);
+                }while (cursor.moveToNext());
+            }Log.i("DATOS CANTIDAD","ES "+feed.size());
+        }
+        return  true;
+    }
+
+    public boolean detalleRecycler(SQL_Helper helper,Context context,ArrayList<Clase_FeedItem> feed){
+        helper=new SQL_Helper(context);
+        SQLiteDatabase db;
+        db=helper.getReadableDatabase();
+        Cursor cursor=db.rawQuery("select a.codbarra, a.idarticulo, a.nombre, c.almacen, c.cantidad, c.estado from carga c, articulo a where a.idarticulo=c.idarticulo and c.estado <> '0' and c.estado <> 'Completo'",null);
+
+        if (cursor!=null){
+            if (cursor.moveToFirst()){
+                do{
+                    Clase_FeedItem feedItem=new Clase_FeedItem();
+                    feedItem.setCodbar(cursor.getString(0));
+                    feedItem.setCodprod(cursor.getString(1));
+                    feedItem.setNomprod(cursor.getString(2));
+                    feedItem.setAlmprod(cursor.getString(3));
+                    feedItem.setCanprod(cursor.getString(4));
+                    feedItem.setEstado(cursor.getString(5));
+
+                    feed.add(feedItem);
+                }while (cursor.moveToNext());
+            }Log.i("DATOS CANTIDAD","ES "+feed.size());
+        }
+        return  true;
     }
 }

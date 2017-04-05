@@ -1,12 +1,16 @@
 package com.example.rusbellgutierrez.SRT.Volley;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,12 +27,14 @@ import com.example.rusbellgutierrez.SRT.Clases.Clase_Transportista;
 import com.example.rusbellgutierrez.SRT.Misc.Progress_Bar;
 import com.example.rusbellgutierrez.SRT.SQL.SQL_Helper;
 import com.example.rusbellgutierrez.SRT.SQL.SQL_Sentencias;
+import com.rey.material.widget.ProgressView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.math.BigInteger;
+import java.util.logging.Handler;
 
 /**
  * Created by Russbell on 22/03/2017.
@@ -37,79 +43,7 @@ import java.math.BigInteger;
 public class Volley_Peticiones {
 
     SQL_Sentencias sql=new SQL_Sentencias();
-
-     public void Detalle(String url, final Context context){
-
-        final SQL_Helper helper= new SQL_Helper(context);
-
-        Log.i("url",""+url);
-
-        //solicitud volley para realizar un get, cola de peticiones
-        RequestQueue queue = Volley.newRequestQueue(context);
-
-        //peticion para obtener datos del json
-        StringRequest requestDetalle =  new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                Log.i("DATA","La data es "+response);
-                try {
-
-                    //declarando object JSON para mysql
-                    JSONObject jo = new JSONObject(response);
-                    JSONArray ja = jo.getJSONArray("detalle");
-
-                    //int c=sql.existe_Registro(helper);
-
-                    System.out.println("*****JARRAY*****  " + ja.length());
-
-                    /*if (c>0){
-                        Log.i("INFORMACION"," LA TABLA YA TIENE DATOS");
-                    }else{*/
-
-                    for(int i=0; i<ja.length(); i++){
-                        JSONObject jdata = ja.getJSONObject(i);
-
-                        Clase_Articulo art= new Clase_Articulo(BigInteger.valueOf(jdata.getInt("idarticulo")),jdata.getString("nombre"),BigInteger.valueOf(Long.parseLong(jdata.getString("codbarra"))));
-                        Clase_Carga car= new Clase_Carga(jdata.getInt("idtransportista"),BigInteger.valueOf(jdata.getInt("idarticulo")),jdata.getString("almacen"),jdata.getInt("cantidad"),jdata.getString("fecha"),jdata.getInt("viaje"),jdata.getString("estado"));
-                        Log.i("DATOS DE CLASES","DATOS ART "+art.getIdarticulo()+", "+art.getNombre()+", "+art.getCodbarra()+"  "+
-                        "DATOS CAR "+car.getIdtransportista()+", "+car.getIdarticulo()+", "+car.getAlmacen()+", "+car.getCantidad()+", "+car.getFecha()+", "+car.getViaje()+", "+car.getEstado());
-
-                        Log.i("LOG_TAG", "idarticulo: " + jdata.getInt("idarticulo") +
-                                ", nombre: " + jdata.getString("nombre") +
-                                ", codbarra: " + jdata.getString("codbarra") +
-                                ", idtransportista: " + jdata.getInt("idtransportista") +
-                                ", almacen: " + jdata.getString("almacen") +
-                                ", cantidad: " + jdata.getInt("cantidad") +
-                                ", viaje: " + jdata.getInt("viaje") +
-                                ", fecha: " + jdata.getString("fecha") +
-                                ", estado: " + jdata.getString("estado"));
-
-                        sql.guardar_detalleBD(art,car,helper);
-
-                        //Toast.makeText(context,"Los datos de los productos se cargaron",Toast.LENGTH_SHORT).show();
-                    }
-                //}
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-
-                    Toast.makeText(context,"Error al cargar datos",Toast.LENGTH_LONG).show();
-                }
-
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-                Log.i("ERROR_VOLLEY","El error es "+error);
-
-            }
-        });
-
-        queue.add(requestDetalle);
-    }
+    boolean estado=false;
 
     public void Consulta(String URL, final Context context, final String contraseña, final FrameLayout frame, final Button button, final AlphaAnimation animation) {
 
@@ -134,15 +68,23 @@ public class Volley_Peticiones {
 
                     //declarando array JSON para mysql
                     JSONArray ja = new JSONArray(response);
-                    String contra = ja.getString(0);
+
+                    String contra = ja.getJSONObject(0).getString("pass");
+                    String cod = ja.getJSONObject(0).getString("idTransportista");
+                    String nom = ja.getJSONObject(0).getString("nombreTransportista");
+                    String cel = ja.getJSONObject(0).getString("telefonoTransportista");
+                    String placa = ja.getJSONObject(0).getString("matriculaVehiculo");
+
+
+                    /*String contra = ja.getString(0);
                     String cod=ja.getString(1);
                     String nom=ja.getString(2);
                     String cel=ja.getString(3);
-                    String placa=ja.getString(4);
+                    String placa=ja.getString(4);*/
 
 
                     //PARA MYSQL
-                    Clase_Transportista t=new Clase_Transportista(Integer.parseInt(cod),nom,Integer.parseInt(cel),placa);
+                    Clase_Transportista t=new Clase_Transportista(Integer.parseInt(cod),nom,cel,placa);
 
                     //revisar si se instancio el objeto cuando salte el errror java.lang.null.point
                     sql.guardar_transportistaBD(t,helper);
@@ -204,7 +146,7 @@ public class Volley_Peticiones {
     public void consultarDetalle(String URL, final Context context, final TextView oculto){
         Log.i("URL: ",URL);
 
-        final int[] data = {0};
+        //final int[] data = {0};
 
         RequestQueue queue = Volley.newRequestQueue(context);
 
@@ -217,13 +159,14 @@ public class Volley_Peticiones {
 
                     //declarando array JSON para mysql
                     JSONArray ja = new JSONArray(response);
-                    data[0] = Integer.parseInt(ja.getString(0));
+                    int data=ja.length();
+                    //data[0] = Integer.parseInt(ja.getString(0));
 
-                    if(data[0] >0){
+                    if(data>0/*data[0] >0*/){
 
                         oculto.setText("Tiene data");
 
-                    }else if (data[0] ==0){
+                    }else if (data==0/*data[0] ==0*/){
 
                         oculto.setText("No tiene data");
 

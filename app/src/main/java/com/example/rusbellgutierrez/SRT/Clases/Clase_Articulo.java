@@ -10,9 +10,9 @@ public class Clase_Articulo {
 
     private BigInteger idarticulo;
     private String nombre;
-    private BigInteger codbarra;
+    private String codbarra;
 
-    public Clase_Articulo(BigInteger idarticulo, String nombre, BigInteger codbarra) {
+    public Clase_Articulo(BigInteger idarticulo, String nombre, String codbarra) {
         this.idarticulo = idarticulo;
         this.nombre = nombre;
         this.codbarra = codbarra;
@@ -34,11 +34,11 @@ public class Clase_Articulo {
         this.nombre = nombre;
     }
 
-    public BigInteger getCodbarra() {
+    public String getCodbarra() {
         return codbarra;
     }
 
-    public void setCod_barra(BigInteger codbarra) {
+    public void setCod_barra(String codbarra) {
         this.codbarra = codbarra;
     }
 }

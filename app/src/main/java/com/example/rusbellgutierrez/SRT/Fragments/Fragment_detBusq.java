@@ -5,7 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -20,6 +22,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +31,7 @@ import com.example.rusbellgutierrez.SRT.Clases.Clase_FeedItem;
 import com.example.rusbellgutierrez.SRT.Interfaces.OnFragmentListener;
 import com.example.rusbellgutierrez.SRT.R;
 import com.example.rusbellgutierrez.SRT.SQL.SQL_Helper;
+import com.example.rusbellgutierrez.SRT.SQL.SQL_Sentencias;
 import com.rey.material.widget.ProgressView;
 
 import java.util.ArrayList;
@@ -48,7 +52,10 @@ public class Fragment_detBusq extends Fragment implements OnFragmentListener,Sea
     private SQLiteDatabase db;
     private RecyclerAdapter recyclerAdapter;
 
-    private ProgressView progressView;
+    private ProgressBar pgb;
+
+    SQL_Sentencias sql=new SQL_Sentencias();
+    private Handler handler = new Handler();
 
     public Fragment_detBusq(){
 
@@ -78,21 +85,55 @@ public class Fragment_detBusq extends Fragment implements OnFragmentListener,Sea
         //para poblar un recyclerview se emplea viewgroup en lugar de view
         ViewGroup viewGroup=(ViewGroup)inflater.inflate(R.layout.fragment_busqueda,container,false);
         recyclerView=(RecyclerView)viewGroup.findViewById(R.id.recycler_view);
-        progressView=(ProgressView)viewGroup.findViewById(R.id.progress);
+        pgb=(ProgressBar) viewGroup.findViewById(R.id.pg_bar);
 
         setHasOptionsMenu(true);
 
-        progressView.setVisibility(View.VISIBLE);
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
 
-        loadDatabase();
-
-        progressView.setVisibility(View.GONE);
+                loadDatabase();
+            }
+        });
 
         return viewGroup;
     }
 
+    private class asincronoLoad extends AsyncTask<Void,Integer,Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+
+
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+
+                    //progressBar.setVisibility(View.VISIBLE);
+                    loadDatabase();
+
+                }
+            });
+
+            return true;
+        }
+
+        protected void onPreExecute() {
+            pgb.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if(result)
+            {
+                pgb.setVisibility(View.GONE);
+            }
+        }
+    }
+
     public void loadDatabase(){
-        helper=new SQL_Helper(getActivity());
+        /*helper=new SQL_Helper(getActivity());
         db=helper.getReadableDatabase();
         cursor=db.rawQuery("select a.codbarra, a.idarticulo, a.nombre, c.almacen, c.cantidad, c.estado from carga c, articulo a where a.idarticulo=c.idarticulo and c.estado <> '0' and c.estado <> 'Completo'",null);
 
@@ -110,7 +151,33 @@ public class Fragment_detBusq extends Fragment implements OnFragmentListener,Sea
                     feed.add(feedItem);
                 }while (cursor.moveToNext());
             }
-        }
+        }*/
+        pgb.setVisibility(View.VISIBLE);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                boolean estado=sql.dataRecycler(helper,getActivity(),feed);
+                //SI "estado" ES TRUE, EJECUTA EL HANDLER
+                //if (feed.size()==207)
+                if (estado){
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            pgb.setVisibility(View.GONE);
+                            int count=0;
+                            if (recyclerAdapter!=null)
+                                count=recyclerAdapter.getItemCount();
+                            Log.i("CANTIDAD DE ROWS","ES "+count);
+
+                        }
+                    });
+                }
+
+            }
+        }).start();
+
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
         recyclerAdapter=new RecyclerAdapter(getActivity(),feed);
         //llamamos al metodo set anteriormente declarado
@@ -183,8 +250,8 @@ public class Fragment_detBusq extends Fragment implements OnFragmentListener,Sea
 
         TextView searchText = (TextView) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
 
-        searchText.setTextColor(Color.parseColor("#FFFFFF"));
-        searchText.setHintTextColor(Color.parseColor("#FFFFFF"));
+        searchText.setTextColor(Color.parseColor("#000000"));
+        searchText.setHintTextColor(Color.parseColor("#000000"));
         searchText.setHint("Busca...");
         searchView.setOnQueryTextListener(this);
 

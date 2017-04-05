@@ -8,10 +8,10 @@ public class Clase_Transportista {
 
     private int idtransportista;
     private String nom_transp;
-    private int cel_transp;
+    private String cel_transp;
     private String placa;
 
-    public Clase_Transportista(int idtransportista, String nom_transp, int cel_transp, String placa) {
+    public Clase_Transportista(int idtransportista, String nom_transp, String cel_transp, String placa) {
         this.idtransportista = idtransportista;
         this.nom_transp = nom_transp;
         this.cel_transp = cel_transp;
@@ -34,11 +34,11 @@ public class Clase_Transportista {
         this.nom_transp = nom_transp;
     }
 
-    public int getCel_transp() {
+    public String getCel_transp() {
         return cel_transp;
     }
 
-    public void setCel_transp(int cel_transp) {
+    public void setCel_transp(String cel_transp) {
         this.cel_transp = cel_transp;
     }
 

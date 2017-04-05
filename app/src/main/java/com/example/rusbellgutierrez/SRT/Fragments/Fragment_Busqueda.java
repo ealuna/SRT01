@@ -5,7 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -20,6 +22,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +31,7 @@ import com.example.rusbellgutierrez.SRT.Interfaces.OnFragmentListener;
 import com.example.rusbellgutierrez.SRT.Clases.Clase_FeedItem;
 import com.example.rusbellgutierrez.SRT.R;
 import com.example.rusbellgutierrez.SRT.SQL.SQL_Helper;
+import com.example.rusbellgutierrez.SRT.SQL.SQL_Sentencias;
 import com.rey.material.widget.ProgressView;
 
 import java.util.ArrayList;
@@ -48,7 +52,11 @@ public class Fragment_Busqueda extends Fragment implements OnFragmentListener, S
     private SQLiteDatabase db;
     private RecyclerAdapter recyclerAdapter;
 
-    private ProgressView progressView;
+    //asincronoLoad hilocarga;
+    SQL_Sentencias sql=new SQL_Sentencias();
+    private Handler handler = new Handler();
+
+    private ProgressBar progressBar;
 
     public Fragment_Busqueda() {
         // Required empty public constructor
@@ -79,25 +87,64 @@ public class Fragment_Busqueda extends Fragment implements OnFragmentListener, S
         //para poblar un recyclerview se emplea viewgroup en lugar de view
         ViewGroup viewGroup=(ViewGroup)inflater.inflate(R.layout.fragment_busqueda,container,false);
         recyclerView=(RecyclerView)viewGroup.findViewById(R.id.recycler_view);
-        progressView=(ProgressView)viewGroup.findViewById(R.id.progress);
+        progressBar=(ProgressBar) viewGroup.findViewById(R.id.pg_bar);
 
         setHasOptionsMenu(true);
 
-        progressView.setVisibility(View.VISIBLE);
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
 
-        loadDatabase();
+                loadDatabase();
+            }
+        });
 
-        progressView.setVisibility(View.GONE);
+
+        //progressView.setVisibility(View.GONE);
 
         return viewGroup;
     }
 
-    public void loadDatabase(){
-        helper=new SQL_Helper(getActivity());
-        db=helper.getReadableDatabase();
-        cursor=db.rawQuery("select a.codbarra, a.idarticulo, a.nombre, c.almacen, c.cantidad from carga c, articulo a where a.idarticulo=c.idarticulo and c.estado like '0'",null);
+    /*ESTE PROCESO ASINCRONO NO TOCAR, PERMITE CARGAR DE INMEDIATO LA DATA*/
+    private class asincronoLoad extends AsyncTask<Void,Integer,Boolean>{
 
-        if (cursor!=null){
+        @Override
+        protected Boolean doInBackground(Void... params) {
+
+
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+
+                    //progressBar.setVisibility(View.VISIBLE);
+                    loadDatabase();
+                    Log.i("INFO ASYNCTASK","SE EJECUTA EL ASINCRONO");
+
+                }
+            });
+
+            return true;
+        }
+
+        protected void onPreExecute() {
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if(result)
+            {
+                progressBar.setVisibility(View.GONE);
+            }
+        }
+    }
+
+    public void loadDatabase(){
+        //helper=new SQL_Helper(getActivity());
+        //db=helper.getReadableDatabase();
+        //cursor=db.rawQuery("select a.codbarra, a.idarticulo, a.nombre, c.almacen, c.cantidad from carga c, articulo a where a.idarticulo=c.idarticulo and c.estado like '0'",null);
+
+        /*if (cursor!=null){
             if (cursor.moveToFirst()){
                 do{
                     Clase_FeedItem feedItem=new Clase_FeedItem();
@@ -110,7 +157,86 @@ public class Fragment_Busqueda extends Fragment implements OnFragmentListener, S
                     feed.add(feedItem);
                 }while (cursor.moveToNext());
             }
-        }
+        }*/
+
+        progressBar.setVisibility(View.VISIBLE);
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                /*if (cursor!=null){
+                                    if (cursor.moveToFirst()){
+                                        do{
+                                            Clase_FeedItem feedItem=new Clase_FeedItem();
+                                            feedItem.setCodbar(cursor.getString(0));
+                                            feedItem.setCodprod(cursor.getString(1));
+                                            feedItem.setNomprod(cursor.getString(2));
+                                            feedItem.setAlmprod(cursor.getString(3));
+                                            feedItem.setCanprod(cursor.getString(4));
+
+                                            feed.add(feedItem);
+                                        }while (cursor.moveToNext());
+                                    }
+                                }*/
+
+                                boolean estado=sql.dataRecycler(helper,getActivity(),feed);
+                                //SI "estado" ES TRUE, EJECUTA EL HANDLER
+                                //if (feed.size()==207)
+                                if (estado){
+                                    handler.post(new Runnable() {
+                                        @Override
+                                        public void run() {
+
+
+                                            //sql.dataRecycler(helper,getActivity(),feed);
+                                            /*LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
+                                            recyclerAdapter=new RecyclerAdapter(getActivity(),feed);
+                                            //llamamos al metodo set anteriormente declarado
+                                            recyclerAdapter.setOnFragmentListener(new OnFragmentListener() {
+                                                //sobreescribimos el metodo para pasar bundle, el fragment destino lo recibe durante onResume
+                                                @Override
+                                                public void onFragmentListener(Bundle parameters) {
+                                                    mCallback.onSetTitle("Productos");
+
+                                                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                                                    Fragment_Producto fp=new Fragment_Producto();
+                                                    //Log.i("BUNDLE"," DATA ANTES "+parameters.g+", "+parameters.getString("codprod")+", "+parameters.getString("nomprod")+", "+parameters.getString("almprod")+", "+parameters.getString("canprod"));
+                                                    fp.setArguments(parameters);
+
+                                                    ft.replace(R.id.content_frame, fp);
+                                                    ft.addToBackStack(null);
+                                                    ft.commit();
+
+                                                    Log.i("BUNDLE"," DATA "+parameters.getString("codbarra")+", "+parameters.getString("idarticulo")+", "+parameters.getString("nombre")+", "+parameters.getString("almacen")+", "+parameters.getString("cantidad"));
+                                                }
+
+                                                @Override
+                                                public void onSetTitle(String title) {
+
+                                                }
+                                            });
+                                            recyclerView.setHasFixedSize(true);
+                                            recyclerView.setLayoutManager(linearLayoutManager);
+                                            recyclerView.setAdapter(recyclerAdapter);
+                                            int count=0;
+                                            if (recyclerAdapter!=null)
+                                                count=recyclerAdapter.getItemCount();
+                                            Log.i("CANTIDAD DE ROWS","ES "+count);*/
+
+                                            progressBar.setVisibility(View.GONE);
+                                            int count=0;
+                                            if (recyclerAdapter!=null)
+                                                count=recyclerAdapter.getItemCount();
+                                            Log.i("CANTIDAD DE ROWS","ES "+count);
+
+                                        }
+                                    });
+                                }
+
+                            }
+                        }).start();
+
+        //sql.dataRecycler(helper,getActivity(),feed);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
         recyclerAdapter=new RecyclerAdapter(getActivity(),feed);
         //llamamos al metodo set anteriormente declarado
@@ -140,6 +266,10 @@ public class Fragment_Busqueda extends Fragment implements OnFragmentListener, S
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(recyclerAdapter);
+        int count=0;
+        if (recyclerAdapter!=null)
+            count=recyclerAdapter.getItemCount();
+        Log.i("CANTIDAD DE ROWS","ES "+count);
     }
 
     @Override
@@ -174,26 +304,33 @@ public class Fragment_Busqueda extends Fragment implements OnFragmentListener, S
     @Override
     public void onCreateOptionsMenu(Menu menu,MenuInflater inflater) {
         inflater.inflate(R.menu.menu_search, menu);
-        super.onCreateOptionsMenu(menu,inflater);
+        //super.onCreateOptionsMenu(menu,inflater);
 
-        MenuItem searchitem = menu.findItem(R.id.action_search);
+        /*MenuItem searchitem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchitem);
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
 
         TextView searchText = (TextView) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
 
-        searchText.setTextColor(Color.parseColor("#FFFFFF"));
-        searchText.setHintTextColor(Color.parseColor("#FFFFFF"));
-        searchText.setHint("Busca...");
-        searchView.setOnQueryTextListener(this);
+        searchText.setTextColor(Color.parseColor("#000000"));
+        searchText.setHintTextColor(Color.parseColor("#000000"));
+        searchText.setHint(".....");
+        searchView.setOnQueryTextListener(this);*/
 
 
-    }
+    //}
 
-        /*//comienza la implementacion del searchview
+        //comienza la implementacion del searchview
         final MenuItem item = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
+
+        TextView searchText = (TextView) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+
+        searchText.setTextColor(Color.parseColor("#000000"));
+        searchText.setHintTextColor(Color.parseColor("#000000"));
+        searchText.setHint(".....");
+
         searchView.setOnQueryTextListener(this);
 
         MenuItemCompat.setOnActionExpandListener(item,
@@ -211,7 +348,7 @@ public class Fragment_Busqueda extends Fragment implements OnFragmentListener, S
                         return true; // Return true to expand action view
                     }
                 });
-    }*/
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
@@ -221,13 +358,13 @@ public class Fragment_Busqueda extends Fragment implements OnFragmentListener, S
     @Override
     public boolean onQueryTextChange(String newText) {
         final List<Clase_FeedItem> feedList = filter(feed, newText);
-        if (feedList.size() > 0) {
+        //if (feedList.size() > 0) {
             recyclerAdapter.setFilter(feedList);
             return true;
-        } else {
+        /*} else {
             Toast.makeText(getActivity(), "No se encontró", Toast.LENGTH_SHORT).show();
             return false;
-        }
+        }*/
 
 
     }
@@ -239,7 +376,7 @@ public class Fragment_Busqueda extends Fragment implements OnFragmentListener, S
 
     private List<Clase_FeedItem> filter(List<Clase_FeedItem> models, String query) {
         query = query.toLowerCase();
-        this.recyclerAdapter.searchText=query;
+        //this.recyclerAdapter.searchText=query;
 
         final List<Clase_FeedItem> feedList = new ArrayList<>();
         for (Clase_FeedItem model : models) {
@@ -261,7 +398,7 @@ public class Fragment_Busqueda extends Fragment implements OnFragmentListener, S
                 feedList.add(model);
             }
         }
-        recyclerAdapter= new RecyclerAdapter(getActivity(),feedList);
+        /*recyclerAdapter= new RecyclerAdapter(getActivity(),feedList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));//revisar getActivity o getContext
         recyclerView.setAdapter(recyclerAdapter);
         recyclerAdapter.notifyDataSetChanged();
@@ -287,7 +424,7 @@ public class Fragment_Busqueda extends Fragment implements OnFragmentListener, S
             public void onSetTitle(String title) {
 
             }
-        });
+        });*/
 
         return feedList;
     }
