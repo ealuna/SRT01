@@ -228,21 +228,26 @@ public class Activity_Cuerpo extends AppCompatActivity implements OnFragmentList
             String idarticulo = data[1].toString();
             String nombre = data[2].toString();
             String almacen = data[3].toString();
-            String cantidad = data[4].toString();
+            //String cantidad = data[4].toString();
+            String caja = data[4].toString();
+            String unidad = data[5].toString();
 
             //REvisar pasar datos de un array a un string
             Log.i("LOG_TAG", "codbarra: " + codbarra +
                     ", idarticulo: " + idarticulo +
                     ", nombre: " + nombre +
                     ", almacen: " + almacen +
-                    ", cantidad: " + cantidad);
+                    ", caja: " + caja +
+                    ", unidad: " + unidad);
 
             Bundle bundle = new Bundle();//art.getNombre()
             bundle.putString("codbarra", codbarra);
             bundle.putString("idarticulo", idarticulo);
             bundle.putString("nombre", nombre);
             bundle.putString("almacen", almacen);
-            bundle.putString("cantidad", cantidad);//String.valueOf(art.getCod_barra())}
+            bundle.putString("caja", caja);
+            bundle.putString("unidad", unidad);
+            //bundle.putString("cantidad", cantidad);//String.valueOf(art.getCod_barra())}
 
 
             if (bundle != null) {

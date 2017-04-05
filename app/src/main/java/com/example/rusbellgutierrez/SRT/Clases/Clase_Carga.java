@@ -11,19 +11,37 @@ public class Clase_Carga {
     private int idtransportista;
     private BigInteger idarticulo;
     private String almacen;
-    private int cantidad;
+    private int caja;
+    private int unidad;
     private String fecha;
     private int viaje;
     private String estado;
 
-    public Clase_Carga(int idtransportista, BigInteger idarticulo, String almacen, int cantidad, String fecha, int viaje,String estado) {
+    public Clase_Carga(int idtransportista, BigInteger idarticulo, String almacen, int caja, int unidad, String fecha, int viaje,String estado) {
         this.idtransportista = idtransportista;
         this.idarticulo = idarticulo;
         this.almacen = almacen;
-        this.cantidad = cantidad;
+        this.caja = caja;
+        this.unidad = unidad;
         this.fecha = fecha;
         this.viaje = viaje;
         this.estado=estado;
+    }
+
+    public int getCaja() {
+        return caja;
+    }
+
+    public void setCaja(int caja) {
+        this.caja = caja;
+    }
+
+    public int getUnidad() {
+        return unidad;
+    }
+
+    public void setUnidad(int unidad) {
+        this.unidad = unidad;
     }
 
     public String getEstado() {
@@ -64,14 +82,6 @@ public class Clase_Carga {
 
     public void setAlmacen(String almacen) {
         this.almacen = almacen;
-    }
-
-    public int getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
     }
 
     public String getFecha() {

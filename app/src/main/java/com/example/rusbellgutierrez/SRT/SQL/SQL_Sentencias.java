@@ -80,7 +80,8 @@ public class SQL_Sentencias {
                 ca.put("idtransportista",car.getIdtransportista());
                 ca.put("idarticulo",car.getIdarticulo().toString());
                 ca.put("almacen",car.getAlmacen());
-                ca.put("cantidad",car.getCantidad());
+                ca.put("caja",car.getCaja());
+                ca.put("unidad",car.getUnidad());
                 ca.put("fecha",car.getFecha());
                 ca.put("viaje",car.getViaje());
                 ca.put("estado",car.getEstado());
@@ -101,13 +102,13 @@ public class SQL_Sentencias {
     public String[] consultar_detalleBD(String scanContent, SQL_Helper helper){
         /*Clase_Articulo art;
         Clase_Carga car;*/
-        String[] array=new String[5];
+        String[] array=new String[6];
         SQLiteDatabase db;
         db=helper.getReadableDatabase();
 
         if (db!=null){
             String[] args= new String[]{scanContent};
-            Cursor c=db.rawQuery("select a.codbarra, a.idarticulo, a.nombre, c.almacen, c.cantidad from carga c, articulo a where a.idarticulo=c.idarticulo and a.codbarra=?",args);//group by a.idarticulo
+            Cursor c=db.rawQuery("select a.codbarra, a.idarticulo, a.nombre, c.almacen, c.caja, c.unidad from carga c, articulo a where a.idarticulo=c.idarticulo and a.codbarra=?",args);//group by a.idarticulo
             //("select codbarra,nombre,idarticulo from articulo where codbarra=?",args)
             //("select a.codbarra, a.idarticulo, a.nombre, c.almacen, SUM(c.cantidad) from carga c, articulo a where a.idarticulo=c.idarticulo and a.codbarra=? group by a.idarticulo",args)
             Log.i("INFO CURSOR", "¿EL CURSOR ES TRUE O FALSE? "+c.moveToFirst());
@@ -118,9 +119,9 @@ public class SQL_Sentencias {
                         array[2] = c.getString(2);
                         array[3] = c.getString(3);
                         array[4] = c.getString(4);
+                        array[5] = c.getString(5);
 
                         Log.i("DATOS DEL ARRAY", Arrays.toString(array));
-                        Log.i("DATOS DEL ARRAY SUMA", array[4]);
 
                     c.close();
 
@@ -149,7 +150,7 @@ public class SQL_Sentencias {
         helper=new SQL_Helper(context);
         SQLiteDatabase db;
         db=helper.getReadableDatabase();
-        Cursor cursor=db.rawQuery("select a.codbarra, a.idarticulo, a.nombre, c.almacen, c.cantidad from carga c, articulo a where a.idarticulo=c.idarticulo and c.estado like '0'",null);
+        Cursor cursor=db.rawQuery("select a.codbarra, a.idarticulo, a.nombre, c.almacen, c.caja, c.unidad from carga c, articulo a where a.idarticulo=c.idarticulo and c.estado like '0'",null);
 
         if (cursor!=null){
             if (cursor.moveToFirst()){
@@ -159,7 +160,8 @@ public class SQL_Sentencias {
                     feedItem.setCodprod(cursor.getString(1));
                     feedItem.setNomprod(cursor.getString(2));
                     feedItem.setAlmprod(cursor.getString(3));
-                    feedItem.setCanprod(cursor.getString(4));
+                    feedItem.setCajprod(cursor.getString(4));
+                    feedItem.setUniprod(cursor.getString(5));
 
                     feed.add(feedItem);
                 }while (cursor.moveToNext());
@@ -172,7 +174,7 @@ public class SQL_Sentencias {
         helper=new SQL_Helper(context);
         SQLiteDatabase db;
         db=helper.getReadableDatabase();
-        Cursor cursor=db.rawQuery("select a.codbarra, a.idarticulo, a.nombre, c.almacen, c.cantidad, c.estado from carga c, articulo a where a.idarticulo=c.idarticulo and c.estado <> '0' and c.estado <> 'Completo'",null);
+        Cursor cursor=db.rawQuery("select a.codbarra, a.idarticulo, a.nombre, c.almacen, c.caja, c.unidad, c.estado from carga c, articulo a where a.idarticulo=c.idarticulo and c.estado <> '0' and c.estado <> 'Completo'",null);
 
         if (cursor!=null){
             if (cursor.moveToFirst()){
@@ -182,13 +184,27 @@ public class SQL_Sentencias {
                     feedItem.setCodprod(cursor.getString(1));
                     feedItem.setNomprod(cursor.getString(2));
                     feedItem.setAlmprod(cursor.getString(3));
-                    feedItem.setCanprod(cursor.getString(4));
-                    feedItem.setEstado(cursor.getString(5));
+                    feedItem.setCajprod(cursor.getString(4));
+                    feedItem.setUniprod(cursor.getString(5));
+                    feedItem.setEstado(cursor.getString(6));
 
                     feed.add(feedItem);
                 }while (cursor.moveToNext());
             }Log.i("DATOS CANTIDAD","ES "+feed.size());
         }
         return  true;
+    }
+
+    public boolean updateCarga(Context context,String codigo,String estado){
+        SQL_Helper helper=new SQL_Helper(context);
+        SQLiteDatabase db;
+        db=helper.getWritableDatabase();
+         if (db!=null){
+
+             ContentValues ca= new ContentValues();
+             ca.put("estado",estado);
+
+             db.update("carga",ca,"idarticulo="+codigo,null);
+         }return true;
     }
 }

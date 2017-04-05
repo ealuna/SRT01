@@ -157,7 +157,7 @@ public class Fragment_detBusq extends Fragment implements OnFragmentListener,Sea
             @Override
             public void run() {
 
-                boolean estado=sql.dataRecycler(helper,getActivity(),feed);
+                boolean estado=sql.detalleRecycler(helper,getActivity(),feed);
                 //SI "estado" ES TRUE, EJECUTA EL HANDLER
                 //if (feed.size()==207)
                 if (estado){
@@ -241,9 +241,9 @@ public class Fragment_detBusq extends Fragment implements OnFragmentListener,Sea
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_search, menu);
-        super.onCreateOptionsMenu(menu,inflater);
+        //super.onCreateOptionsMenu(menu,inflater);
 
-        MenuItem searchitem = menu.findItem(R.id.action_search);
+        /*MenuItem searchitem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchitem);
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
@@ -252,15 +252,24 @@ public class Fragment_detBusq extends Fragment implements OnFragmentListener,Sea
 
         searchText.setTextColor(Color.parseColor("#000000"));
         searchText.setHintTextColor(Color.parseColor("#000000"));
-        searchText.setHint("Busca...");
-        searchView.setOnQueryTextListener(this);
+        searchText.setBackgroundColor(Color.WHITE);
+        searchText.setHint("Escriba...");
+        searchView.setOnQueryTextListener(this);*/
 
 
-    }
+    //}
 
-        /*//comienza la implementacion del searchview
+        //comienza la implementacion del searchview
         final MenuItem item = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
+
+        TextView searchText = (TextView) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+
+        searchText.setTextColor(Color.parseColor("#000000"));
+        searchText.setHintTextColor(Color.parseColor("#000000"));
+        searchText.setBackgroundColor(Color.WHITE);
+        searchText.setHint("Escriba...");
+
         searchView.setOnQueryTextListener(this);
 
         MenuItemCompat.setOnActionExpandListener(item,
@@ -278,7 +287,7 @@ public class Fragment_detBusq extends Fragment implements OnFragmentListener,Sea
                         return true; // Return true to expand action view
                     }
                 });
-    }*/
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
@@ -288,13 +297,13 @@ public class Fragment_detBusq extends Fragment implements OnFragmentListener,Sea
     @Override
     public boolean onQueryTextChange(String newText) {
         final List<Clase_FeedItem> feedList = filter(feed, newText);
-        if (feedList.size() > 0) {
+        //if (feedList.size() > 0) {
             recyclerAdapter.setFilter(feedList);
             return true;
-        } else {
+        /*} else {
             Toast.makeText(getActivity(), "No se encontró", Toast.LENGTH_SHORT).show();
             return false;
-        }
+        }*/
 
 
     }
@@ -306,7 +315,7 @@ public class Fragment_detBusq extends Fragment implements OnFragmentListener,Sea
 
     private List<Clase_FeedItem> filter(List<Clase_FeedItem> models, String query) {
         query = query.toLowerCase();
-        this.recyclerAdapter.searchText=query;
+        //this.recyclerAdapter.searchText=query;
 
         final List<Clase_FeedItem> feedList = new ArrayList<>();
         for (Clase_FeedItem model : models) {
@@ -314,7 +323,6 @@ public class Fragment_detBusq extends Fragment implements OnFragmentListener,Sea
             final String codprod = model.getCodprod().toLowerCase();
             final String nomprod = model.getNomprod().toLowerCase();
             final String almprod = model.getAlmprod().toLowerCase();
-            final String canprod = model.getCanprod().toLowerCase();
             final String estado = model.getEstado().toLowerCase();
 
             if (codbarra.contains(query)) {
@@ -325,13 +333,11 @@ public class Fragment_detBusq extends Fragment implements OnFragmentListener,Sea
                 feedList.add(model);
             }else if (almprod.contains(query)){
                 feedList.add(model);
-            }else if (canprod.contains(query)){
-                feedList.add(model);
             }else if (estado.contains(query)){
                 feedList.add(model);
             }
         }
-        recyclerAdapter= new RecyclerAdapter(getActivity(),feedList);
+        /*recyclerAdapter= new RecyclerAdapter(getActivity(),feedList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));//revisar getActivity o getContext
         recyclerView.setAdapter(recyclerAdapter);
         recyclerAdapter.notifyDataSetChanged();
@@ -357,7 +363,7 @@ public class Fragment_detBusq extends Fragment implements OnFragmentListener,Sea
             public void onSetTitle(String title) {
 
             }
-        });
+        });*/
 
         return feedList;
     }

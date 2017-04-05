@@ -31,7 +31,8 @@ public class SQL_Columnas {
         public static final String idtransportista = "idtransportista";
         public static final String idarticulo = "idarticulo";
         public static final String almacen = "almacen";
-        public static final String cantidad = "cantidad";
+        public static final String caja = "caja";
+        public static final String unidad = "unidad";
         public static final String fecha = "fecha";
         public static final String viaje = "viaje";
         public static final String estado = "estado";

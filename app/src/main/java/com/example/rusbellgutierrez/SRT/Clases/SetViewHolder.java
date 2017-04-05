@@ -17,7 +17,8 @@ public class SetViewHolder extends RecyclerView.ViewHolder {
     public TextView codprod;
     public TextView nomprod;
     public TextView almprod;
-    public TextView canprod;
+    public TextView cajprod;
+    public TextView uniprod;
     //experimental
     public TextView estado;
 
@@ -30,7 +31,9 @@ public class SetViewHolder extends RecyclerView.ViewHolder {
         codprod=(TextView)itemView.findViewById(R.id.codprod);
         nomprod=(TextView)itemView.findViewById(R.id.nomprod);
         almprod=(TextView)itemView.findViewById(R.id.almprod);
-        canprod=(TextView)itemView.findViewById(R.id.canprod);
+        cajprod=(TextView)itemView.findViewById(R.id.cajprod);
+        uniprod=(TextView)itemView.findViewById(R.id.uniprod);
+        //canprod=(TextView)itemView.findViewById(R.id.canprod);
 
         //experimental
         estado=(TextView)itemView.findViewById(R.id.estado);
@@ -46,7 +49,9 @@ public class SetViewHolder extends RecyclerView.ViewHolder {
             codprod.setText(feedItem.getCodprod());
             nomprod.setText(feedItem.getNomprod());
             almprod.setText(feedItem.getAlmprod());
-            canprod.setText(feedItem.getCanprod());
+            cajprod.setText(feedItem.getCajprod());
+            uniprod.setText(feedItem.getUniprod());
+            //canprod.setText(feedItem.getCanprod());
             //experimental
             estado.setText(feedItem.getEstado());
         }else {
@@ -54,7 +59,9 @@ public class SetViewHolder extends RecyclerView.ViewHolder {
             codprod.setText(feedItem.getCodprod());
             nomprod.setText(feedItem.getNomprod());
             almprod.setText(feedItem.getAlmprod());
-            canprod.setText(feedItem.getCanprod());
+            cajprod.setText(feedItem.getCajprod());
+            uniprod.setText(feedItem.getUniprod());
+            //canprod.setText(feedItem.getCanprod());
         }
     }
 }

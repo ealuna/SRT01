@@ -50,7 +50,8 @@ public class SQL_Helper extends SQLiteOpenHelper {
                 + CargaEntry.idtransportista + " INTEGER NOT NULL,"
                 + CargaEntry.idarticulo + " INTEGER NOT NULL,"
                 + CargaEntry.almacen + " TEXT NOT NULL,"
-                + CargaEntry.cantidad + " INTEGER NOT NULL,"
+                + CargaEntry.caja + " INTEGER NOT NULL,"
+                + CargaEntry.unidad + " INTEGER NOT NULL,"
                 + CargaEntry.fecha + " TEXT NOT NULL,"//AÑO-MES-DIA
                 + CargaEntry.viaje + " INTEGER NOT NULL,"
                 + CargaEntry.estado + " TEXT NOT NULL)");

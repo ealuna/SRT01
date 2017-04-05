@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.text.InputType;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.inputmethod.InputMethodManager;
@@ -87,6 +88,8 @@ public class Activity_Acceso extends AppCompatActivity implements ConectivityRec
         carta =(CardView)findViewById(R.id.carta);
         //declaramos el framelayout
         progressBarHolder = (FrameLayout) findViewById(R.id.progressBarHolder);
+
+        contraseña.setInputType(InputType.TYPE_CLASS_NUMBER);
 
         //aca inicia la funciòn para recordar datos
         loginPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);

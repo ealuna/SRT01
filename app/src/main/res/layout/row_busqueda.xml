@@ -85,7 +85,7 @@
                         android:textSize="13sp"
                         android:textColor="@color/Black"
                         android:layout_toStartOf="@+id/almprod"
-                        android:text="Cantidad: " />
+                        android:text="Caja: " />
 
                     <TextView
                         android:id="@+id/codprod"
@@ -122,7 +122,7 @@
                         android:text="TextView" />
 
                     <TextView
-                        android:id="@+id/canprod"
+                        android:id="@+id/cajprod"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignBottom="@+id/textView14"
@@ -131,6 +131,28 @@
                         android:text="TextView"
                         android:textColor="@color/Black"
                         android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/textView5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@+id/textView14"
+                        android:layout_marginTop="3dp"
+                        android:textColor="@color/Black"
+                        android:textSize="13sp"
+                        android:text="Unidad:" />
+
+                    <TextView
+                        android:id="@+id/uniprod"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/Black"
+                        android:textSize="13sp"
+                        android:text="TextView"
+                        android:layout_alignBaseline="@+id/textView5"
+                        android:layout_alignBottom="@+id/textView5"
+                        android:layout_toEndOf="@+id/textView14" />
 
                 </RelativeLayout>
             </LinearLayout>

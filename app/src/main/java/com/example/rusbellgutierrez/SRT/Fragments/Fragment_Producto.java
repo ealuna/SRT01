@@ -16,11 +16,13 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.rusbellgutierrez.SRT.Dialogs.Dialogo_Observacion;
 import com.example.rusbellgutierrez.SRT.Dialogs.Dialogo_Sesion;
 import com.example.rusbellgutierrez.SRT.Interfaces.OnFragmentListener;
 import com.example.rusbellgutierrez.SRT.R;
+import com.example.rusbellgutierrez.SRT.SQL.SQL_Sentencias;
 import com.google.zxing.integration.android.IntentIntegrator;
 
 public class Fragment_Producto extends Fragment implements View.OnClickListener{
@@ -28,9 +30,11 @@ public class Fragment_Producto extends Fragment implements View.OnClickListener{
     public static final String TAG="Producto";
 
     Button boton_escaner, boton_verificar;
-    TextView cod_barra,cod_articulo,nom_articulo,almacen,cantidad,obs_text,cod_oculto;
+    TextView cod_barra,cod_articulo,nom_articulo,almacen,caja,unidad,obs_text;
     CheckBox ch_estado;
     CardView carta_articulo;
+
+    SQL_Sentencias sql= new SQL_Sentencias();
 
     String codoculto="";
 
@@ -101,7 +105,8 @@ public class Fragment_Producto extends Fragment implements View.OnClickListener{
             cod_articulo =(TextView)v.findViewById(R.id.cod_articulo);
             nom_articulo =(TextView)v.findViewById(R.id.nom_articulo);
             almacen =(TextView)v.findViewById(R.id.almacen);
-            cantidad =(TextView)v.findViewById(R.id.cantidad);
+            caja =(TextView)v.findViewById(R.id.caja);
+            unidad=(TextView)v.findViewById(R.id.unidad);
             carta_articulo =(CardView)v.findViewById(R.id.carta_articulo);
             //campo invisible que obtiene el estado
             obs_text =(TextView)v.findViewById(R.id.observacion_text);
@@ -110,7 +115,9 @@ public class Fragment_Producto extends Fragment implements View.OnClickListener{
             boton_verificar =(Button)v.findViewById(R.id.boton_verificar);
             ch_estado =(CheckBox)v.findViewById(R.id.ch_estado);
 
+            obs_text.setText("Completo");
 
+            ch_estado.setEnabled(false);
 
             //hacemos visible el menu
             setHasOptionsMenu(true);
@@ -124,7 +131,7 @@ public class Fragment_Producto extends Fragment implements View.OnClickListener{
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked){
                     //llamamos al dialogo de observacion
-                    new Dialogo_Observacion().show(getFragmentManager(), "RadioDialog");
+                    new Dialogo_Observacion().show(getFragmentManager(),"RadioDialog");
                 }
             }
         });
@@ -145,14 +152,31 @@ public class Fragment_Producto extends Fragment implements View.OnClickListener{
                 }else if (view.getId()== R.id.boton_verificar){
 
                     //implementar la funcion para guardar en sqlite
-                    cod_barra.setText("");
-                    cod_articulo.setText("");
-                    nom_articulo.setText("");
-                    almacen.setText("");
-                    cantidad.setText("");
-                    ch_estado.setEnabled(false);
-                    ch_estado.setChecked(false);
-                    boton_verificar.setEnabled(false);
+                    String codarticulo=cod_articulo.getText().toString();
+                    String obs=obs_text.getText().toString();
+
+                    Log.i("DATOS A GUARDAR","SON "+codarticulo+" Y "+obs);
+
+                    //llamamos a la consulta que hará update a las tabla carga
+                    boolean upd=sql.updateCarga(getActivity(),codarticulo,obs);
+
+                    if (upd){
+
+                        cod_barra.setText("");
+                        cod_articulo.setText("");
+                        nom_articulo.setText("");
+                        almacen.setText("");
+                        caja.setText("");
+                        unidad.setText("");
+                        ch_estado.setEnabled(false);
+                        ch_estado.setChecked(false);
+                        boton_verificar.setEnabled(false);
+
+                        Log.i("DATOS","SE GUARDARON");
+                    }else {
+                        Log.i("DATOS","NO SE GUARDARON");
+                    }
+
                 }
             }
 
@@ -170,7 +194,9 @@ public class Fragment_Producto extends Fragment implements View.OnClickListener{
             cod_articulo.setText(getArguments().getString("idarticulo"));
             nom_articulo.setText(getArguments().getString("nombre"));
             almacen.setText(getArguments().getString("almacen"));
-            cantidad.setText(getArguments().getString("cantidad"));
+            //cantidad.setText(getArguments().getString("cantidad"));
+            caja.setText(getArguments().getString("caja"));
+            unidad.setText(getArguments().getString("unidad"));
 
         } else {
             Log.i("AVISO","No se obtuvo arguments");

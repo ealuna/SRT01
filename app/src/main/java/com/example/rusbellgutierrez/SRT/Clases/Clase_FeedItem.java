@@ -12,13 +12,30 @@ public class Clase_FeedItem {
     private String codprod;
     private String nomprod;
     private String almprod;
-    private String canprod;
+    private String cajprod;
+    private String uniprod;
 
     //experimental
     private String estado;
 
     public String getEstado() {
         return estado;
+    }
+
+    public String getCajprod() {
+        return cajprod;
+    }
+
+    public void setCajprod(String cajprod) {
+        this.cajprod = cajprod;
+    }
+
+    public String getUniprod() {
+        return uniprod;
+    }
+
+    public void setUniprod(String uniprod) {
+        this.uniprod = uniprod;
     }
 
     public void setEstado(String estado) {
@@ -55,13 +72,5 @@ public class Clase_FeedItem {
 
     public void setAlmprod(String almprod) {
         this.almprod = almprod;
-    }
-
-    public String getCanprod() {
-        return canprod;
-    }
-
-    public void setCanprod(String canprod) {
-        this.canprod = canprod;
     }
 }

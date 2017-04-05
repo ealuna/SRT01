@@ -68,7 +68,7 @@ public class Fragment_Busqueda extends Fragment implements OnFragmentListener, S
     }
 
 
-    OnFragmentListener mCallback=null;
+    private OnFragmentListener mCallback=null;
 
     public static Fragment_Busqueda newInstance(Bundle arguments){
         Fragment_Busqueda f = new Fragment_Busqueda();
@@ -255,7 +255,7 @@ public class Fragment_Busqueda extends Fragment implements OnFragmentListener, S
                 ft.addToBackStack(null);
                 ft.commit();
 
-                Log.i("BUNDLE"," DATA "+parameters.getString("codbarra")+", "+parameters.getString("idarticulo")+", "+parameters.getString("nombre")+", "+parameters.getString("almacen")+", "+parameters.getString("cantidad"));
+                Log.i("BUNDLE"," DATA "+parameters.getString("codbarra")+", "+parameters.getString("idarticulo")+", "+parameters.getString("nombre")+", "+parameters.getString("almacen")+", "+parameters.getString("caja")+", "+parameters.getString("unidad"));
             }
 
             @Override
@@ -329,7 +329,8 @@ public class Fragment_Busqueda extends Fragment implements OnFragmentListener, S
 
         searchText.setTextColor(Color.parseColor("#000000"));
         searchText.setHintTextColor(Color.parseColor("#000000"));
-        searchText.setHint(".....");
+        searchText.setBackgroundColor(Color.WHITE);
+        searchText.setHint("Escriba...");
 
         searchView.setOnQueryTextListener(this);
 
@@ -384,7 +385,6 @@ public class Fragment_Busqueda extends Fragment implements OnFragmentListener, S
             final String codprod = model.getCodprod().toLowerCase();
             final String nomprod = model.getNomprod().toLowerCase();
             final String almprod = model.getAlmprod().toLowerCase();
-            final String canprod = model.getCanprod().toLowerCase();
 
             if (codbarra.contains(query)) {
                 feedList.add(model);
@@ -393,8 +393,6 @@ public class Fragment_Busqueda extends Fragment implements OnFragmentListener, S
             }else if (nomprod.contains(query)){
                 feedList.add(model);
             }else if (almprod.contains(query)){
-                feedList.add(model);
-            }else if (canprod.contains(query)){
                 feedList.add(model);
             }
         }

@@ -22,7 +22,7 @@
             android:layout_gravity="center"
             android:layout_marginBottom="20dp"
             android:ems="10"
-            android:text="Estado..."
+            android:text="¿Alguna observación?"
             android:textColor="@color/color_hint"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -32,15 +32,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:paddingLeft="50dp"
             android:layout_marginBottom="10dp"
-            android:orientation="vertical">
-
-            <RadioButton
-                android:id="@+id/rb_completo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Completo" />
+            android:orientation="vertical"
+            android:paddingLeft="50dp">
 
             <RadioButton
                 android:id="@+id/rb_faltante"
@@ -62,22 +56,71 @@
         </RadioGroup>
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/obser_lay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="8dp"
+            android:visibility="invisible">
 
             <EditText
                 android:id="@+id/obser"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="15"
-                android:enabled="false"
                 android:gravity="center"
-                android:hint="Observación"
-                android:textAlignment="center"
+                android:hint="Que tienen"
                 android:inputType="text"
+                android:textAlignment="center"
                 android:theme="@style/CampoTextoMorado" />
         </android.support.design.widget.TextInputLayout>
+
+        <LinearLayout
+            android:id="@+id/lin_lay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/caja_lay"
+                android:layout_width="102dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
+                android:visibility="visible">
+
+                <EditText
+                    android:id="@+id/caja"
+                    android:layout_width="96dp"
+                    android:layout_height="wrap_content"
+                    android:ems="15"
+                    android:hint="Caja"
+                    android:inputType="number"
+                    android:theme="@style/CampoTextoMorado" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/uni_lay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
+                android:visibility="visible"
+                android:weightSum="1">
+
+                <EditText
+                    android:id="@+id/unidad"
+                    android:layout_width="96dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.24"
+                    android:ems="15"
+                    android:hint="Unidad"
+                    android:inputType="number"
+                    android:theme="@style/CampoTextoMorado" />
+            </android.support.design.widget.TextInputLayout>
+
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -97,9 +140,9 @@
             <Button
                 android:id="@+id/ok"
                 style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="match_parent"
+                android:layout_width="103dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="15dp"
                 android:text="Aceptar"
                 android:textColor="#970e3a"
                 android:theme="@style/ColorBotonDialog2" />

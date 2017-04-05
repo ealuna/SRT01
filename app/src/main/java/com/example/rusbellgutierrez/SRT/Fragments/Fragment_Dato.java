@@ -70,7 +70,7 @@ public class Fragment_Dato extends Fragment implements OnFragmentListener,View.O
     String ip_sql="192.168.1.204:80";
 
     //SQLSERVER
-    String url_carga="http://"+ip_sql+"/REST/generarCarga0/";
+    String url_carga="http://"+ip_sql+"/REST/generarCarga/";
 
     //para mysql
     String url_detalle="http://"+ip_trabajo_lap+"/ejemplologin/detalle.php?codigo=";
@@ -247,7 +247,7 @@ public class Fragment_Dato extends Fragment implements OnFragmentListener,View.O
                         JSONObject jdata = jo.getJSONObject(i);
 
                         final Clase_Articulo art= new Clase_Articulo(BigInteger.valueOf(jdata.getInt("idArticulo")),jdata.getString("descripcionArticulo"),jdata.getString("codigoBarraUnidad"));
-                        final Clase_Carga car= new Clase_Carga(jdata.getInt("idTransportista"),BigInteger.valueOf(jdata.getInt("idArticulo")),jdata.getString("almacen"),jdata.getInt("unidades"),jdata.getString("fechaDocumento"),jdata.getInt("numeroReparto"),"0");//jdata.getString("estado")
+                        final Clase_Carga car= new Clase_Carga(jdata.getInt("idTransportista"),BigInteger.valueOf(jdata.getInt("idArticulo")),jdata.getString("almacen"),jdata.getInt("cajas"),jdata.getInt("unidades"),jdata.getString("fechaDocumento"),jdata.getInt("numeroReparto"),"0");//jdata.getString("estado")
 
                         //SE DEBE EJECUTAR EL HILO EN SEGUNDO PLANO
                         pb.setVisibility(View.VISIBLE);

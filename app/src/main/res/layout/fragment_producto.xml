@@ -18,7 +18,6 @@
             android:id="@+id/observacion_text"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:text=""
             android:visibility="invisible" />
 
         <android.support.v7.widget.AppCompatButton
@@ -45,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/boton_escaner"
-                android:layout_marginTop="18dp"
+                android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:text=""
                 android:textColor="@color/color_hint"
@@ -86,7 +85,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
-                    android:layout_marginTop="5dp"
                     android:gravity="center"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
@@ -97,7 +95,6 @@
                     android:id="@+id/textView8"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:paddingLeft="24dp"
                     android:paddingRight="24dp"
                     android:text="Nombre:"
@@ -108,18 +105,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
-                    android:layout_marginTop="5dp"
                     android:gravity="center"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:text=""
+                    android:lines="3"
                     android:textColor="@color/color_hint" />
 
                 <TextView
                     android:id="@+id/textView10"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:paddingLeft="24dp"
                     android:paddingRight="24dp"
                     android:text="Almacén:"
@@ -130,7 +126,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
-                    android:layout_marginTop="5dp"
                     android:gravity="center"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
@@ -139,13 +134,12 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="40dp"
                     android:layout_marginBottom="5dp"
-                    android:layout_marginTop="5dp"
                     android:layout_weight="0.16"
                     android:orientation="horizontal"
-                    android:paddingLeft="24dp"
-                    android:paddingRight="24dp">
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
 
                     <TextView
                         android:id="@+id/textView19"
@@ -153,11 +147,11 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:text="Cantidad:"
+                        android:text="Cajas:"
                         android:textColor="@color/color_hint" />
 
                     <TextView
-                        android:id="@+id/cantidad"
+                        android:id="@+id/caja"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -167,14 +161,33 @@
                         android:text="N°"
                         android:textColor="@color/color_hint" />
 
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="Unidades: "
+                        android:textColor="@color/color_hint"/>
+
+                    <TextView
+                        android:id="@+id/unidad"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="0.01"
+                        android:gravity="center"
+                        android:text="N°"
+                        android:textColor="@color/color_hint"/>
+
                     <CheckBox
                         android:id="@+id/ch_estado"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_weight="0.01"
                         android:layout_marginLeft="5dp"
-                        android:text="Estado"
+                        android:text="Obs."
                         android:textColor="@color/color_hint" />
 
                 </LinearLayout>
