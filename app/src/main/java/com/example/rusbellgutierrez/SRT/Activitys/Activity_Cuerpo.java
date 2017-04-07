@@ -157,6 +157,7 @@ public class Activity_Cuerpo extends AppCompatActivity implements OnFragmentList
                             case R.id.producto:
                                 position=5;
                                 fragment = new Fragment_Producto();
+                                fragment.setArguments(bundle);
                                 fragmentTransaction = true;
                                 break;
                             case R.id.perfil:
@@ -224,13 +225,15 @@ public class Activity_Cuerpo extends AppCompatActivity implements OnFragmentList
             Log.i("DATO", "ARRAY FINAL" + Arrays.toString(data));
             //Fragment_Producto fp=new Fragment_Producto();
 
-            String codbarra = data[0].toString();
-            String idarticulo = data[1].toString();
-            String nombre = data[2].toString();
-            String almacen = data[3].toString();
+            String codbarra = data[0];
+            String idarticulo = data[1];
+            String nombre = data[2];
+            String almacen = data[3];
             //String cantidad = data[4].toString();
-            String caja = data[4].toString();
-            String unidad = data[5].toString();
+            String caja = data[4];
+            String unidad = data[5];
+            String viaje = data[6];
+            String idtransportista = data [7];
 
             //REvisar pasar datos de un array a un string
             Log.i("LOG_TAG", "codbarra: " + codbarra +
@@ -238,7 +241,9 @@ public class Activity_Cuerpo extends AppCompatActivity implements OnFragmentList
                     ", nombre: " + nombre +
                     ", almacen: " + almacen +
                     ", caja: " + caja +
-                    ", unidad: " + unidad);
+                    ", unidad: " + unidad +
+                    ", viaje: " + viaje +
+                    ", idtransportista: " + idtransportista);
 
             Bundle bundle = new Bundle();//art.getNombre()
             bundle.putString("codbarra", codbarra);
@@ -247,6 +252,8 @@ public class Activity_Cuerpo extends AppCompatActivity implements OnFragmentList
             bundle.putString("almacen", almacen);
             bundle.putString("caja", caja);
             bundle.putString("unidad", unidad);
+            bundle.putString("viaje",viaje);
+            bundle.putString("idtransportista",idtransportista);
             //bundle.putString("cantidad", cantidad);//String.valueOf(art.getCod_barra())}
 
 

@@ -102,13 +102,13 @@ public class SQL_Sentencias {
     public String[] consultar_detalleBD(String scanContent, SQL_Helper helper){
         /*Clase_Articulo art;
         Clase_Carga car;*/
-        String[] array=new String[6];
+        String[] array=new String[8];
         SQLiteDatabase db;
         db=helper.getReadableDatabase();
 
         if (db!=null){
             String[] args= new String[]{scanContent};
-            Cursor c=db.rawQuery("select a.codbarra, a.idarticulo, a.nombre, c.almacen, c.caja, c.unidad from carga c, articulo a where a.idarticulo=c.idarticulo and a.codbarra=?",args);//group by a.idarticulo
+            Cursor c=db.rawQuery("select a.codbarra, a.idarticulo, a.nombre, c.almacen, c.caja, c.unidad, c.viaje, c.idtransportista from carga c, articulo a where a.idarticulo=c.idarticulo and a.codbarra=?",args);//group by a.idarticulo
             //("select codbarra,nombre,idarticulo from articulo where codbarra=?",args)
             //("select a.codbarra, a.idarticulo, a.nombre, c.almacen, SUM(c.cantidad) from carga c, articulo a where a.idarticulo=c.idarticulo and a.codbarra=? group by a.idarticulo",args)
             Log.i("INFO CURSOR", "¿EL CURSOR ES TRUE O FALSE? "+c.moveToFirst());
@@ -120,6 +120,8 @@ public class SQL_Sentencias {
                         array[3] = c.getString(3);
                         array[4] = c.getString(4);
                         array[5] = c.getString(5);
+                        array[6] = c.getString(6);
+                        array[7] = c.getString(7);
 
                         Log.i("DATOS DEL ARRAY", Arrays.toString(array));
 
@@ -150,7 +152,7 @@ public class SQL_Sentencias {
         helper=new SQL_Helper(context);
         SQLiteDatabase db;
         db=helper.getReadableDatabase();
-        Cursor cursor=db.rawQuery("select a.codbarra, a.idarticulo, a.nombre, c.almacen, c.caja, c.unidad from carga c, articulo a where a.idarticulo=c.idarticulo and c.estado like '0'",null);
+        Cursor cursor=db.rawQuery("select a.codbarra, a.idarticulo, a.nombre, c.almacen, c.caja, c.unidad, c.viaje, c.idtransportista from carga c, articulo a where a.idarticulo=c.idarticulo and c.estado like '0'",null);
 
         if (cursor!=null){
             if (cursor.moveToFirst()){
@@ -162,6 +164,8 @@ public class SQL_Sentencias {
                     feedItem.setAlmprod(cursor.getString(3));
                     feedItem.setCajprod(cursor.getString(4));
                     feedItem.setUniprod(cursor.getString(5));
+                    feedItem.setViaje(cursor.getString(6));
+                    feedItem.setIdtransportista(cursor.getString(7));
 
                     feed.add(feedItem);
                 }while (cursor.moveToNext());
@@ -174,7 +178,7 @@ public class SQL_Sentencias {
         helper=new SQL_Helper(context);
         SQLiteDatabase db;
         db=helper.getReadableDatabase();
-        Cursor cursor=db.rawQuery("select a.codbarra, a.idarticulo, a.nombre, c.almacen, c.caja, c.unidad, c.estado from carga c, articulo a where a.idarticulo=c.idarticulo and c.estado <> '0' and c.estado <> 'Completo'",null);
+        Cursor cursor=db.rawQuery("select a.codbarra, a.idarticulo, a.nombre, c.almacen, c.caja, c.unidad, c.viaje, c.idtransportista, c.estado from carga c, articulo a where a.idarticulo=c.idarticulo and c.estado <> '0' and c.estado <> 'Completo'",null);
 
         if (cursor!=null){
             if (cursor.moveToFirst()){
@@ -186,7 +190,9 @@ public class SQL_Sentencias {
                     feedItem.setAlmprod(cursor.getString(3));
                     feedItem.setCajprod(cursor.getString(4));
                     feedItem.setUniprod(cursor.getString(5));
-                    feedItem.setEstado(cursor.getString(6));
+                    feedItem.setViaje(cursor.getString(6));
+                    feedItem.setEstado(cursor.getString(7));
+                    feedItem.setIdtransportista(cursor.getString(8));
 
                     feed.add(feedItem);
                 }while (cursor.moveToNext());
@@ -195,16 +201,16 @@ public class SQL_Sentencias {
         return  true;
     }
 
-    public boolean updateCarga(Context context,String codigo,String estado){
+    public boolean updateCarga(Context context,Clase_Carga car){
         SQL_Helper helper=new SQL_Helper(context);
         SQLiteDatabase db;
         db=helper.getWritableDatabase();
          if (db!=null){
 
              ContentValues ca= new ContentValues();
-             ca.put("estado",estado);
+             ca.put("estado",car.getEstado());
 
-             db.update("carga",ca,"idarticulo="+codigo,null);
+             db.update("carga",ca,"idarticulo="+car.getIdarticulo(),null);
          }return true;
     }
 }

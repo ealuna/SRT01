@@ -14,10 +14,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.rusbellgutierrez.SRT.Activitys.Activity_Cuerpo;
@@ -33,7 +37,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Handler;
 
 /**
@@ -43,7 +50,6 @@ import java.util.logging.Handler;
 public class Volley_Peticiones {
 
     SQL_Sentencias sql=new SQL_Sentencias();
-    boolean estado=false;
 
     public void Consulta(String URL, final Context context, final String contraseña, final FrameLayout frame, final Button button, final AlphaAnimation animation) {
 
@@ -191,5 +197,24 @@ public class Volley_Peticiones {
         });
 
         queue.add(requestDetTrans);
+    }
+
+    public void guardarSQL(String URL, Context context,HashMap<String,String> parametros){
+        Log.i("URL: ",URL);
+
+        RequestQueue queue=Volley.newRequestQueue(context);
+
+        JsonObjectRequest postDatos= new JsonObjectRequest(Request.Method.POST, URL, new JSONObject(parametros), new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        queue.add(postDatos);
     }
 }

@@ -19,8 +19,12 @@ public class SetViewHolder extends RecyclerView.ViewHolder {
     public TextView almprod;
     public TextView cajprod;
     public TextView uniprod;
+
+    public TextView idtransportista;
     //experimental
     public TextView estado;
+
+    public TextView viaje;
 
     public FloatingActionButton fab_edit;
 
@@ -33,7 +37,8 @@ public class SetViewHolder extends RecyclerView.ViewHolder {
         almprod=(TextView)itemView.findViewById(R.id.almprod);
         cajprod=(TextView)itemView.findViewById(R.id.cajprod);
         uniprod=(TextView)itemView.findViewById(R.id.uniprod);
-        //canprod=(TextView)itemView.findViewById(R.id.canprod);
+        viaje=(TextView)itemView.findViewById(R.id.viaje);
+        idtransportista=(TextView)itemView.findViewById(R.id.idtransportista);
 
         //experimental
         estado=(TextView)itemView.findViewById(R.id.estado);
@@ -51,6 +56,8 @@ public class SetViewHolder extends RecyclerView.ViewHolder {
             almprod.setText(feedItem.getAlmprod());
             cajprod.setText(feedItem.getCajprod());
             uniprod.setText(feedItem.getUniprod());
+            viaje.setText(feedItem.getViaje());
+            idtransportista.setText(feedItem.getIdtransportista());
             //canprod.setText(feedItem.getCanprod());
             //experimental
             estado.setText(feedItem.getEstado());
@@ -61,6 +68,8 @@ public class SetViewHolder extends RecyclerView.ViewHolder {
             almprod.setText(feedItem.getAlmprod());
             cajprod.setText(feedItem.getCajprod());
             uniprod.setText(feedItem.getUniprod());
+            viaje.setText(feedItem.getViaje());
+            idtransportista.setText(feedItem.getIdtransportista());
             //canprod.setText(feedItem.getCanprod());
         }
     }

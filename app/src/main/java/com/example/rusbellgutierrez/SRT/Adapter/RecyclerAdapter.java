@@ -167,6 +167,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<SetViewHolder> {
                 bundle.putString("almacen",String.valueOf(holder.almprod.getText()));
                 bundle.putString("caja",String.valueOf(holder.cajprod.getText()));
                 bundle.putString("unidad",String.valueOf(holder.uniprod.getText()));
+                bundle.putString("viaje",String.valueOf(holder.viaje.getText()));
+                bundle.putString("idtransportista",String.valueOf(holder.idtransportista.getText()));
                 //atrapamos todos los text y ponemos en un bundle que pasaremos por la interfas
                 onFragmentListener.onFragmentListener(bundle);
                 //lo recibira el fragmentbusqueda

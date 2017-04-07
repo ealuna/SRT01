@@ -14,9 +14,27 @@ public class Clase_FeedItem {
     private String almprod;
     private String cajprod;
     private String uniprod;
+    private String idtransportista;
 
     //experimental
     private String estado;
+    private String viaje;
+
+    public String getViaje() {
+        return viaje;
+    }
+
+    public String getIdtransportista() {
+        return idtransportista;
+    }
+
+    public void setIdtransportista(String idtransportista) {
+        this.idtransportista = idtransportista;
+    }
+
+    public void setViaje(String viaje) {
+        this.viaje = viaje;
+    }
 
     public String getEstado() {
         return estado;
